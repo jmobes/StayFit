@@ -1,8 +1,11 @@
-require('dotenv/config');
+require('dotenv').config();
 const express = require('express');
 const staticMiddleware = require('./static-middleware');
-
+const users = require("./routes/users");
 const app = express();
+
+app.use(express.json());
+app.use("/api/users", users);
 
 app.use(staticMiddleware);
 
