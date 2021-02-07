@@ -1,5 +1,6 @@
 const express = require('express');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 const db = require('../db');
 const Joi = require('joi');
 const HttpError = require('../models/Http-Error');
@@ -33,7 +34,8 @@ router.post('/', async (req, res, next) => {
     return next(new HttpError('Invalid email or password', 400));
   }
 
-  res.send(true);
+  const token = jwt.sign({ id: user.rows[0].user_id }, process.env.JWT_PRIV_KEY);
+  res.send(token);
 });
 
 function validate(req) {

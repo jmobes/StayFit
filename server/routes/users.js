@@ -1,5 +1,6 @@
 const express = require('express');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 const db = require('../db');
 const HttpError = require('../models/Http-Error');
 const validate = require('../validation/validate');
@@ -57,8 +58,8 @@ router.post('/', async (req, res, next) => {
     }
     return next(new HttpError(message || 'Unexpected error', code || 500));
   }
-
-  res.status(201).send(user.rows);
+  const token = jwt.sign({ id: user.rows[0].user_id }, process.env.JWT_PRIV_KEY);
+  res.header('x-auth-token', token).status(201).send(user.rows);
 });
 
 module.exports = router;
