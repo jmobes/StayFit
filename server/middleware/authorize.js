@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 const HttpError = require('../models/Http-Error');
 
-function auth(req, res, next) {
+function authorize(req, res, next) {
   const token = req.header('x-auth-token');
   if (!token) {
     return next(new HttpError('Access denied. No token provided.', 401));
@@ -16,4 +16,4 @@ function auth(req, res, next) {
   }
 }
 
-module.exports = auth;
+module.exports = authorize;
