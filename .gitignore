@@ -1,4 +1,6 @@
 server/public/main.js*
+server/.env
+server/node_modules
 node_modules
 .DS_Store
 .vscode

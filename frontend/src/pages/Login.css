@@ -1,0 +1,13 @@
+.title {
+  color: #fff;
+  font-size: 4rem;
+  text-transform: uppercase;
+  font-weight: 400;
+  text-align: center;
+  margin-top: 20rem;
+  letter-spacing: 0.25rem;
+}
+
+.title__text--2 {
+  color: #27e77f;
+}
