@@ -4,10 +4,30 @@
   text-transform: uppercase;
   font-weight: 400;
   text-align: center;
-  margin-top: 20rem;
+  margin-top: 15rem;
   letter-spacing: 0.25rem;
 }
-
 .title__text--2 {
   color: #27e77f;
+}
+.login__guest {
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 1.25rem;
+  text-align: center;
+  margin-top: 3rem;
+}
+.login__guest--text {
+  color: #27e77f;
+  text-transform: uppercase;
+}
+.link__signup {
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 1.25rem;
+  text-align: center;
+  margin-top: 3rem;
+  margin-top: 10rem;
+}
+.link__signup--text {
+  color: #27e77f;
+  text-transform: uppercase;
 }
