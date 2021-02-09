@@ -4,12 +4,14 @@ const staticMiddleware = require("./static-middleware");
 const HttpError = require("./models/Http-Error");
 const users = require("./routes/users");
 const authenticate = require("./routes/authenticate");
+const routines = require("./routes/routines");
 const app = express();
 
 app.use(express.json());
 app.use(staticMiddleware);
 app.use("/api/users", users);
 app.use("/api/authenticate", authenticate);
+app.use("/api/routines", routines);
 
 app.use((req, res, next) => {
   const error = new HttpError("Could not find this route", 404);

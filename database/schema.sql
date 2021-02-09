@@ -4,61 +4,43 @@
 
 
 CREATE TABLE "users" (
-    "user_id" serial   NOT NULL,
-    "user_name" varchar(255)   NOT NULL,
-    "email" varchar(255)   NOT NULL,
-    "password" varchar(255)   NOT NULL,
-    CONSTRAINT "pk_users" PRIMARY KEY (
-        "user_id"
-     ),
-    CONSTRAINT "uc_users_email" UNIQUE (
-        "email"
-    )
+    "user_id" serial PRIMARY KEY NOT NULL,
+    "user_name" varchar(255) NOT NULL,
+    "email" varchar(255) UNIQUE NOT NULL,
+    "password" varchar(255) NOT NULL
 );
 
 CREATE TABLE "routines" (
-    "routine_id" serial   NOT NULL,
-    "date_start" date   NOT NULL,
-    "date_end" date   NOT NULL,
-    "user_id" int   NOT NULL,
-    CONSTRAINT "pk_routines" PRIMARY KEY (
-        "routine_id"
-     )
+    "routine_id" serial PRIMARY KEY NOT NULL,
+    "date_start" date NOT NULL DEFAULT CURRENT_DATE,
+    "date_end" date,
+    "user_id" int NOT NULL
 );
 
 CREATE TABLE "exercises" (
-    "exercise_id" serial   NOT NULL,
-    "name" varchar(255)   NOT NULL,
-    CONSTRAINT "pk_exercises" PRIMARY KEY (
-        "exercise_id"
-     )
+    "exercise_id" serial PRIMARY KEY NOT NULL,
+    "name" varchar(255) NOT NULL
 );
 
 CREATE TABLE "routine_exercises" (
-    "routine_exercise_id" serial PRIMARY KEY,
-    "routine_id" int   NOT NULL,
-    "exercise_id" int   NOT NULL
+    "routine_exercise_id" serial PRIMARY KEY NOT NULL,
+    "routine_id" int NOT NULL,
+    "exercise_id" int NOT NULL
 );
 
 CREATE TABLE "favorite_exercises" (
-    "favorite_exercise_id" serial   NOT NULL,
-    "user_id" int   NOT NULL,
-    "exercise_id" int   NOT NULL,
-    CONSTRAINT "pk_favorite_exercises" PRIMARY KEY (
-        "favorite_exercise_id"
-     )
+    "favorite_exercise_id" serial PRIMARY KEY NOT NULL,
+    "user_id" int NOT NULL,
+    "exercise_id" int NOT NULL
 );
 
 CREATE TABLE "stats" (
-    "stats_id" serial   NOT NULL,
-    "set" int   NOT NULL,
-    "reps" int   NOT NULL,
-    "weight" real   NOT NULL,
-    "exercise_id" int   NOT NULL,
-    "user_id" int   NOT NULL,
-    CONSTRAINT "pk_stats" PRIMARY KEY (
-        "stats_id"
-     )
+    "stats_id" serial PRIMARY KEY NOT NULL,
+    "set" int NOT NULL,
+    "reps" int NOT NULL,
+    "weight" real NOT NULL,
+    "exercise_id" int NOT NULL,
+    "user_id" int NOT NULL
 );
 
 ALTER TABLE "routines" ADD CONSTRAINT "fk_routines_user_id" FOREIGN KEY("user_id")
