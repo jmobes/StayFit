@@ -1,6 +1,9 @@
 server/public/main.js*
 server/.env
 server/node_modules
+server/package-lock.json
+frontend/node_modules
+frontend/package-lock.json
 node_modules
 .DS_Store
 .vscode
