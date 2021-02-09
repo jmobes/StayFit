@@ -1,0 +1,91 @@
+.form__signup {
+  margin-top: 20rem;
+}
+.form__signup__username {
+  height: 4.5rem;
+  border-radius: 10px;
+  width: 70%;
+  margin: 0 auto 1rem auto;
+  background-color: #1b1b1b;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.form__signup__username__input {
+  height: 100%;
+  width: 100%;
+  border: none;
+  border-radius: 10px;
+  outline: none;
+  background-color: transparent;
+  font-size: 2rem;
+  font-family: inherit;
+  color: #fff;
+}
+.icon-person {
+  margin: 0 1rem;
+}
+.form__signup__email {
+  height: 4.5rem;
+  border-radius: 10px;
+  width: 70%;
+  margin: 0 auto;
+  background-color: #1b1b1b;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.form__signup__email__input {
+  height: 100%;
+  width: 100%;
+  border: none;
+  border-radius: 10px;
+  outline: none;
+  background-color: transparent;
+  font-size: 2rem;
+  font-family: inherit;
+  color: #fff;
+}
+.icon-email {
+  margin: 0 1rem;
+}
+.form__signup__password {
+  height: 4.5rem;
+  border-radius: 10px;
+  width: 70%;
+  margin: 0 auto;
+  background-color: #1b1b1b;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1rem;
+}
+.form__signup__password__input {
+  height: 100%;
+  width: 100%;
+  border: none;
+  border-radius: 10px;
+  outline: none;
+  background-color: transparent;
+  font-size: 2rem;
+  font-family: inherit;
+  color: #fff;
+}
+.icon-password {
+  margin: 0 1rem;
+}
+.button__signup {
+  width: 70%;
+  height: 4.5rem;
+  text-align: center;
+  display: block;
+  margin: 0 auto;
+  border-radius: 10px;
+  margin-top: 4rem;
+  border: none;
+  outline: none;
+  font-size: 2.5rem;
+  text-transform: uppercase;
+  color: #fff;
+  background-color: #27e77f;
+}
