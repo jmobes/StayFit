@@ -1,0 +1,29 @@
+.workout {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+}
+.workout__header {
+  display: flex;
+  justify-content: space-between;
+}
+.workout__title {
+  margin-top: 3rem;
+  position: relative;
+}
+.workout__title__text {
+  color: #fff;
+  font-size: 3rem;
+  text-transform: uppercase;
+  text-align: center;
+  font-weight: 300;
+}
+.workout__icon {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: -1;
+  opacity: 80%;
+  color: rgba(39, 231, 127, 0.5);
+}
