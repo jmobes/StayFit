@@ -20,6 +20,9 @@
 }
 .home__nav__list__item {
   margin: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .home__nav__list__item--bg {
   background-color: #1b1b1b;
