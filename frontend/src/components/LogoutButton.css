@@ -1,0 +1,9 @@
+.logout__button {
+  background-color: #27e77f;
+  color: #000;
+  border: none;
+  outline: none;
+  border-radius: 5px;
+  padding: 0.5rem 1rem;
+  text-transform: uppercase;
+}
