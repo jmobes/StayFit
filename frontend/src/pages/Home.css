@@ -1,0 +1,36 @@
+.home {
+  display: flex;
+  flex-direction: column;
+  color: #27e77f;
+  padding: 1rem;
+}
+.home__header {
+  display: flex;
+  justify-content: flex-end;
+}
+.home__nav {
+  margin-top: 15rem;
+}
+.home__nav__list {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 0 auto;
+}
+.home__nav__list__item {
+  margin: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.home__nav__list__item--bg {
+  background-color: #1b1b1b;
+  border-radius: 10px;
+}
+.home__nav__list__item__text {
+  font-size: 2rem;
+  color: #fff;
+  text-align: center;
+  text-transform: uppercase;
+}
