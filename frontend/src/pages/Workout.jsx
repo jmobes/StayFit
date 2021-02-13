@@ -7,7 +7,7 @@ import AddIcon from "@material-ui/icons/Add";
 import ExerciseList from "../components/ExerciseList";
 
 const Workout = () => {
-  const [displayExercises, setDisplayExercises] = useState(false);
+  const [displayExercises, setDisplayExercises] = useState(true);
 
   return (
     <div className="workout">

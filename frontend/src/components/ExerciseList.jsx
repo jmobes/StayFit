@@ -1,9 +1,19 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "./ExerciseList.css";
 
+import ExerciseListItem from "./ExerciseListItem";
 import AddIcon from "@material-ui/icons/Add";
 
-const ExerciseList = () => {
+const ExerciseList = (props) => {
+  const [exercises, setExercises] = useState();
+
+  useEffect(() => {
+    fetch("http://localhost:5000/api/exercises")
+      .then((res) => res.json())
+      .then((data) => setExercises(data))
+      .catch((err) => console.error(err));
+  }, []);
+
   return (
     <div className="exercise__list">
       <div className="exercise__list__headers">
@@ -15,28 +25,15 @@ const ExerciseList = () => {
         />
       </div>
       <div className="exercise__list__container">
-        <p className="exercise__list__item">Bench Press</p>
-        <p className="exercise__list__item">Bench Press</p>
-        <p className="exercise__list__item">Bench Press</p>
-        <p className="exercise__list__item">Bench Press</p>
-        <p className="exercise__list__item">Bench Press</p>
-        <p className="exercise__list__item">Bench Press</p>
-        <p className="exercise__list__item">Bench Press</p>
-        <p className="exercise__list__item">Bench Press</p>
-        <p className="exercise__list__item">Bench Press</p>
-        <p className="exercise__list__item">Bench Press</p>
-        <p className="exercise__list__item">Bench Press</p>
-        <p className="exercise__list__item">Bench Press</p>
-        <p className="exercise__list__item">Bench Press</p>
-        <p className="exercise__list__item">Bench Press</p>
-        <p className="exercise__list__item">Bench Press</p>
-        <p className="exercise__list__item">Bench Press</p>
-        <p className="exercise__list__item">Bench Press</p>
-        <p className="exercise__list__item">Bench Press</p>
-        <p className="exercise__list__item">Bench Press</p>
-        <p className="exercise__list__item">Bench Press</p>
-        <p className="exercise__list__item">Bench Press</p>
-        <p className="exercise__list__item">Bench Press</p>
+        {exercises &&
+          exercises.map((exercise) => {
+            return (
+              <ExerciseListItem
+                key={exercise.exercise_id}
+                name={exercise.name}
+              />
+            );
+          })}
       </div>
     </div>
   );
