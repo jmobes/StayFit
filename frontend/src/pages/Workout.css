@@ -46,6 +46,7 @@
 }
 .workout__select__icon {
   color: #27e77f;
+  cursor: pointer;
 }
 .workout__data {
   margin-top: 2rem;

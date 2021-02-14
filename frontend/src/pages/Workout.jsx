@@ -7,7 +7,7 @@ import AddIcon from "@material-ui/icons/Add";
 import ExerciseList from "../components/ExerciseList";
 
 const Workout = () => {
-  const [displayExercises, setDisplayExercises] = useState(true);
+  const [displayExercises, setDisplayExercises] = useState(false);
 
   return (
     <div className="workout">
@@ -20,7 +20,7 @@ const Workout = () => {
         <h2 className="workout__title__text">workout</h2>
       </div>
       {displayExercises ? (
-        <ExerciseList />
+        <ExerciseList showList={setDisplayExercises} />
       ) : (
         <React.Fragment>
           <div
