@@ -6,6 +6,7 @@ import AddIcon from "@material-ui/icons/Add";
 
 const ExerciseList = (props) => {
   const [exercises, setExercises] = useState();
+  const [edit, setEdit] = useState(false);
 
   useEffect(() => {
     fetch("http://localhost:5000/api/exercises")
@@ -42,10 +43,18 @@ const ExerciseList = (props) => {
         >
           cancel
         </div>
-        <div className="exercise__list__headers__edit">edit</div>
+        <div
+          onClick={() => setEdit(!edit)}
+          className={`exercise__list__headers__edit ${
+            edit ? "exercise__list__headers__edit--active" : ""
+          }`}
+        >
+          edit
+        </div>
         <AddIcon
           className="exercise__list__headers__add"
           style={{ fontSize: 35 }}
+          onClick={props.showAddExercise}
         />
       </div>
       <div className="exercise__list__container">
@@ -57,6 +66,7 @@ const ExerciseList = (props) => {
                 name={exercise.name}
                 id={exercise.exercise_id}
                 delete={deleteExercise}
+                showEdit={edit}
               />
             );
           })}

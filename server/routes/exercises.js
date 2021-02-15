@@ -6,7 +6,7 @@ const router = express.Router();
 
 router.get("/", async (req, res, next) => {
   try {
-    const exercises = await db.query("SELECT * FROM exercises");
+    const exercises = await db.query("SELECT * FROM exercises ORDER BY name");
     res.status(200).send(exercises.rows);
   } catch (ex) {
     return next(new HttpError());
@@ -21,7 +21,7 @@ router.post("/", async (req, res, next) => {
 
   try {
     const exercise = await db.query(
-      "INSERT INTO exercises (name) VALUES ($1)",
+      "INSERT INTO exercises (name) VALUES ($1) RETURNING *",
       [req.body.name]
     );
     res.status(201).send(exercise.rows[0]);

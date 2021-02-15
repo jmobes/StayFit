@@ -27,6 +27,12 @@
   color: rgb(107, 107, 107);
   cursor: pointer;
 }
+.exercise__list__headers__edit--active {
+  background-color: #d6e15b;
+  color: #000;
+  border-radius: 10px;
+  padding: 0.5rem 1rem;
+}
 .exercise__list__headers__add {
   color: #27e77f;
   cursor: pointer;

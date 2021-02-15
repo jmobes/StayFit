@@ -7,11 +7,13 @@ const ExerciseListItem = (props) => {
   return (
     <div className="exercise__list__item__container">
       <p className="exercise__list__item">{props.name}</p>
-      <RemoveIcon
-        className="exercise__list__item__icon"
-        style={{ fontSize: 25 }}
-        onClick={() => props.delete(props.id)}
-      />
+      {props.showEdit && (
+        <RemoveIcon
+          className="exercise__list__item__icon"
+          style={{ fontSize: 25 }}
+          onClick={() => props.delete(props.id)}
+        />
+      )}
     </div>
   );
 };
