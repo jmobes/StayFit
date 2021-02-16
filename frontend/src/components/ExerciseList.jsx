@@ -63,8 +63,7 @@ const ExerciseList = (props) => {
             return (
               <ExerciseListItem
                 key={exercise.exercise_id}
-                name={exercise.name}
-                id={exercise.exercise_id}
+                exercise={exercise}
                 delete={deleteExercise}
                 showEdit={edit}
               />

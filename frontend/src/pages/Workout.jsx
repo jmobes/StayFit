@@ -6,10 +6,13 @@ import FitnessCenterIcon from "@material-ui/icons/FitnessCenter";
 import AddIcon from "@material-ui/icons/Add";
 import ExerciseList from "../components/ExerciseList";
 import CreateExercise from "../components/CreateExercise";
+import LogExercise from "../components/LogExercise";
 
 const Workout = () => {
   const [displayExercises, setDisplayExercises] = useState(false);
   const [createExercise, setCreateExercise] = useState(false);
+  const [logExercise, setLogExercise] = useState(true);
+  const [exercise, setExercise] = useState();
 
   const showAddExercise = () => {
     setCreateExercise(true);
@@ -28,6 +31,8 @@ const Workout = () => {
     view = (
       <CreateExercise hideCreateExercise={() => setCreateExercise(false)} />
     );
+  } else if (logExercise) {
+    view = <LogExercise />;
   } else {
     view = (
       <React.Fragment>
@@ -54,29 +59,8 @@ const Workout = () => {
           className="workout__icon"
           style={{ fontSize: 100 }}
         />
-        {/* <h2 className="workout__title__text">workout</h2> */}
       </div>
       {view}
-      {/* {displayExercises ? (
-        <ExerciseList
-          showList={setDisplayExercises}
-          showAddExercise={createExercise}
-        />
-      ) : (
-        <React.Fragment>
-          <div
-            className="workout__select"
-            onClick={() => setDisplayExercises(true)}
-          >
-            <p className="workout__select__title">select exercise</p>
-            <AddIcon
-              className="workout__select__icon"
-              style={{ fontSize: 30 }}
-            />
-          </div>
-          <div className="workout__data">No exercise data</div>
-        </React.Fragment>
-      )} */}
     </div>
   );
 };

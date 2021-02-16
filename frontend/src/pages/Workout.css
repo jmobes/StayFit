@@ -11,26 +11,11 @@
 }
 .workout__title {
   margin-top: 5rem;
-  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
 }
-.workout__title__text {
-  color: #fff;
-  font-size: 3rem;
-  text-transform: uppercase;
-  text-align: center;
-  font-weight: 300;
-}
 .workout__icon {
-  /* position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  z-index: -1;
-  opacity: 80%; */
-  /* color: rgba(39, 231, 127, 0.5); */
   color: rgba(39, 231, 127);
 }
 .workout__select {
