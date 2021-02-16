@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "./LogExercise.css";
 
 import AddIcon from "@material-ui/icons/Add";
@@ -33,7 +33,9 @@ const LogExercise = (props) => {
           </div>
         </div>
       </div>
-      <AddIcon style={{ fontSize: 40 }} className="add__set__button" />
+      <AddIcon style={{ fontSize: 50 }} className="add__set__button" />
+      <button className="log__exercise__button">Log Exercise</button>
+      <button className="cancel__exercise__button">Cancel</button>
     </div>
   );
 };
