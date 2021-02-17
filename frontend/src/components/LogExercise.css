@@ -3,6 +3,7 @@
   flex-direction: column;
   margin-top: 5rem;
   font-size: 2rem;
+  padding: 1rem;
 }
 .log__exercise__title {
   align-self: center;
@@ -39,6 +40,7 @@
   justify-content: space-around;
   text-align: center;
   margin-bottom: 1.5rem;
+  position: relative;
 }
 .log__exercise__data__row__item {
   width: 30%;
@@ -51,10 +53,6 @@
   border-bottom: 1px solid #c4c4c4;
   padding-bottom: 1rem;
 }
-/* .log__exercise__data__row:not(:last-child) > * {
-  border-bottom: 1px solid #c4c4c4;
-  padding-bottom: 1rem;
-} */
 .add__set__button {
   color: #27e77f;
   align-self: center;
@@ -87,3 +85,12 @@
   text-transform: uppercase;
   font-weight: 600;
 }
+/* .log__exercise__data__row__remove {
+  position: absolute;
+  color: red;
+  right: 0;
+  background: none;
+  outline: none;
+  border: none;
+  font-size: 2rem;
+} */
