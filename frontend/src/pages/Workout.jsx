@@ -11,12 +11,18 @@ import LogExercise from "../components/LogExercise";
 const Workout = () => {
   const [displayExercises, setDisplayExercises] = useState(false);
   const [createExercise, setCreateExercise] = useState(false);
-  const [logExercise, setLogExercise] = useState(true);
-  const [exercise, setExercise] = useState();
+  const [logExercise, setLogExercise] = useState(false);
 
   const showAddExercise = () => {
     setCreateExercise(true);
     setDisplayExercises(false);
+  };
+  const showLogExercise = () => {
+    setLogExercise(true);
+    setDisplayExercises(false);
+  };
+  const hideLogExercise = () => {
+    setLogExercise(false);
   };
 
   let view;
@@ -25,6 +31,7 @@ const Workout = () => {
       <ExerciseList
         showList={setDisplayExercises}
         showAddExercise={showAddExercise}
+        showLogExercise={showLogExercise}
       />
     );
   } else if (createExercise) {
@@ -32,7 +39,7 @@ const Workout = () => {
       <CreateExercise hideCreateExercise={() => setCreateExercise(false)} />
     );
   } else if (logExercise) {
-    view = <LogExercise />;
+    view = <LogExercise hideLogExercise={hideLogExercise} />;
   } else {
     view = (
       <React.Fragment>

@@ -66,6 +66,7 @@ const ExerciseList = (props) => {
                 exercise={exercise}
                 delete={deleteExercise}
                 showEdit={edit}
+                showLogExercise={props.showLogExercise}
               />
             );
           })}

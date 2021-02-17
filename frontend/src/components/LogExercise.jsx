@@ -30,7 +30,12 @@ const LogExercise = (props) => {
         className="add__set__button"
       />
       <button className="log__exercise__button">Log Exercise</button>
-      <button className="cancel__exercise__button">Cancel</button>
+      <button
+        onClick={props.hideLogExercise}
+        className="cancel__exercise__button"
+      >
+        Cancel
+      </button>
     </div>
   );
 };
