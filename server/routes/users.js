@@ -10,7 +10,7 @@ router.get("/", async (req, res, next) => {
   let users;
   try {
     users = await db.query("SELECT * FROM users");
-  } catch (e) {
+  } catch (ex) {
     return next(new HttpError());
   }
 

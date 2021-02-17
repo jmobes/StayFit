@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import "./Home.css";
-import LogoutButton from "../components/LogoutButton";
+import HeaderButton from "../components/HeaderButton";
 import FitnessCenterIcon from "@material-ui/icons/FitnessCenter";
 import HistoryIcon from "@material-ui/icons/History";
 import TimelineIcon from "@material-ui/icons/Timeline";
@@ -10,7 +10,7 @@ const Home = () => {
   return (
     <div className="home">
       <div className="home__header">
-        <LogoutButton />
+        <HeaderButton text="logout" />
       </div>
       <div className="home__nav">
         <ul className="home__nav__list">

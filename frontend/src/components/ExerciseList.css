@@ -1,0 +1,46 @@
+.exercise__list {
+  margin-top: 5rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background-color: #121212;
+  overflow: hidden;
+}
+.exercise__list__headers {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  font-size: 2rem;
+  text-transform: capitalize;
+  border-bottom: 3px solid #939292;
+}
+.exercise__list__headers div {
+  border: none;
+  outline: none;
+}
+.exercise__list__headers__cancel {
+  color: red;
+  cursor: pointer;
+}
+.exercise__list__headers__edit {
+  color: rgb(107, 107, 107);
+  cursor: pointer;
+}
+.exercise__list__headers__edit--active {
+  background-color: #d6e15b;
+  color: #000;
+  border-radius: 10px;
+  padding: 0.5rem 1rem;
+}
+.exercise__list__headers__add {
+  color: #27e77f;
+  cursor: pointer;
+}
+.exercise__list__container {
+  height: 100%;
+  font-size: 3rem;
+  font-weight: 300;
+  color: #27e77f;
+  overflow: auto;
+}

@@ -1,2 +1,13 @@
-INSERT INTO users("user_name", "email", "password")
-VALUES ('Joe', 'joe@gmail.com', 'joe123');
+INSERT INTO exercises(name) VALUES ('Bench Press');
+INSERT INTO exercises(name) VALUES ('Chest Flys');
+INSERT INTO exercises(name) VALUES ('Incline Press');
+INSERT INTO exercises(name) VALUES ('Decline Press');
+INSERT INTO exercises(name) VALUES ('Dumbbell Press');
+INSERT INTO exercises(name) VALUES ('Military Press');
+INSERT INTO exercises(name) VALUES ('Deadlift');
+INSERT INTO exercises(name) VALUES ('Barbell Squat');
+INSERT INTO exercises(name) VALUES ('Dumbbell Curls');
+INSERT INTO exercises(name) VALUES ('Preacher Curls');
+INSERT INTO exercises(name) VALUES ('Barbell Row');
+INSERT INTO exercises(name) VALUES ('Tricep Extensions');
+INSERT INTO exercises(name) VALUES ('Calf Raises');

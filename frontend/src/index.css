@@ -5,6 +5,7 @@
   padding: 0;
   box-sizing: border-box;
   font-family: "Rowdies", cursive;
+  font-weight: 300;
 }
 
 html {
@@ -13,4 +14,7 @@ html {
 
 body {
   background-color: #000;
+}
+.hidden {
+  display: none;
 }

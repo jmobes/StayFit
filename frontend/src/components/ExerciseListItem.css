@@ -1,0 +1,17 @@
+.exercise__list__item__container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 1rem;
+}
+.exercise__list__container div:not(:last-child) {
+  border-bottom: 3px solid #939292;
+}
+.exercise__list__item {
+  font-size: 2.5rem;
+  text-transform: capitalize;
+}
+.exercise__list__item__icon {
+  color: red;
+  cursor: pointer;
+}
