@@ -52,6 +52,7 @@ REFERENCES "routines" ("routine_id");
 ALTER TABLE "routine_exercises" ADD CONSTRAINT "fk_routine_exercises_exercise_id" FOREIGN KEY("exercise_id")
 REFERENCES "exercises" ("exercise_id");
 
+
 ALTER TABLE "favorite_exercises" ADD CONSTRAINT "fk_favorite_exercises_user_id" FOREIGN KEY("user_id")
 REFERENCES "users" ("user_id");
 

@@ -12,14 +12,16 @@ const Workout = () => {
   const [displayExercises, setDisplayExercises] = useState(false);
   const [createExercise, setCreateExercise] = useState(false);
   const [logExercise, setLogExercise] = useState(false);
+  const [exercise, setExercise] = useState(null);
 
   const showAddExercise = () => {
     setCreateExercise(true);
     setDisplayExercises(false);
   };
-  const showLogExercise = () => {
+  const showLogExercise = (exercise) => {
     setLogExercise(true);
     setDisplayExercises(false);
+    setExercise(exercise);
   };
   const hideLogExercise = () => {
     setLogExercise(false);
@@ -39,7 +41,9 @@ const Workout = () => {
       <CreateExercise hideCreateExercise={() => setCreateExercise(false)} />
     );
   } else if (logExercise) {
-    view = <LogExercise hideLogExercise={hideLogExercise} />;
+    view = (
+      <LogExercise hideLogExercise={hideLogExercise} name={exercise.name} />
+    );
   } else {
     view = (
       <React.Fragment>
