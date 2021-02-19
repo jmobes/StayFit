@@ -9,7 +9,7 @@ const LogExercise = (props) => {
 
   return (
     <div className="log__exercise">
-      <h3 className="log__exercise__title">Bench Press</h3>
+      <h3 className="log__exercise__title">{props.name}</h3>
       <div className="log__exercise__data">
         <div className="log__exercise__data__columns">
           <h4 className="log__exercise__data__column">Set</h4>

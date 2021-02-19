@@ -20,9 +20,16 @@ router.post("/", async (req, res, next) => {
   }
 
   try {
+    const duplicate = await db.query(
+      "SELECT * FROM exercises where name = $1",
+      [req.body.name.toLowerCase()]
+    );
+    if (duplicate.rowCount > 0) {
+      return next(new HttpError("Exercise already exists", 400));
+    }
     const exercise = await db.query(
       "INSERT INTO exercises (name) VALUES ($1) RETURNING *",
-      [req.body.name]
+      [req.body.name.toLowerCase()]
     );
     res.status(201).send(exercise.rows[0]);
   } catch (ex) {

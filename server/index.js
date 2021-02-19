@@ -5,6 +5,7 @@ const users = require("./routes/users");
 const authenticate = require("./routes/authenticate");
 const routines = require("./routes/routines");
 const exercises = require("./routes/exercises");
+const routine_exercises = require("./routes/routine_exercises");
 const app = express();
 
 app.use(express.json());
@@ -25,6 +26,7 @@ app.use("/api/users", users);
 app.use("/api/authenticate", authenticate);
 app.use("/api/routines", routines);
 app.use("/api/exercises", exercises);
+app.use("/api/routine-exercises", routine_exercises);
 
 app.use((req, res, next) => {
   const error = new HttpError("Could not find this route", 404);
