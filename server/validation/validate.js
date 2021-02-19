@@ -26,6 +26,16 @@ function validateExercise(exercise) {
   return schema.validate(exercise);
 }
 
+function validateRoutineExercise(routine_exercise) {
+  const schema = Joi.object({
+    routine_id: Joi.string().required(),
+    exercise_id: Joi.string().required(),
+  });
+
+  return schema.validate(routine_exercise);
+}
+
 module.exports.validateUser = validateUser;
 module.exports.validateRoutine = validateRoutine;
 module.exports.validateExercise = validateExercise;
+module.exports.validateRoutineExercise = validateRoutineExercise;
