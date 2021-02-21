@@ -12,6 +12,7 @@ import Workout from "./pages/Workout";
 import History from "./pages/History";
 import Progress from "./pages/Progress";
 import Records from "./pages/Records";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 const App = () => {
   const [token, setToken] = useState();
@@ -38,6 +39,7 @@ const App = () => {
         throw new Error(responseData);
       }
       setToken(responseData);
+      localStorage.setItem("token", responseData);
       setError(null);
     } catch (err) {
       setError(err.message || "Something went wrong");
@@ -51,6 +53,7 @@ const App = () => {
   const logout = () => {
     setToken(null);
     setError(null);
+    localStorage.removeItem("token");
   };
 
   return (
@@ -62,21 +65,21 @@ const App = () => {
         <Route path="/signup">
           <Signup />
         </Route>
-        <Route path="/workout">
+        <ProtectedRoute path="/workout">
           <Workout logout={logout} />
-        </Route>
-        <Route path="/history">
+        </ProtectedRoute>
+        <ProtectedRoute path="/history">
           <History />
-        </Route>
-        <Route path="/progress">
+        </ProtectedRoute>
+        <ProtectedRoute path="/progress">
           <Progress />
-        </Route>
-        <Route path="/records">
+        </ProtectedRoute>
+        <ProtectedRoute path="/records">
           <Records />
-        </Route>
-        <Route path="/" exact>
+        </ProtectedRoute>
+        <ProtectedRoute path="/" exact>
           <Home logout={logout} />
-        </Route>
+        </ProtectedRoute>
       </Switch>
     </Router>
   );
