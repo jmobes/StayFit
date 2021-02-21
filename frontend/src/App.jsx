@@ -13,8 +13,13 @@ import Workout from "./pages/Workout";
 const App = () => {
   const [token, setToken] = useState();
   const [error, setError] = useState();
+  const [loading, setLoading] = useState(false);
 
   const login = async (email, password) => {
+    if (!email || !password) {
+      setError("Please enter email and password");
+    }
+    setLoading(true);
     const options = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -30,16 +35,26 @@ const App = () => {
         throw new Error(responseData);
       }
       setToken(responseData);
+      setError(null);
     } catch (err) {
       setError(err.message || "Something went wrong");
+      setLoading(false);
+      return false;
     }
+    setLoading(false);
+    return true;
+  };
+
+  const logout = () => {
+    setToken(null);
+    setError(null);
   };
 
   return (
     <Router>
       <Switch>
         <Route path="/login">
-          <Login login={login} />
+          <Login login={login} loading={loading} error={error} />
         </Route>
         <Route path="/signup">
           <Signup />

@@ -65,3 +65,7 @@
   color: #fff;
   background-color: #27e77f;
 }
+.error {
+  border: 2px solid red;
+  color: red;
+}
