@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import "./Login.css";
 
 import LoginForm from "../components/LoginForm";
@@ -18,7 +19,9 @@ const Login = (props) => {
       </p>
       <p className="link__signup">
         Don't have an account?{" "}
-        <span className="link__signup--text">Signup here</span>
+        <Link to="/signup">
+          <span className="link__signup--text">Signup here</span>
+        </Link>
       </p>
     </>
   );

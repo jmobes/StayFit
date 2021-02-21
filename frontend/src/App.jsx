@@ -9,6 +9,9 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Home from "./pages/Home";
 import Workout from "./pages/Workout";
+import History from "./pages/History";
+import Progress from "./pages/Progress";
+import Records from "./pages/Records";
 
 const App = () => {
   const [token, setToken] = useState();
@@ -60,10 +63,19 @@ const App = () => {
           <Signup />
         </Route>
         <Route path="/workout">
-          <Workout />
+          <Workout logout={logout} />
+        </Route>
+        <Route path="/history">
+          <History />
+        </Route>
+        <Route path="/progress">
+          <Progress />
+        </Route>
+        <Route path="/records">
+          <Records />
         </Route>
         <Route path="/" exact>
-          <Home />
+          <Home logout={logout} />
         </Route>
       </Switch>
     </Router>
