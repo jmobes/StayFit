@@ -1,5 +1,6 @@
 require("dotenv").config();
 const express = require("express");
+const cors = require("cors");
 const HttpError = require("./models/Http-Error");
 const users = require("./routes/users");
 const authenticate = require("./routes/authenticate");
@@ -9,15 +10,16 @@ const routine_exercises = require("./routes/routine_exercises");
 const app = express();
 
 app.use(express.json());
+
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
   res.header(
     "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept, Authorization"
+    "Origin, X-Requested-With, Content-Type, Accept, Authorization, x-auth-token"
   );
   if (req.method === "OPTIONS") {
     res.header("Access-Control-Allow-Methods", "GET, POST, PUT, PATCH, DELETE");
-    return res.status(200).send();
+    return res.status(200).json();
   }
   next();
 });
@@ -38,7 +40,7 @@ app.use((error, req, res, next) => {
     return next(error);
   }
   res.status(error.code || 500);
-  res.send(error.message || "An unexpected error occurred");
+  res.json(error.message || "An unexpected error occurred");
 });
 
 app.listen(process.env.PORT, () => {

@@ -14,7 +14,7 @@ router.get("/", async (req, res, next) => {
     return next(new HttpError());
   }
 
-  res.status(200).send(users.rows);
+  res.status(200).json(users.rows);
 });
 
 router.get("/:id", async (req, res, next) => {
@@ -33,7 +33,7 @@ router.get("/:id", async (req, res, next) => {
     return next(new HttpError("Cannot find User", 404));
   }
 
-  res.status(200).send(user.rows);
+  res.status(200).json(user.rows);
 });
 
 router.post("/", async (req, res, next) => {
@@ -65,7 +65,7 @@ router.post("/", async (req, res, next) => {
     { id: user.rows[0].user_id },
     process.env.JWT_PRIV_KEY
   );
-  res.header("x-auth-token", token).status(201).send(user.rows);
+  res.header("x-auth-token", token).status(201).json(user.rows);
 });
 
 module.exports = router;

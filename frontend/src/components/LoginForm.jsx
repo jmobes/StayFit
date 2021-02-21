@@ -3,13 +3,13 @@ import "./LoginForm.css";
 import MailOutlineIcon from "@material-ui/icons/MailOutline";
 import VpnKeyIcon from "@material-ui/icons/VpnKey";
 
-const LoginForm = () => {
+const LoginForm = (props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("User has signed up");
+    props.login(email, password);
   };
 
   return (
