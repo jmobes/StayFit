@@ -65,7 +65,7 @@ router.post("/", async (req, res, next) => {
     { id: user.rows[0].user_id },
     process.env.JWT_PRIV_KEY
   );
-  res.header("x-auth-token", token).status(201).json(user.rows);
+  res.header("Authorization", token).status(201).json(user.rows);
 });
 
 module.exports = router;

@@ -38,7 +38,7 @@ router.post("/", async (req, res, next) => {
     { id: user.rows[0].user_id },
     process.env.JWT_PRIV_KEY
   );
-  res.json(token);
+  res.json({ token: token, userId: user.rows[0].user_id });
 });
 
 function validate(req) {

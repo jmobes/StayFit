@@ -5,14 +5,15 @@ function authorize(req, res, next) {
   if (req.method === "OPTIONS") {
     return next();
   }
-  const token = req.header("x-auth-token");
+  const token = req.header("Authorization");
+  console.log(token);
   if (!token) {
     return next(new HttpError("Access denied. No token provided.", 401));
   }
 
   try {
     const decoded = jwt.verify(token, process.env.JWT_PRIV_KEY);
-    req.user = decoded;
+    req.user = decoded.id;
     next();
   } catch (ex) {
     return next(new HttpError("Invalid token.", 400));

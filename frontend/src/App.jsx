@@ -38,8 +38,14 @@ const App = () => {
       if (!result.ok) {
         throw new Error(responseData);
       }
-      setToken(responseData);
-      localStorage.setItem("token", responseData);
+      setToken(responseData.token);
+      localStorage.setItem(
+        "user",
+        JSON.stringify({
+          userId: responseData.userId,
+          token: responseData.token,
+        })
+      );
       setError(null);
     } catch (err) {
       setError(err.message || "Something went wrong");
@@ -53,33 +59,22 @@ const App = () => {
   const logout = () => {
     setToken(null);
     setError(null);
-    localStorage.removeItem("token");
+    localStorage.removeItem("user");
   };
 
   return (
     <Router>
       <Switch>
-        <Route path="/login">
-          <Login login={login} loading={loading} error={error} />
-        </Route>
-        <Route path="/signup">
-          <Signup />
-        </Route>
-        <ProtectedRoute path="/workout">
-          <Workout logout={logout} />
-        </ProtectedRoute>
-        <ProtectedRoute path="/history">
-          <History />
-        </ProtectedRoute>
-        <ProtectedRoute path="/progress">
-          <Progress />
-        </ProtectedRoute>
-        <ProtectedRoute path="/records">
-          <Records />
-        </ProtectedRoute>
-        <ProtectedRoute path="/" exact>
-          <Home logout={logout} />
-        </ProtectedRoute>
+        <Route
+          path="/login"
+          render={() => <Login error={error} loading={loading} login={login} />}
+        />
+        <Route path="/signup" component={Signup} />
+        <ProtectedRoute path="/workout" logout={logout} component={Workout} />
+        <ProtectedRoute path="/history" component={History} />
+        <ProtectedRoute path="/progress" component={Progress} />
+        <ProtectedRoute path="/records" component={Records} />
+        <ProtectedRoute path="/" exact logout={logout} component={Home} />
       </Switch>
     </Router>
   );

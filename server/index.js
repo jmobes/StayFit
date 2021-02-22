@@ -2,6 +2,7 @@ require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const HttpError = require("./models/Http-Error");
+const authorize = require("./middleware/authorize");
 const users = require("./routes/users");
 const authenticate = require("./routes/authenticate");
 const routines = require("./routes/routines");
@@ -15,7 +16,7 @@ app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
   res.header(
     "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept, Authorization, x-auth-token"
+    "Origin, X-Requested-With, Content-Type, Accept, Authorization"
   );
   if (req.method === "OPTIONS") {
     res.header("Access-Control-Allow-Methods", "GET, POST, PUT, PATCH, DELETE");
@@ -26,6 +27,7 @@ app.use((req, res, next) => {
 
 app.use("/api/users", users);
 app.use("/api/authenticate", authenticate);
+app.use(authorize);
 app.use("/api/routines", routines);
 app.use("/api/exercises", exercises);
 app.use("/api/routine-exercises", routine_exercises);

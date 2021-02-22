@@ -9,10 +9,20 @@ const ExerciseList = (props) => {
   const [edit, setEdit] = useState(false);
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/exercises")
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (!user) {
+      setExercises(null);
+      return;
+    }
+    const token = user.token;
+    fetch("http://localhost:5000/api/exercises", {
+      headers: {
+        Authorization: token,
+      },
+    })
       .then((res) => res.json())
       .then((data) => setExercises(data))
-      .catch((err) => console.error(err));
+      .catch((err) => setExercises(null));
   }, []);
 
   const deleteExercise = (id) => {

@@ -8,7 +8,6 @@ import TimelineIcon from "@material-ui/icons/Timeline";
 import FlagIcon from "@material-ui/icons/Flag";
 
 const Home = (props) => {
-  console.log(props);
   return (
     <div className="home">
       <div className="home__header">
