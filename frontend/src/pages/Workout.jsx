@@ -42,7 +42,7 @@ const Workout = (props) => {
     );
   } else if (logExercise) {
     view = (
-      <LogExercise hideLogExercise={hideLogExercise} name={exercise.name} />
+      <LogExercise hideLogExercise={hideLogExercise} exercise={exercise} />
     );
   } else {
     view = (

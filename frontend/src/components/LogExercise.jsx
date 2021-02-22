@@ -6,10 +6,47 @@ import AddIcon from "@material-ui/icons/Add";
 
 const LogExercise = (props) => {
   const [numSets, setNumSets] = useState([1]);
+  const [exerciseId, setExerciseId] = useState();
+  const [userId, setUserId] = useState();
+  const [stats, setStats] = useState([]);
+
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (!user) {
+      return;
+    }
+    const userId = user.userId;
+    setExerciseId(props.exercise.exercise_id);
+    setUserId(user.userId);
+  }, []);
+
+  const addSet = async (set, reps, weight) => {
+    const options = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        set: set,
+        reps: reps,
+        weight: weight,
+        exercise_id: exerciseId,
+        user_id: userId,
+      }),
+    };
+    try {
+      const result = await fetch("http://localhost:5000/api/stats", options);
+      if (!result.ok) {
+        return;
+      }
+      const data = await result.json();
+      console.log(data);
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   return (
     <div className="log__exercise">
-      <h3 className="log__exercise__title">{props.name}</h3>
+      <h3 className="log__exercise__title">{props.exercise.name}</h3>
       <div className="log__exercise__data">
         <div className="log__exercise__data__columns">
           <h4 className="log__exercise__data__column">Set</h4>
