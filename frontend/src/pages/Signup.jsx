@@ -16,51 +16,57 @@ const Signup = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="form__signup">
-      <div className="form__signup__username">
-        <PersonIcon
-          className="icon-person"
-          style={{ fontSize: 30, color: "#fff" }}
-        />
-        <input
-          type="text"
-          className="form__signup__username__input"
-          placeholder="username"
-          onChange={(e) => setUsername(e.target.value)}
-          value={username}
-          required
-        />
-      </div>
-      <div className="form__signup__email">
-        <MailOutlineIcon
-          className="icon-email"
-          style={{ fontSize: 30, color: "#fff" }}
-        />
-        <input
-          type="email"
-          className="form__signup__email__input"
-          placeholder="stayfit@gmail.com"
-          onChange={(e) => setEmail(e.target.value)}
-          value={email}
-          required
-        />
-      </div>
-      <div className="form__signup__password">
-        <VpnKeyIcon
-          className="icon-password"
-          style={{ fontSize: 30, color: "#fff" }}
-        />
-        <input
-          type="password"
-          className="form__signup__password__input"
-          placeholder="password"
-          onChange={(e) => setPassword(e.target.value)}
-          value={password}
-          required
-        />
-      </div>
-      <input type="submit" value="Signup" className="button__signup" />
-    </form>
+    <>
+      <h1 className="title">
+        <span className="title__text title__text--1">Stay Fi</span>
+        <span className="title__text title__text--2">T</span>
+      </h1>
+      <form onSubmit={handleSubmit} className="form__signup">
+        <div className="form__signup__username">
+          <PersonIcon
+            className="icon-person"
+            style={{ fontSize: 30, color: "#fff" }}
+          />
+          <input
+            type="text"
+            className="form__signup__username__input"
+            placeholder="username"
+            onChange={(e) => setUsername(e.target.value)}
+            value={username}
+            required
+          />
+        </div>
+        <div className="form__signup__email">
+          <MailOutlineIcon
+            className="icon-email"
+            style={{ fontSize: 30, color: "#fff" }}
+          />
+          <input
+            type="email"
+            className="form__signup__email__input"
+            placeholder="stayfit@gmail.com"
+            onChange={(e) => setEmail(e.target.value)}
+            value={email}
+            required
+          />
+        </div>
+        <div className="form__signup__password">
+          <VpnKeyIcon
+            className="icon-password"
+            style={{ fontSize: 30, color: "#fff" }}
+          />
+          <input
+            type="password"
+            className="form__signup__password__input"
+            placeholder="password"
+            onChange={(e) => setPassword(e.target.value)}
+            value={password}
+            required
+          />
+        </div>
+        <input type="submit" value="Signup" className="button__signup" />
+      </form>
+    </>
   );
 };
 

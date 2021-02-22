@@ -1,18 +1,22 @@
-const jwt = require('jsonwebtoken');
-const HttpError = require('../models/Http-Error');
+const jwt = require("jsonwebtoken");
+const HttpError = require("../models/Http-Error");
 
 function authorize(req, res, next) {
-  const token = req.header('x-auth-token');
+  if (req.method === "OPTIONS") {
+    return next();
+  }
+  const token = req.header("Authorization");
+  console.log(token);
   if (!token) {
-    return next(new HttpError('Access denied. No token provided.', 401));
+    return next(new HttpError("Access denied. No token provided.", 401));
   }
 
   try {
     const decoded = jwt.verify(token, process.env.JWT_PRIV_KEY);
-    req.user = decoded;
+    req.user = decoded.id;
     next();
   } catch (ex) {
-    return next(new HttpError('Invalid token.', 400));
+    return next(new HttpError("Invalid token.", 400));
   }
 }
 

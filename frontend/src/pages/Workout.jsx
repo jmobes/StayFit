@@ -8,7 +8,7 @@ import ExerciseList from "../components/ExerciseList";
 import CreateExercise from "../components/CreateExercise";
 import LogExercise from "../components/LogExercise";
 
-const Workout = () => {
+const Workout = (props) => {
   const [displayExercises, setDisplayExercises] = useState(false);
   const [createExercise, setCreateExercise] = useState(false);
   const [logExercise, setLogExercise] = useState(false);
@@ -63,7 +63,7 @@ const Workout = () => {
     <div className="workout">
       <div className="workout__header">
         <HeaderButton text="home" />
-        <HeaderButton text="logout" />
+        <HeaderButton text="logout" logout={props.logout} />
       </div>
       <div className="workout__title">
         <FitnessCenterIcon

@@ -7,7 +7,7 @@ const router = express.Router();
 router.get("/", async (req, res, next) => {
   try {
     const exercises = await db.query("SELECT * FROM exercises ORDER BY name");
-    res.status(200).send(exercises.rows);
+    res.status(200).json(exercises.rows);
   } catch (ex) {
     return next(new HttpError());
   }
@@ -31,7 +31,7 @@ router.post("/", async (req, res, next) => {
       "INSERT INTO exercises (name) VALUES ($1) RETURNING *",
       [req.body.name.toLowerCase()]
     );
-    res.status(201).send(exercise.rows[0]);
+    res.status(201).json(exercise.rows[0]);
   } catch (ex) {
     return next(new HttpError());
   }
@@ -51,7 +51,7 @@ router.delete("/:id", async (req, res, next) => {
     if (exercise.rowCount < 1) {
       return next(new HttpError("Exercise with that ID does not exist"), 404);
     }
-    res.status(200).send(exercise.rows[0]);
+    res.status(200).json(exercise.rows[0]);
   } catch (ex) {
     return next(new HttpError());
   }

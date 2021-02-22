@@ -7,7 +7,7 @@ const router = express.Router();
 router.get("/", async (req, res, next) => {
   try {
     const routines = await db.query("SELECT * FROM routines");
-    res.status(200).send(routines.rows);
+    res.status(200).json(routines.rows);
   } catch (ex) {
     return next(new HttpError());
   }
@@ -39,7 +39,7 @@ router.post("/", async (req, res, next) => {
       "INSERT INTO routines (user_id) VALUES ($1) RETURNING *",
       [userId]
     );
-    res.status(201).send(routine.rows[0]);
+    res.status(201).json(routine.rows[0]);
   } catch (ex) {
     return next(new HttpError());
   }
@@ -67,7 +67,7 @@ router.patch("/:routineId", async (req, res, next) => {
       [routineId]
     );
 
-    res.status(200).send(update.rows[0]);
+    res.status(200).json(update.rows[0]);
   } catch (ex) {
     return next(new HttpError());
   }
@@ -85,7 +85,7 @@ router.delete("/:id", async (req, res, next) => {
       return next(new HttpError("Routine does not exist", 404));
     }
 
-    res.status(200).send(routine.rows[0]);
+    res.status(200).json(routine.rows[0]);
   } catch (ex) {
     return next(new HttpError());
   }
