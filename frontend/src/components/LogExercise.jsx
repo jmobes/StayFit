@@ -30,29 +30,57 @@ const LogExercise = (props) => {
     }
   };
 
-  // const addSet = async (set, reps, weight) => {
-  //   const options = {
-  //     method: "POST",
-  //     headers: { "Content-Type": "application/json" },
-  //     body: JSON.stringify({
-  //       set: set,
-  //       reps: reps,
-  //       weight: weight,
-  //       exercise_id: exerciseId,
-  //       user_id: userId,
-  //     }),
-  //   };
-  //   try {
-  //     const result = await fetch("http://localhost:5000/api/stats", options);
-  //     if (!result.ok) {
-  //       return;
-  //     }
-  //     const data = await result.json();
-  //     console.log(data);
-  //   } catch (err) {
-  //     console.error(err);
-  //   }
-  // };
+  const addSets = () => {
+    stats.map((setData) => {
+      const options = {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          set: setData.set,
+          reps: setData.reps,
+          weight: setData.weight,
+          exercise_id: exerciseId.toString(),
+          user_id: userId.toString(),
+        }),
+      };
+      fetch("http://localhost:5000/api/stats", options)
+        .then((res) => res.json())
+        .then((data) => console.log(data))
+        .catch((err) => console.error(err));
+      // try {
+      //   const result = await fetch("http://localhost:5000/api/stats", options);
+      //   if (!result.ok) {
+      //     return;
+      //   }
+      //   const data = await result.json();
+      //   console.log(data);
+      // }
+      // catch (err) {
+      //   console.error(err);
+      // }
+    });
+    // const options = {
+    //   method: "POST",
+    //   headers: { "Content-Type": "application/json" },
+    //   body: JSON.stringify({
+    //     set: set,
+    //     reps: reps,
+    //     weight: weight,
+    //     exercise_id: exerciseId,
+    //     user_id: userId,
+    //   }),
+    // };
+    // try {
+    //   const result = await fetch("http://localhost:5000/api/stats", options);
+    //   if (!result.ok) {
+    //     return;
+    //   }
+    //   const data = await result.json();
+    //   console.log(data);
+    // } catch (err) {
+    //   console.error(err);
+    // }
+  };
 
   return (
     <div className="log__exercise">
@@ -106,7 +134,14 @@ const LogExercise = (props) => {
         style={{ fontSize: 50 }}
         className="add__set__button"
       />
-      <button className="log__exercise__button">Log Exercise</button>
+      <button
+        onClick={() => {
+          addSets();
+        }}
+        className="log__exercise__button"
+      >
+        Log Exercise
+      </button>
       <button
         onClick={props.hideLogExercise}
         className="cancel__exercise__button"
