@@ -85,12 +85,12 @@
   text-transform: uppercase;
   font-weight: 600;
 }
-/* .log__exercise__data__row__remove {
+.log__exercise__error {
   position: absolute;
+  left: 50%;
+  top: 28%;
   color: red;
-  right: 0;
-  background: none;
-  outline: none;
-  border: none;
-  font-size: 2rem;
-} */
+  width: 100%;
+  text-align: center;
+  transform: translateX(-50%);
+}

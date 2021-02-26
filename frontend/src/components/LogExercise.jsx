@@ -8,6 +8,7 @@ const LogExercise = (props) => {
   const [exerciseId, setExerciseId] = useState();
   const [userId, setUserId] = useState();
   const [stats, setStats] = useState([{ set: 1, weight: "", reps: "" }]);
+  const [error, setError] = useState("");
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("user"));
@@ -31,55 +32,38 @@ const LogExercise = (props) => {
   };
 
   const addSets = () => {
-    stats.map((setData) => {
-      const options = {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          set: setData.set,
-          reps: setData.reps,
-          weight: setData.weight,
-          exercise_id: exerciseId.toString(),
-          user_id: userId.toString(),
-        }),
-      };
-      fetch("http://localhost:5000/api/stats", options)
-        .then((res) => res.json())
-        .then((data) => console.log(data))
-        .catch((err) => console.error(err));
-      // try {
-      //   const result = await fetch("http://localhost:5000/api/stats", options);
-      //   if (!result.ok) {
-      //     return;
-      //   }
-      //   const data = await result.json();
-      //   console.log(data);
-      // }
-      // catch (err) {
-      //   console.error(err);
-      // }
-    });
-    // const options = {
-    //   method: "POST",
-    //   headers: { "Content-Type": "application/json" },
-    //   body: JSON.stringify({
-    //     set: set,
-    //     reps: reps,
-    //     weight: weight,
-    //     exercise_id: exerciseId,
-    //     user_id: userId,
-    //   }),
-    // };
-    // try {
-    //   const result = await fetch("http://localhost:5000/api/stats", options);
-    //   if (!result.ok) {
-    //     return;
-    //   }
-    //   const data = await result.json();
-    //   console.log(data);
-    // } catch (err) {
-    //   console.error(err);
-    // }
+    try {
+      stats.map((object) => {
+        const valuesArray = Object.values(object);
+        valuesArray.forEach((value, index) => {
+          console.log(`index ${index}: Value ${value}`);
+          if (!value) {
+            throw new Error("Please fill out all fields");
+          }
+        });
+      });
+
+      stats.map((setData) => {
+        const options = {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            set: setData.set,
+            reps: setData.reps,
+            weight: setData.weight,
+            exercise_id: exerciseId.toString(),
+            user_id: userId.toString(),
+          }),
+        };
+        fetch("http://localhost:5000/api/stats", options)
+          .then((res) => res.json())
+          .then((data) => console.log(data))
+          .catch((err) => setError(err.message));
+      });
+    } catch (e) {
+      console.error(e.message);
+      setError(e.message);
+    }
   };
 
   return (
@@ -137,6 +121,7 @@ const LogExercise = (props) => {
       <button
         onClick={() => {
           addSets();
+          error && props.hideLogExercise();
         }}
         className="log__exercise__button"
       >
@@ -148,6 +133,7 @@ const LogExercise = (props) => {
       >
         Cancel
       </button>
+      {error && <p className="log__exercise__error">{error}</p>}
     </div>
   );
 };
