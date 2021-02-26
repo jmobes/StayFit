@@ -35,7 +35,20 @@ function validateRoutineExercise(routine_exercise) {
   return schema.validate(routine_exercise);
 }
 
+function validateStats(stats) {
+  const schema = Joi.object({
+    set: Joi.number().required(),
+    reps: Joi.number().required(),
+    weight: Joi.number().required(),
+    exercise_id: Joi.string().required(),
+    user_id: Joi.string().required(),
+  });
+
+  return schema.validate(stats);
+}
+
 module.exports.validateUser = validateUser;
 module.exports.validateRoutine = validateRoutine;
 module.exports.validateExercise = validateExercise;
 module.exports.validateRoutineExercise = validateRoutineExercise;
+module.exports.validateStats = validateStats;

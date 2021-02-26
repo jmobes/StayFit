@@ -22,7 +22,6 @@ const Inputs = (props) => {
         type="text"
         className="log__exercise__data__row__item"
       />
-      {/* <button className="log__exercise__data__row__remove">X</button> */}
     </div>
   );
 };
