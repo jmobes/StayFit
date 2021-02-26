@@ -64,6 +64,7 @@
   text-transform: uppercase;
   color: #fff;
   background-color: #27e77f;
+  cursor: pointer;
 }
 .error {
   border: 2px solid red;

@@ -19,6 +19,7 @@
 .login__guest--text {
   color: #27e77f;
   text-transform: uppercase;
+  cursor: pointer;
 }
 .link__signup {
   color: rgba(255, 255, 255, 0.5);
@@ -30,4 +31,5 @@
 .link__signup--text {
   color: #27e77f;
   text-transform: uppercase;
+  cursor: pointer;
 }
