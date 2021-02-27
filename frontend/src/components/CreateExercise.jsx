@@ -5,8 +5,11 @@ const CreateExercise = (props) => {
   const [name, setName] = useState("");
 
   const addExerciseToList = () => {
-    if (!name || name.length < 3) return;
+    const user = JSON.parse(localStorage.getItem("user"));
+    const userId = user.userId.toString();
+    if (!name || name.length < 3 || !userId) return;
     const exercise = {
+      user_id: userId,
       name: name,
     };
     const options = {
