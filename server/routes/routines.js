@@ -13,31 +13,52 @@ router.get("/", async (req, res, next) => {
   }
 });
 
+router.get("/null-date/:id", async (req, res, next) => {
+  const user_id = Number(req.params.id);
+  if (isNaN(user_id)) {
+    return next(new HttpError("Invalid user id", 400));
+  }
+
+  try {
+    const user = await db.query("SELECT * FROM users WHERE user_id = $1", [
+      user_id,
+    ]);
+    if (user.rowCount < 1) {
+      return next(new HttpError("User does not exist", 404));
+    }
+
+    const unfinishedRoutines = await db.query(
+      "SELECT * FROM routines WHERE user_id = $1 AND date_end IS NULL",
+      [user_id]
+    );
+
+    res.status(200).json(unfinishedRoutines.rows);
+  } catch (err) {
+    return next(new HttpError());
+  }
+});
+
 router.post("/", async (req, res, next) => {
   const { error } = validateRoutine(req.body);
   if (error) {
     return next(new HttpError(error.details[0].message, 400));
   }
 
-  const { userId } = req.body;
-  if (!Number(userId)) {
-    return next(new HttpError("Please enter a valid userId", 400));
+  const { user_id } = req.body;
+  if (!Number(user_id)) {
+    return next(new HttpError("Please enter a valid user id", 400));
   }
   try {
     const user = await db.query("SELECT * FROM users WHERE user_id = $1", [
-      userId,
+      user_id,
     ]);
     if (user.rowCount < 1) {
       return next(new HttpError("Could not find user in database", 404));
     }
-  } catch (ex) {
-    return next(new HttpError());
-  }
 
-  try {
     const routine = await db.query(
       "INSERT INTO routines (user_id) VALUES ($1) RETURNING *",
-      [userId]
+      [user_id]
     );
     res.status(201).json(routine.rows[0]);
   } catch (ex) {

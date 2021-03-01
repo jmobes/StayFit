@@ -12,7 +12,7 @@ function validateUser(user) {
 
 function validateRoutine(routine) {
   const schema = Joi.object({
-    userId: Joi.string().required(),
+    user_id: Joi.string().required(),
   });
 
   return schema.validate(routine);
@@ -20,6 +20,7 @@ function validateRoutine(routine) {
 
 function validateExercise(exercise) {
   const schema = Joi.object({
+    user_id: Joi.string().required(),
     name: Joi.string().min(3).max(30).required(),
   });
 
@@ -47,8 +48,18 @@ function validateStats(stats) {
   return schema.validate(stats);
 }
 
+function validateUserExercise(exercise) {
+  const schema = Joi.object({
+    user_id: Joi.string().required(),
+    exercise_id: Joi.string().required(),
+  });
+
+  return schema.validate(exercise);
+}
+
 module.exports.validateUser = validateUser;
 module.exports.validateRoutine = validateRoutine;
 module.exports.validateExercise = validateExercise;
 module.exports.validateRoutineExercise = validateRoutineExercise;
 module.exports.validateStats = validateStats;
+module.exports.validateUserExercise = validateUserExercise;

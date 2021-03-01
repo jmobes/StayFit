@@ -4,9 +4,30 @@ const HttpError = require("../models/Http-Error");
 const { validateRoutineExercise } = require("../validation/validate");
 const router = express.Router();
 
-router.get("/", async (req, res, next) => {
+router.get("/:userId/:exerciseId", async (req, res, next) => {
+  const userId = Number(req.params.userId);
+  const exerciseId = Number(req.params.exerciseId);
+  if (isNaN(userId) || isNaN(exerciseId)) {
+    return next(new HttpError("Invalid user or exercise id", 400));
+  }
   try {
-    const routine_exercises = await db.query("SELECT * FROM routine_exercises");
+    const user = await db.query("SELECT * FROM users WHERE user_id = $1", [
+      userId,
+    ]);
+    if (user.rows < 1) {
+      return next(new HttpError("Could not find user", 404));
+    }
+    const exercise = await db.query(
+      "SELECT * FROM exercises WHERE exercise_id = $1",
+      [exerciseId]
+    );
+    if (exercise.rows < 1) {
+      return next(new HttpError("Could not find exercise", 404));
+    }
+    const routine_exercises = await db.query(
+      "SELECT * FROM routine_exercises WHERE user_id = $1 AND exercise_id = $2",
+      [userId, exerciseId]
+    );
     res.status(200).json(routine_exercises.rows);
   } catch (ex) {
     return next(new HttpError());

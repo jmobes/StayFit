@@ -15,7 +15,8 @@ const ExerciseList = (props) => {
       return;
     }
     const token = user.token;
-    fetch("http://localhost:5000/api/exercises", {
+    const user_id = user.userId;
+    fetch(`http://localhost:5000/api/exercises/${user_id}`, {
       headers: {
         Authorization: token,
       },

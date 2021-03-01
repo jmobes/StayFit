@@ -17,7 +17,7 @@ const LogExercise = (props) => {
     }
     const userId = user.userId;
     setExerciseId(props.exercise.exercise_id);
-    setUserId(user.userId);
+    setUserId(userId);
   }, []);
 
   const handleChange = (e) => {
@@ -36,7 +36,6 @@ const LogExercise = (props) => {
       stats.map((object) => {
         const valuesArray = Object.values(object);
         valuesArray.forEach((value, index) => {
-          console.log(`index ${index}: Value ${value}`);
           if (!value) {
             throw new Error("Please fill out all fields");
           }
@@ -57,12 +56,84 @@ const LogExercise = (props) => {
         };
         fetch("http://localhost:5000/api/stats", options)
           .then((res) => res.json())
-          .then((data) => console.log(data))
+          .then((data) => console.log("Added sets:", data))
           .catch((err) => setError(err.message));
       });
+      setError(null);
+      return new Promise((resolve, reject) => {
+        resolve("SUCCESS");
+      });
     } catch (e) {
-      console.error(e.message);
-      setError(e.message);
+      return new Promise((resolve, reject) => {
+        reject(e.message);
+      });
+    }
+  };
+
+  const startRoutine = async () => {
+    if (!userId) return;
+
+    console.log("Finding incomplete routines");
+    try {
+      const result = await fetch(
+        `http://localhost:5000/api/routines/null-date/${userId}`
+      );
+      const unfinished = await result.json();
+      console.log("incomplete routine found:", unfinished);
+      if (unfinished.length > 0) {
+        console.log("Resuming routine...");
+        return new Promise((resolve, reject) => {
+          resolve(unfinished[0].routine_id);
+        });
+      }
+      console.log("No incomplete routines found");
+      const options = {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          user_id: userId.toString(),
+        }),
+      };
+      const routineResult = await fetch(
+        `http://localhost:5000/api/routines`,
+        options
+      );
+      const routine = await routineResult.json();
+      console.log(routine);
+      console.log("Creating new routine...");
+      return new Promise((resolve, reject) => {
+        resolve(routine.routine_id);
+      });
+    } catch (err) {
+      setError(err.message);
+    }
+  };
+
+  const addExerciseToRoutine = async (routine_id) => {
+    console.log(userId);
+    if (!userId) return;
+
+    try {
+      const routineId = routine_id;
+      if (!routineId || !exerciseId) return;
+      const options = {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          routine_id: routineId.toString(),
+          exercise_id: exerciseId.toString(),
+        }),
+      };
+      const result = await fetch(
+        `http://localhost:5000/api/routine-exercises`,
+        options
+      );
+      const routine_exercise = await result.json();
+      console.log("Routine-exercise created");
+      console.log("Routine-Exercise: ", routine_exercise);
+    } catch (err) {
+      console.error(err);
+      setError(err.message);
     }
   };
 
@@ -119,9 +190,16 @@ const LogExercise = (props) => {
         className="add__set__button"
       />
       <button
-        onClick={() => {
-          addSets();
-          error && props.hideLogExercise();
+        onClick={async () => {
+          try {
+            const result = await addSets();
+            console.log("RESULT:", result);
+            const routineId = await startRoutine();
+            addExerciseToRoutine(routineId);
+            props.hideLogExercise();
+          } catch (err) {
+            setError(err);
+          }
         }}
         className="log__exercise__button"
       >

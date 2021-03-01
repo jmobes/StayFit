@@ -4,10 +4,29 @@ const HttpError = require("../models/Http-Error");
 const { validateExercise } = require("../validation/validate");
 const router = express.Router();
 
+router.get("/:id", async (req, res, next) => {
+  const userId = Number(req.params.id);
+  if (isNaN(userId)) {
+    return next(new HttpError("Invalid user id"));
+  }
+  try {
+    const rootExercises = await db.query(
+      "SELECT * FROM exercises WHERE user_id = $1 ORDER BY name",
+      [1]
+    );
+    const userExercises = await db.query(
+      "SELECT * FROM exercises WHERE user_id = $1 ORDER BY name",
+      [userId]
+    );
+    res.status(200).json([...userExercises.rows, ...rootExercises.rows]);
+  } catch (ex) {
+    return next(new HttpError());
+  }
+});
+
 router.get("/", async (req, res, next) => {
   try {
-    const exercises = await db.query("SELECT * FROM exercises ORDER BY name");
-    res.status(200).json(exercises.rows);
+    const exercises = await db.query();
   } catch (ex) {
     return next(new HttpError());
   }
@@ -20,16 +39,16 @@ router.post("/", async (req, res, next) => {
   }
 
   try {
-    const duplicate = await db.query(
-      "SELECT * FROM exercises where name = $1",
-      [req.body.name.toLowerCase()]
-    );
-    if (duplicate.rowCount > 0) {
-      return next(new HttpError("Exercise already exists", 400));
+    const user = await db.query("SELECT * FROM users WHERE user_id = $1", [
+      req.body.user_id,
+    ]);
+    if (user.rowCount < 1) {
+      return next(new HttpError("Could not find user", 404));
     }
+
     const exercise = await db.query(
-      "INSERT INTO exercises (name) VALUES ($1) RETURNING *",
-      [req.body.name.toLowerCase()]
+      "INSERT INTO exercises (user_id, name) VALUES ($1, $2) RETURNING *",
+      [req.body.user_id, req.body.name.toLowerCase()]
     );
     res.status(201).json(exercise.rows[0]);
   } catch (ex) {
