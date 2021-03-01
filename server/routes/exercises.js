@@ -12,7 +12,7 @@ router.get("/:id", async (req, res, next) => {
   try {
     const rootExercises = await db.query(
       "SELECT * FROM exercises WHERE user_id = $1 ORDER BY name",
-      [2]
+      [1]
     );
     const userExercises = await db.query(
       "SELECT * FROM exercises WHERE user_id = $1 ORDER BY name",
@@ -45,13 +45,7 @@ router.post("/", async (req, res, next) => {
     if (user.rowCount < 1) {
       return next(new HttpError("Could not find user", 404));
     }
-    const duplicate = await db.query(
-      "SELECT * FROM exercises WHERE name = $1",
-      [req.body.name.toLowerCase()]
-    );
-    if (duplicate.rowCount > 0) {
-      return next(new HttpError("Exercise already exists", 400));
-    }
+
     const exercise = await db.query(
       "INSERT INTO exercises (user_id, name) VALUES ($1, $2) RETURNING *",
       [req.body.user_id, req.body.name.toLowerCase()]

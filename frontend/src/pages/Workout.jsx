@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./Workout.css";
 
 import HeaderButton from "../components/HeaderButton";
@@ -13,6 +13,9 @@ const Workout = (props) => {
   const [createExercise, setCreateExercise] = useState(false);
   const [logExercise, setLogExercise] = useState(false);
   const [exercise, setExercise] = useState(null);
+  const [loggedCount, setLoggedCount] = useState(0);
+
+  useEffect(() => {});
 
   const showAddExercise = () => {
     setCreateExercise(true);
@@ -42,7 +45,12 @@ const Workout = (props) => {
     );
   } else if (logExercise) {
     view = (
-      <LogExercise hideLogExercise={hideLogExercise} exercise={exercise} />
+      <LogExercise
+        hideLogExercise={hideLogExercise}
+        exercise={exercise}
+        loggedCount={loggedCount}
+        updateLoggedCount={() => setLoggedCount(loggedCount + 1)}
+      />
     );
   } else {
     view = (

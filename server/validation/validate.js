@@ -12,7 +12,7 @@ function validateUser(user) {
 
 function validateRoutine(routine) {
   const schema = Joi.object({
-    userId: Joi.string().required(),
+    user_id: Joi.string().required(),
   });
 
   return schema.validate(routine);

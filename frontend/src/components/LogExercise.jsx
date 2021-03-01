@@ -17,7 +17,7 @@ const LogExercise = (props) => {
     }
     const userId = user.userId;
     setExerciseId(props.exercise.exercise_id);
-    setUserId(user.userId);
+    setUserId(userId);
   }, []);
 
   const handleChange = (e) => {
@@ -57,12 +57,49 @@ const LogExercise = (props) => {
         };
         fetch("http://localhost:5000/api/stats", options)
           .then((res) => res.json())
-          .then((data) => console.log(data))
+          .then((data) => props.hideLogExercise())
           .catch((err) => setError(err.message));
       });
     } catch (e) {
       console.error(e.message);
       setError(e.message);
+    }
+  };
+
+  const startRoutine = async () => {
+    if (!userId) {
+      return;
+    }
+
+    console.log("USER ID is: ", userId);
+    console.log("Checking if user has unfinished routine...");
+    try {
+      const result = await fetch(
+        `http://localhost:5000/api/routines/null-date/${userId}`
+      );
+      const unfinished = await result.json();
+      console.log("Unfinished routines:", unfinished);
+      if (unfinished.length > 0) {
+        return;
+      }
+    } catch (err) {
+      console.error(err);
+    }
+    console.log("Starting a routine");
+    const options = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        user_id: userId.toString(),
+      }),
+    };
+    try {
+      const result = await fetch(`http://localhost:5000/api/routines`, options);
+      const routine = await result.json();
+      props.updateLoggedCount();
+      console.log(routine);
+    } catch (err) {
+      console.error(err.message);
     }
   };
 
@@ -122,6 +159,7 @@ const LogExercise = (props) => {
         onClick={() => {
           addSets();
           error && props.hideLogExercise();
+          !error && startRoutine();
         }}
         className="log__exercise__button"
       >
