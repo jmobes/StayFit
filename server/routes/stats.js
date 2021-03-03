@@ -31,12 +31,12 @@ router.post("/", async (req, res, next) => {
     return next(new HttpError(error.details[0].message), 400);
   }
 
-  const { set, reps, weight, exercise_id, user_id } = req.body;
+  const { set, reps, weight, routine_exercise_id, user_id } = req.body;
   try {
     const stats = await db.query(
-      `INSERT INTO stats (set, reps, weight, exercise_id, user_id)
+      `INSERT INTO stats (set, reps, weight, routine_exercise_id, user_id)
       VALUES ($1, $2, $3, $4, $5) RETURNING *`,
-      [set, reps, weight, exercise_id, user_id]
+      [set, reps, weight, routine_exercise_id, user_id]
     );
     res.status(201).json(stats.rows[0]);
   } catch (ex) {

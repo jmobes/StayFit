@@ -4,6 +4,22 @@ const HttpError = require("../models/Http-Error");
 const { validateRoutineExercise } = require("../validation/validate");
 const router = express.Router();
 
+router.get("/:routineId", async (req, res, next) => {
+  const routineId = Number(req.params.routineId);
+  if (isNaN(routineId)) {
+    return next(new HttpError("Invalid routine ID", 400));
+  }
+  try {
+    const routine_exercises = await db.query(
+      `SELECT * FROM routine_exercises WHERE routine_id = $1`,
+      [routineId]
+    );
+    res.status(200).json(routine_exercises);
+  } catch (err) {
+    return next(new HttpError(err.message));
+  }
+});
+
 router.get("/:userId/:exerciseId", async (req, res, next) => {
   const userId = Number(req.params.userId);
   const exerciseId = Number(req.params.exerciseId);
