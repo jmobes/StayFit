@@ -39,7 +39,6 @@ CREATE TABLE "routine_exercises" (
 
 CREATE TABLE "stats" (
     "stats_id" SERIAL   NOT NULL,
-    "set" int   NOT NULL,
     "reps" int   NOT NULL,
     "weight" real   NOT NULL,
     "routine_exercise_id" int   NOT NULL,

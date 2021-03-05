@@ -58,7 +58,7 @@ router.post("/", async (req, res, next) => {
 
   const { routine_id, exercise_id } = req.body;
   if (!Number(routine_id) || !Number(exercise_id)) {
-    return next(new HttpError("Please json a valid routine or exercise ID"));
+    return next(new HttpError("Please enter a valid routine or exercise ID"));
   }
   try {
     const routine = await db.query(

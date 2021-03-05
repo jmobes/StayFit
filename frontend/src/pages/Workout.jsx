@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "./Workout.css";
 
 import HeaderButton from "../components/HeaderButton";
@@ -13,8 +13,10 @@ const Workout = (props) => {
   const [createExercise, setCreateExercise] = useState(false);
   const [logExercise, setLogExercise] = useState(false);
   const [exercise, setExercise] = useState(null);
-  const [routineStarted, setRoutineStarted] = useState(false);
-  const [exercises, setExercises] = useState();
+  const [routine, setRoutine] = useState();
+  const [exerciseName, setExerciseName] = useState([]);
+
+  const parent = useRef();
 
   useEffect(async () => {
     const user = JSON.parse(localStorage.getItem("user"));
@@ -32,18 +34,16 @@ const Workout = (props) => {
         return;
       }
       const routineId = unfinished[0].routine_id;
-      console.log("routine_id:", routineId);
-      console.log("user_id:", userId);
       const res = await fetch(
-        `http://localhost:5000/api/routine-exercises/${routineId}`
+        `http://localhost:5000/api/routine-data/${userId}/${routineId}`
       );
-      const exercises = await res.json();
-      console.log(exercises.rows);
-      setExercises(exercises.rows);
+      const routineInfo = await res.json();
+      console.log(routineInfo);
+      setRoutine(routineInfo);
     } catch (err) {
       console.error(err.message);
     }
-  }, []);
+  }, [displayExercises, createExercise, logExercise]);
 
   const showAddExercise = () => {
     setCreateExercise(true);
@@ -86,7 +86,43 @@ const Workout = (props) => {
           <AddIcon className="workout__select__icon" style={{ fontSize: 30 }} />
         </div>
         <div className="workout__data">
-          {routineStarted && "No exercise data"}
+          {routine &&
+            routine.map((current, index, arr) => {
+              const previous = arr[index - 1];
+              const next = arr[index + 1];
+              if (!previous) {
+                parent.current = (
+                  <div className="workout__data__exercise">
+                    <h3 className="workout__data__exercise--name">
+                      {current.name}
+                    </h3>
+                    <p className="workout__data__exercise--item">
+                      {`${current.weight} X ${current.reps}`}
+                    </p>
+                  </div>
+                );
+                return parent.current;
+              } else if (previous.name !== current.name) {
+                parent.current = (
+                  <div className="workout__data__exercise">
+                    <h3 className="workout__data__exercise--name">
+                      {current.name}
+                    </h3>
+                    <p className="workout__data__exercise--item">
+                      {`${current.weight} X ${current.reps}`}
+                    </p>
+                  </div>
+                );
+                return parent.current;
+              } else {
+                console.log(parent);
+                // return (
+                //   <p className="workout__data__exercise--item">
+                //     {`${current.weight} X ${current.reps}`}
+                //   </p>
+                // );
+              }
+            })}
         </div>
       </React.Fragment>
     );
