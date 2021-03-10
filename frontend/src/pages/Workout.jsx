@@ -86,47 +86,44 @@ const Workout = (props) => {
           <AddIcon className="workout__select__icon" style={{ fontSize: 30 }} />
         </div>
         <div className="workout__data">
-          <div className="workout__data__exercise">
-            {routine &&
-              routine.map((current, index, arr) => {
-                const previous = arr[index - 1];
-                const next = arr[index + 1];
-                return (
-                  <React.Fragment>
-                    {!previous || previous.name !== current.name ? (
-                      <React.Fragment>
-                        <p className="workout__data__exercise--name">
-                          {current.name}
-                        </p>
-                        <p className="workout__data__exercise--item">
-                          {`${current.weight} X ${current.reps}`}
-                        </p>
-                      </React.Fragment>
-                    ) : (
-                      <p className="workout__data__exercise--item">
-                        {`${current.weight} X ${current.reps}`}
-                      </p>
-                    )}
-                  </React.Fragment>
-                );
-                // return (
-                //     {!previous || previous.name !== current.name ? (
-                //       <React.Fragment>
-                // <p className="workout__data__exercise--name">
-                //   {current.name}
-                // </p>
-                // <p className="workout__data__exercise--item">
-                //   {`${current.weight} X ${current.reps}`}
-                // </p>
-                //       </React.Fragment>
-                //     ) : (
-                // <p className="workout__data__exercise--item">
-                //   {`${current.weight} X ${current.reps}`}
-                // </p>
-                //     )}
-                // );
-              })}
-          </div>
+          {routine &&
+            routine.map((current, index, arr) => {
+              const previous = arr[index - 1];
+              const next = arr[index + 1];
+              return (
+                <React.Fragment key={index} className="workout__data__item">
+                  {!previous || previous.name !== current.name ? (
+                    <React.Fragment>
+                      <p className="workout__data--name">{current.name}</p>
+                      <p
+                        style={{
+                          marginBottom: `${
+                            next && next.name === current.name ? "" : "1rem"
+                          }`,
+                        }}
+                        className="workout__data--stats"
+                      >{`${current.weight} X ${current.reps} ${
+                        next && next.name === current.name ? "|" : ""
+                      }`}</p>
+                    </React.Fragment>
+                  ) : (
+                    <p
+                      style={{
+                        marginBottom: `${
+                          next && next.name === current.name ? "" : "1rem"
+                        }`,
+                        marginLeft: "1rem",
+                      }}
+                      className="workout__data--stats"
+                    >
+                      {`${current.weight} X ${current.reps} ${
+                        next && next.name === current.name ? "|" : ""
+                      }`}
+                    </p>
+                  )}
+                </React.Fragment>
+              );
+            })}
         </div>
       </React.Fragment>
     );

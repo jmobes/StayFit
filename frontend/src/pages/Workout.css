@@ -46,3 +46,6 @@
   text-transform: capitalize;
   padding: 1rem;
 }
+.workout__data--stats {
+  display: inline-block;
+}
