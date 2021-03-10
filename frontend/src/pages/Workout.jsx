@@ -15,8 +15,7 @@ const Workout = (props) => {
   const [exercise, setExercise] = useState(null);
   const [routine, setRoutine] = useState();
   const [exerciseName, setExerciseName] = useState([]);
-
-  const parent = useRef();
+  const [routineId, setRoutineId] = useState();
 
   useEffect(async () => {
     const user = JSON.parse(localStorage.getItem("user"));
@@ -34,6 +33,7 @@ const Workout = (props) => {
         return;
       }
       const routineId = unfinished[0].routine_id;
+      setRoutineId(routineId);
       const res = await fetch(
         `http://localhost:5000/api/routine-data/${userId}/${routineId}`
       );
@@ -86,43 +86,47 @@ const Workout = (props) => {
           <AddIcon className="workout__select__icon" style={{ fontSize: 30 }} />
         </div>
         <div className="workout__data">
-          {routine &&
-            routine.map((current, index, arr) => {
-              const previous = arr[index - 1];
-              const next = arr[index + 1];
-              if (!previous) {
-                parent.current = (
-                  <div className="workout__data__exercise">
-                    <h3 className="workout__data__exercise--name">
-                      {current.name}
-                    </h3>
-                    <p className="workout__data__exercise--item">
-                      {`${current.weight} X ${current.reps}`}
-                    </p>
-                  </div>
+          <div className="workout__data__exercise">
+            {routine &&
+              routine.map((current, index, arr) => {
+                const previous = arr[index - 1];
+                const next = arr[index + 1];
+                return (
+                  <React.Fragment>
+                    {!previous || previous.name !== current.name ? (
+                      <React.Fragment>
+                        <p className="workout__data__exercise--name">
+                          {current.name}
+                        </p>
+                        <p className="workout__data__exercise--item">
+                          {`${current.weight} X ${current.reps}`}
+                        </p>
+                      </React.Fragment>
+                    ) : (
+                      <p className="workout__data__exercise--item">
+                        {`${current.weight} X ${current.reps}`}
+                      </p>
+                    )}
+                  </React.Fragment>
                 );
-                return parent.current;
-              } else if (previous.name !== current.name) {
-                parent.current = (
-                  <div className="workout__data__exercise">
-                    <h3 className="workout__data__exercise--name">
-                      {current.name}
-                    </h3>
-                    <p className="workout__data__exercise--item">
-                      {`${current.weight} X ${current.reps}`}
-                    </p>
-                  </div>
-                );
-                return parent.current;
-              } else {
-                console.log(parent);
                 // return (
-                //   <p className="workout__data__exercise--item">
-                //     {`${current.weight} X ${current.reps}`}
-                //   </p>
+                //     {!previous || previous.name !== current.name ? (
+                //       <React.Fragment>
+                // <p className="workout__data__exercise--name">
+                //   {current.name}
+                // </p>
+                // <p className="workout__data__exercise--item">
+                //   {`${current.weight} X ${current.reps}`}
+                // </p>
+                //       </React.Fragment>
+                //     ) : (
+                // <p className="workout__data__exercise--item">
+                //   {`${current.weight} X ${current.reps}`}
+                // </p>
+                //     )}
                 // );
-              }
-            })}
+              })}
+          </div>
         </div>
       </React.Fragment>
     );

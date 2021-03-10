@@ -72,7 +72,7 @@ router.delete("/:id", async (req, res, next) => {
     }
     res.status(200).json(exercise.rows[0]);
   } catch (ex) {
-    return next(new HttpError());
+    return next(new HttpError(ex.message));
   }
 });
 

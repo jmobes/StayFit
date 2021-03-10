@@ -9,3 +9,20 @@ ON e.exercise_id = re.exercise_id
 JOIN routines r
 ON u.user_id = r.user_id
 WHERE u.user_id = 2 AND r.routine_id = 1;
+
+SELECT e.name, r.routine_id, r.user_id
+FROM exercises e
+JOIN routine_exercises re
+ON e.exercise_id = re.exercise_id
+JOIN routines r
+ON r.routine_id = re.routine_id;
+
+SELECT e.name, r.routine_id, r.user_id
+FROM exercises e
+JOIN routine_exercises re
+ON e.exercise_id = re.exercise_id
+JOIN routines r
+ON r.routine_id = re.routine_id
+WHERE r.routine_id != 1;
+
+DELETE

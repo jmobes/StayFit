@@ -33,7 +33,7 @@ const ExerciseList = (props) => {
         "Content-Type": "application/json",
       },
     };
-    fetch(`http://localhost:5000/api/exercises/${id}`, options)
+    fetch(`http://localhost:5000/api/routine-data/${id}`, options)
       .then((result) => result.json())
       .then((deleted) =>
         setExercises(
