@@ -38,10 +38,9 @@ function validateRoutineExercise(routine_exercise) {
 
 function validateStats(stats) {
   const schema = Joi.object({
-    set: Joi.number().required(),
     reps: Joi.number().required(),
     weight: Joi.number().required(),
-    exercise_id: Joi.string().required(),
+    routine_exercise_id: Joi.string().required(),
     user_id: Joi.string().required(),
   });
 

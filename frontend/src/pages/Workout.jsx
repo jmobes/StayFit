@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "./Workout.css";
 
 import HeaderButton from "../components/HeaderButton";
@@ -7,40 +7,44 @@ import AddIcon from "@material-ui/icons/Add";
 import ExerciseList from "../components/ExerciseList";
 import CreateExercise from "../components/CreateExercise";
 import LogExercise from "../components/LogExercise";
+import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
 
 const Workout = (props) => {
   const [displayExercises, setDisplayExercises] = useState(false);
   const [createExercise, setCreateExercise] = useState(false);
   const [logExercise, setLogExercise] = useState(false);
   const [exercise, setExercise] = useState(null);
-  const [routineStarted, setRoutineStarted] = useState(false);
-  const [exercises, setExercises] = useState();
+  const [routine, setRoutine] = useState();
+  const [exerciseName, setExerciseName] = useState([]);
+  const [routineId, setRoutineId] = useState();
 
-  // useEffect(async () => {
-  //   const user = JSON.parse(localStorage.getItem("user"));
-  //   if (!user) {
-  //     return;
-  //   }
-  //   const userId = user.userId;
-  //   try {
-  //     const result = await fetch(
-  //       `http://localhost:5000/api/routines/null-date/${userId}`
-  //     );
-  //     const unfinished = await result.json();
-  //     console.log("Unfinished routines:", unfinished);
-  //     if (unfinished.length < 1) {
-  //       return;
-  //     }
-  //     const routineId = unfinished[0].routine_id;
-  //     const res = await fetch(
-  //       `http://localhost:5000/api/routine-exercises/${userId}/${routineId}`
-  //     );
-  //     const exercises = await res.json();
-  //     setExercises(exercises);
-  //   } catch (err) {
-  //     console.error(err.message);
-  //   }
-  // });
+  useEffect(async () => {
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (!user) {
+      return;
+    }
+    const userId = user.userId;
+    try {
+      const result = await fetch(
+        `http://localhost:5000/api/routines/null-date/${userId}`
+      );
+      const unfinished = await result.json();
+      console.log("Unfinished routines:", unfinished);
+      if (unfinished.length < 1) {
+        return;
+      }
+      const routineId = unfinished[0].routine_id;
+      setRoutineId(routineId);
+      const res = await fetch(
+        `http://localhost:5000/api/routine-data/${userId}/${routineId}`
+      );
+      const routineInfo = await res.json();
+      console.log(routineInfo);
+      setRoutine(routineInfo);
+    } catch (err) {
+      console.error(err.message);
+    }
+  }, [displayExercises, createExercise, logExercise]);
 
   const showAddExercise = () => {
     setCreateExercise(true);
@@ -83,7 +87,74 @@ const Workout = (props) => {
           <AddIcon className="workout__select__icon" style={{ fontSize: 30 }} />
         </div>
         <div className="workout__data">
-          {routineStarted && "No exercise data"}
+          <div className="workout__data__ctn">
+            {routine &&
+              routine.map((current, index, arr) => {
+                const previous = arr[index - 1];
+                const next = arr[index + 1];
+                if (!previous || previous.name !== current.name) {
+                  return (
+                    <div key={index} className="workout__data__exercise">
+                      <p className="workout__data__exercise__name">
+                        {current.name}
+                      </p>
+                      <DeleteOutlineIcon
+                        style={{ fontSize: 35 }}
+                        className="workout__data__exercise__delete"
+                      />
+                    </div>
+                  );
+                } else {
+                  return null;
+                }
+                // return (
+                //   <div className="workout__data__exercise">
+                //     {!previous || previous.name !== current.name ? (
+                //       <React.Fragment>
+                //         <p className="workout__data__exercise__name">
+                //           {current.name}
+                //         </p>
+                //         <DeleteIcon />
+                //       </React.Fragment>
+                //     ) : (
+                //       null
+                //     )}
+                //   </div>
+                // <React.Fragment key={index}>
+                //   {!previous || previous.name !== current.name ? (
+                //     <React.Fragment>
+                //       <p className="workout__data--name">{current.name}</p>
+                //       <p
+                //         style={{
+                //           marginBottom: `${
+                //             next && next.name === current.name ? "" : "1rem"
+                //           }`,
+                //         }}
+                //         className="workout__data--set"
+                //       >{`${current.weight} X ${current.reps} ${
+                //         next && next.name === current.name ? "|" : ""
+                //       }`}</p>
+                //     </React.Fragment>
+                //   ) : (
+                //     <p
+                //       style={{
+                //         marginBottom: `${
+                //           next && next.name === current.name ? "" : "1rem"
+                //         }`,
+                //         marginLeft: ".5rem",
+                //       }}
+                //       className="workout__data--set"
+                //     >
+                //       {`${current.weight} X ${current.reps} ${
+                //         next && next.name === current.name ? "|" : ""
+                //       }`}
+                //     </p>
+                //   )}
+                // </React.Fragment>
+                // );
+              })}
+          </div>
+          {routine && <button className="log__workout">Log Workout</button>}
         </div>
       </React.Fragment>
     );

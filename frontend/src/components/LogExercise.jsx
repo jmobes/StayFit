@@ -31,26 +31,18 @@ const LogExercise = (props) => {
     }
   };
 
-  const addSets = () => {
+  const addSets = (routine_exercise_id) => {
+    console.log("ROUTINE-EXERCISE-ID: ", routine_exercise_id);
     try {
-      stats.map((object) => {
-        const valuesArray = Object.values(object);
-        valuesArray.forEach((value, index) => {
-          if (!value) {
-            throw new Error("Please fill out all fields");
-          }
-        });
-      });
-
       stats.map((setData) => {
         const options = {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            set: setData.set,
+            // set: setData.set,
             reps: setData.reps,
             weight: setData.weight,
-            exercise_id: exerciseId.toString(),
+            routine_exercise_id: routine_exercise_id.toString(),
             user_id: userId.toString(),
           }),
         };
@@ -60,13 +52,8 @@ const LogExercise = (props) => {
           .catch((err) => setError(err.message));
       });
       setError(null);
-      return new Promise((resolve, reject) => {
-        resolve("SUCCESS");
-      });
     } catch (e) {
-      return new Promise((resolve, reject) => {
-        reject(e.message);
-      });
+      console.error(e.message);
     }
   };
 
@@ -131,6 +118,9 @@ const LogExercise = (props) => {
       const routine_exercise = await result.json();
       console.log("Routine-exercise created");
       console.log("Routine-Exercise: ", routine_exercise);
+      return new Promise((resolve, reject) => {
+        resolve(routine_exercise.routine_exercise_id);
+      });
     } catch (err) {
       console.error(err);
       setError(err.message);
@@ -192,13 +182,21 @@ const LogExercise = (props) => {
       <button
         onClick={async () => {
           try {
-            const result = await addSets();
-            console.log("RESULT:", result);
+            stats.map((object) => {
+              const valuesArray = Object.values(object);
+              valuesArray.forEach((value, index) => {
+                if (!value) {
+                  throw new Error("Please fill out all fields");
+                }
+              });
+            });
             const routineId = await startRoutine();
-            addExerciseToRoutine(routineId);
+            const routine_exercise_id = await addExerciseToRoutine(routineId);
+            addSets(routine_exercise_id);
             props.hideLogExercise();
           } catch (err) {
-            setError(err);
+            console.error(err.message);
+            setError(err.message);
           }
         }}
         className="log__exercise__button"

@@ -10,23 +10,42 @@ router.get("/:id", async (req, res, next) => {
     return next(new HttpError("Invalid user id"));
   }
   try {
+    const alreadyLogged = await db.query(
+      `
+    SELECT DISTINCT e.name, e.user_id, e.name
+    FROM users u
+    JOIN routines r ON u.user_id = r.user_id
+    JOIN routine_exercises re ON r.routine_id = re.routine_id
+    JOIN exercises e ON e.exercise_id = re.exercise_id
+    JOIN stats s ON s.routine_exercise_id = re.routine_exercise_id
+    WHERE u.user_id = $1 AND r.date_end IS NULL
+    ORDER BY e.name
+    `,
+      [userId]
+    );
+
     const rootExercises = await db.query(
       "SELECT * FROM exercises WHERE user_id = $1 ORDER BY name",
       [1]
     );
-    const userExercises = await db.query(
+
+    const user_exercises = await db.query(
       "SELECT * FROM exercises WHERE user_id = $1 ORDER BY name",
       [userId]
     );
-    res.status(200).json([...userExercises.rows, ...rootExercises.rows]);
-  } catch (ex) {
-    return next(new HttpError());
-  }
-});
 
-router.get("/", async (req, res, next) => {
-  try {
-    const exercises = await db.query();
+    const exerciseList = [
+      ...user_exercises.rows,
+      ...rootExercises.rows,
+      ...alreadyLogged.rows,
+    ];
+
+    const updatedList = exerciseList.filter(
+      (exercise) =>
+        exerciseList.filter((e) => e.name === exercise.name).length === 1
+    );
+
+    res.status(200).json(updatedList);
   } catch (ex) {
     return next(new HttpError());
   }
@@ -72,7 +91,7 @@ router.delete("/:id", async (req, res, next) => {
     }
     res.status(200).json(exercise.rows[0]);
   } catch (ex) {
-    return next(new HttpError());
+    return next(new HttpError(ex.message));
   }
 });
 

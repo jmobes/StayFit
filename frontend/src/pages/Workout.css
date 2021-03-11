@@ -45,5 +45,29 @@
   font-size: 2rem;
   text-transform: capitalize;
   padding: 1rem;
-  text-align: center;
+}
+.workout__data__ctn {
+  height: 350px;
+  overflow: auto;
+}
+.workout__data__exercise {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 2.5rem;
+}
+.workout__data__exercise__delete {
+  color: #555553;
+}
+.log__workout {
+  background-color: #27e77f;
+  color: #000;
+  font-size: 3rem;
+  padding: 1rem 2rem;
+  border: none;
+  border-radius: 10px;
+  outline: none;
+  width: 100%;
+  text-transform: uppercase;
+  font-weight: 600;
 }
