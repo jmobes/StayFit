@@ -7,6 +7,7 @@ import AddIcon from "@material-ui/icons/Add";
 import ExerciseList from "../components/ExerciseList";
 import CreateExercise from "../components/CreateExercise";
 import LogExercise from "../components/LogExercise";
+import { Button } from "@material-ui/core";
 
 const Workout = (props) => {
   const [displayExercises, setDisplayExercises] = useState(false);
@@ -86,44 +87,47 @@ const Workout = (props) => {
           <AddIcon className="workout__select__icon" style={{ fontSize: 30 }} />
         </div>
         <div className="workout__data">
-          {routine &&
-            routine.map((current, index, arr) => {
-              const previous = arr[index - 1];
-              const next = arr[index + 1];
-              return (
-                <React.Fragment key={index} className="workout__data__item">
-                  {!previous || previous.name !== current.name ? (
-                    <React.Fragment>
-                      <p className="workout__data--name">{current.name}</p>
+          <div className="workout__data__stats">
+            {routine &&
+              routine.map((current, index, arr) => {
+                const previous = arr[index - 1];
+                const next = arr[index + 1];
+                return (
+                  <React.Fragment key={index}>
+                    {!previous || previous.name !== current.name ? (
+                      <React.Fragment>
+                        <p className="workout__data--name">{current.name}</p>
+                        <p
+                          style={{
+                            marginBottom: `${
+                              next && next.name === current.name ? "" : "1rem"
+                            }`,
+                          }}
+                          className="workout__data--set"
+                        >{`${current.weight} X ${current.reps} ${
+                          next && next.name === current.name ? "|" : ""
+                        }`}</p>
+                      </React.Fragment>
+                    ) : (
                       <p
                         style={{
                           marginBottom: `${
                             next && next.name === current.name ? "" : "1rem"
                           }`,
+                          marginLeft: ".5rem",
                         }}
-                        className="workout__data--stats"
-                      >{`${current.weight} X ${current.reps} ${
-                        next && next.name === current.name ? "|" : ""
-                      }`}</p>
-                    </React.Fragment>
-                  ) : (
-                    <p
-                      style={{
-                        marginBottom: `${
-                          next && next.name === current.name ? "" : "1rem"
-                        }`,
-                        marginLeft: "1rem",
-                      }}
-                      className="workout__data--stats"
-                    >
-                      {`${current.weight} X ${current.reps} ${
-                        next && next.name === current.name ? "|" : ""
-                      }`}
-                    </p>
-                  )}
-                </React.Fragment>
-              );
-            })}
+                        className="workout__data--set"
+                      >
+                        {`${current.weight} X ${current.reps} ${
+                          next && next.name === current.name ? "|" : ""
+                        }`}
+                      </p>
+                    )}
+                  </React.Fragment>
+                );
+              })}
+          </div>
+          {routine && <button className="log__workout">Log Workout</button>}
         </div>
       </React.Fragment>
     );

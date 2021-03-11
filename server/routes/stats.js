@@ -45,4 +45,29 @@ router.post("/", async (req, res, next) => {
   }
 });
 
+router.delete("/:id", async (req, res, next) => {
+  const exerciseId = Number(req.params.id);
+  if (isNaN(exerciseId)) return next(new HttpError("Invalid ID", 400));
+
+  const exercise = await db.query(
+    "SELECT * FROM exercises WHERE exercise_id = $1",
+    [exerciseId]
+  );
+  if (exercise.rowCount < 1)
+    return next(new HttpError("Exercise with the given ID does not exist"));
+
+  const routineExercise = await db.query(
+    "SELECT * FROM routine_exercises WHERE exercise_id = $1",
+    [exerciseId]
+  );
+  if (routineExercise.rowCount < 1)
+    return next(new HttpError("Nothing to delete", 400));
+
+  const stats = await db.query(
+    "SELECT * FROM stats WHERE routine_exercise_id = $1"[
+      routineExercise.rows[0].routine_exercise_id
+    ]
+  );
+});
+
 module.exports = router;
