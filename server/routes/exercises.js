@@ -12,7 +12,7 @@ router.get("/:id", async (req, res, next) => {
   try {
     const alreadyLogged = await db.query(
       `
-    SELECT DISTINCT e.name
+    SELECT DISTINCT e.name, e.user_id, e.name
     FROM users u
     JOIN routines r ON u.user_id = r.user_id
     JOIN routine_exercises re ON r.routine_id = re.routine_id
@@ -25,12 +25,12 @@ router.get("/:id", async (req, res, next) => {
     );
 
     const rootExercises = await db.query(
-      "SELECT name FROM exercises WHERE user_id = $1 ORDER BY name",
+      "SELECT * FROM exercises WHERE user_id = $1 ORDER BY name",
       [1]
     );
 
     const user_exercises = await db.query(
-      "SELECT name FROM exercises WHERE user_id = $1 ORDER BY name",
+      "SELECT * FROM exercises WHERE user_id = $1 ORDER BY name",
       [userId]
     );
 
@@ -46,25 +46,6 @@ router.get("/:id", async (req, res, next) => {
     );
 
     res.status(200).json(updatedList);
-  } catch (ex) {}
-  // try {
-  //   const rootExercises = await db.query(
-  //     "SELECT * FROM exercises WHERE user_id = $1 ORDER BY name",
-  //     [1]
-  //   );
-  //   const userExercises = await db.query(
-  //     "SELECT * FROM exercises WHERE user_id = $1 ORDER BY name",
-  //     [userId]
-  //   );
-  //   res.status(200).json([...userExercises.rows, ...rootExercises.rows]);
-  // } catch (ex) {
-  //   return next(new HttpError());
-  // }
-});
-
-router.get("/", async (req, res, next) => {
-  try {
-    const exercises = await db.query();
   } catch (ex) {
     return next(new HttpError());
   }

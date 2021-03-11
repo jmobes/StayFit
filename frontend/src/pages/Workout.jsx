@@ -7,7 +7,7 @@ import AddIcon from "@material-ui/icons/Add";
 import ExerciseList from "../components/ExerciseList";
 import CreateExercise from "../components/CreateExercise";
 import LogExercise from "../components/LogExercise";
-import { Button } from "@material-ui/core";
+import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
 
 const Workout = (props) => {
   const [displayExercises, setDisplayExercises] = useState(false);
@@ -87,44 +87,71 @@ const Workout = (props) => {
           <AddIcon className="workout__select__icon" style={{ fontSize: 30 }} />
         </div>
         <div className="workout__data">
-          <div className="workout__data__stats">
+          <div className="workout__data__ctn">
             {routine &&
               routine.map((current, index, arr) => {
                 const previous = arr[index - 1];
                 const next = arr[index + 1];
-                return (
-                  <React.Fragment key={index}>
-                    {!previous || previous.name !== current.name ? (
-                      <React.Fragment>
-                        <p className="workout__data--name">{current.name}</p>
-                        <p
-                          style={{
-                            marginBottom: `${
-                              next && next.name === current.name ? "" : "1rem"
-                            }`,
-                          }}
-                          className="workout__data--set"
-                        >{`${current.weight} X ${current.reps} ${
-                          next && next.name === current.name ? "|" : ""
-                        }`}</p>
-                      </React.Fragment>
-                    ) : (
-                      <p
-                        style={{
-                          marginBottom: `${
-                            next && next.name === current.name ? "" : "1rem"
-                          }`,
-                          marginLeft: ".5rem",
-                        }}
-                        className="workout__data--set"
-                      >
-                        {`${current.weight} X ${current.reps} ${
-                          next && next.name === current.name ? "|" : ""
-                        }`}
+                if (!previous || previous.name !== current.name) {
+                  return (
+                    <div key={index} className="workout__data__exercise">
+                      <p className="workout__data__exercise__name">
+                        {current.name}
                       </p>
-                    )}
-                  </React.Fragment>
-                );
+                      <DeleteOutlineIcon
+                        style={{ fontSize: 35 }}
+                        className="workout__data__exercise__delete"
+                      />
+                    </div>
+                  );
+                } else {
+                  return null;
+                }
+                // return (
+                //   <div className="workout__data__exercise">
+                //     {!previous || previous.name !== current.name ? (
+                //       <React.Fragment>
+                //         <p className="workout__data__exercise__name">
+                //           {current.name}
+                //         </p>
+                //         <DeleteIcon />
+                //       </React.Fragment>
+                //     ) : (
+                //       null
+                //     )}
+                //   </div>
+                // <React.Fragment key={index}>
+                //   {!previous || previous.name !== current.name ? (
+                //     <React.Fragment>
+                //       <p className="workout__data--name">{current.name}</p>
+                //       <p
+                //         style={{
+                //           marginBottom: `${
+                //             next && next.name === current.name ? "" : "1rem"
+                //           }`,
+                //         }}
+                //         className="workout__data--set"
+                //       >{`${current.weight} X ${current.reps} ${
+                //         next && next.name === current.name ? "|" : ""
+                //       }`}</p>
+                //     </React.Fragment>
+                //   ) : (
+                //     <p
+                //       style={{
+                //         marginBottom: `${
+                //           next && next.name === current.name ? "" : "1rem"
+                //         }`,
+                //         marginLeft: ".5rem",
+                //       }}
+                //       className="workout__data--set"
+                //     >
+                //       {`${current.weight} X ${current.reps} ${
+                //         next && next.name === current.name ? "|" : ""
+                //       }`}
+                //     </p>
+                //   )}
+                // </React.Fragment>
+                // );
               })}
           </div>
           {routine && <button className="log__workout">Log Workout</button>}
