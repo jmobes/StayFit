@@ -45,29 +45,53 @@ router.post("/", async (req, res, next) => {
   }
 });
 
-router.delete("/:id", async (req, res, next) => {
-  const exerciseId = Number(req.params.id);
-  if (isNaN(exerciseId)) return next(new HttpError("Invalid ID", 400));
+router.delete("/:rid/:eid", async (req, res, next) => {
+  const routineId = Number(req.params.rid);
+  const exerciseId = Number(req.params.eid);
+  if (isNaN(routineId) || isNaN(exerciseId))
+    return next(new HttpError("Invalid ID", 400));
 
-  const exercise = await db.query(
-    "SELECT * FROM exercises WHERE exercise_id = $1",
-    [exerciseId]
-  );
-  if (exercise.rowCount < 1)
-    return next(new HttpError("Exercise with the given ID does not exist"));
+  try {
+    const routine = await db.query(
+      "SELECT * FROM routines WHERE routine_id = $1",
+      [routineId]
+    );
+    if (routine.rowCount < 1)
+      return next(new HttpError("Routine does not exist", 404));
+    console.log("ROUTINE: ", routine.rows);
 
-  const routineExercise = await db.query(
-    "SELECT * FROM routine_exercises WHERE exercise_id = $1",
-    [exerciseId]
-  );
-  if (routineExercise.rowCount < 1)
-    return next(new HttpError("Nothing to delete", 400));
+    const exercise = await db.query(
+      "SELECT * FROM exercises WHERE exercise_id = $1",
+      [exerciseId]
+    );
+    if (exercise.rowCount < 1)
+      return next(new HttpError("Exercise with the given ID does not exist"));
+    console.log("EXERCISE: ", exercise.rows);
 
-  const stats = await db.query(
-    "SELECT * FROM stats WHERE routine_exercise_id = $1"[
-      routineExercise.rows[0].routine_exercise_id
-    ]
-  );
+    const routineExercise = await db.query(
+      "SELECT * FROM routine_exercises WHERE exercise_id = $1 AND routine_id = $2",
+      [exerciseId, routineId]
+    );
+    if (routineExercise.rowCount < 1)
+      return next(new HttpError("Nothing to delete", 400));
+    console.log("ROUTINE EXERCISE: ", routineExercise.rows);
+
+    const stats = await db.query(
+      "DELETE FROM stats WHERE routine_exercise_id = $1 RETURNING *",
+      [routineExercise.rows[0].routine_exercise_id]
+    );
+    console.log("STATS DELETED: ", stats.rows);
+
+    const deleteRoutineExercise = await db.query(
+      "DELETE FROM routine_exercises WHERE exercise_id = $1 AND routine_id = $2 RETURNING *",
+      [exerciseId, routineId]
+    );
+    console.log("ROUTINE EXERCISE DELETED: ", deleteRoutineExercise.rows);
+
+    res.status(200).json(stats.rows);
+  } catch (ex) {
+    return next(new HttpError(ex.message, 500));
+  }
 });
 
 module.exports = router;

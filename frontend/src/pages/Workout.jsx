@@ -15,7 +15,6 @@ const Workout = (props) => {
   const [logExercise, setLogExercise] = useState(false);
   const [exercise, setExercise] = useState(null);
   const [routine, setRoutine] = useState();
-  const [exerciseName, setExerciseName] = useState([]);
   const [routineId, setRoutineId] = useState();
 
   useEffect(async () => {
@@ -39,7 +38,7 @@ const Workout = (props) => {
         `http://localhost:5000/api/routine-data/${userId}/${routineId}`
       );
       const routineInfo = await res.json();
-      console.log(routineInfo);
+      console.log("STATS: ", routineInfo);
       setRoutine(routineInfo);
     } catch (err) {
       console.error(err.message);
@@ -57,6 +56,25 @@ const Workout = (props) => {
   };
   const hideLogExercise = () => {
     setLogExercise(false);
+  };
+
+  const deleteExerciseFromRoutine = async (exerciseId, routineId) => {
+    if (!Number(exerciseId) || !Number(routineId)) return;
+
+    const result = await fetch(
+      `http://localhost:5000/api/stats/${routineId}/${exerciseId}`,
+      {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+      }
+    );
+    const deleted = await result.json();
+    console.log("DELETED STATS: ", deleted);
+    const routineCopy = [...routine];
+    const updatedRoutine = routineCopy.filter(
+      (stats) => stats.routine_exercise_id !== deleted[0].routine_exercise_id
+    );
+    setRoutine(updatedRoutine);
   };
 
   let view;
@@ -89,6 +107,7 @@ const Workout = (props) => {
         <div className="workout__data">
           <div className="workout__data__ctn">
             {routine &&
+              !!routine.length &&
               routine.map((current, index, arr) => {
                 const previous = arr[index - 1];
                 const next = arr[index + 1];
@@ -101,6 +120,12 @@ const Workout = (props) => {
                       <DeleteOutlineIcon
                         style={{ fontSize: 35 }}
                         className="workout__data__exercise__delete"
+                        onClick={() =>
+                          deleteExerciseFromRoutine(
+                            current.exercise_id,
+                            routineId
+                          )
+                        }
                       />
                     </div>
                   );
@@ -154,7 +179,9 @@ const Workout = (props) => {
                 // );
               })}
           </div>
-          {routine && <button className="log__workout">Log Workout</button>}
+          {routine && routine.length ? (
+            <button className="log__workout">Log Workout</button>
+          ) : null}
         </div>
       </React.Fragment>
     );
