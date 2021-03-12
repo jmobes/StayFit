@@ -60,7 +60,7 @@ router.get("/:uid/:rid", async (req, res, next) => {
     }
 
     const routineData = await db.query(
-      `SELECT u.user_name, r.routine_id, r.date_start, r.date_end, re.routine_exercise_id, e.name, s.reps, s.weight
+      `SELECT u.user_name, r.routine_id, r.date_start, r.date_end, re.routine_exercise_id, e.name, e.exercise_id, s.reps, s.weight
        FROM users u
        JOIN stats s
        ON u.user_id = s.user_id

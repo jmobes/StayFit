@@ -60,6 +60,7 @@ router.post("/", async (req, res, next) => {
   if (!Number(routine_id) || !Number(exercise_id)) {
     return next(new HttpError("Please enter a valid routine or exercise ID"));
   }
+
   try {
     const routine = await db.query(
       "SELECT * FROM routines WHERE routine_id = $1",
