@@ -16,6 +16,7 @@ const Workout = (props) => {
   const [exercise, setExercise] = useState(null);
   const [routine, setRoutine] = useState();
   const [routineId, setRoutineId] = useState();
+  const [workoutLogged, setWorkoutLogged] = useState(false);
 
   useEffect(async () => {
     const user = JSON.parse(localStorage.getItem("user"));
@@ -75,6 +76,30 @@ const Workout = (props) => {
       (stats) => stats.routine_exercise_id !== deleted[0].routine_exercise_id
     );
     setRoutine(updatedRoutine);
+  };
+
+  const logWorkout = async () => {
+    if (!routineId) return;
+
+    const options = {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+    };
+    try {
+      const routine = await fetch(
+        `http://localhost:5000/api/routines/${routineId}`,
+        options
+      );
+      const updatedRoutine = await routine.json();
+      setRoutine(null);
+      setRoutineId(null);
+    } catch (ex) {
+      console.error(ex.message);
+    }
+    setWorkoutLogged(true);
+    setTimeout(() => {
+      setWorkoutLogged(false);
+    }, 5000);
   };
 
   let view;
@@ -180,7 +205,9 @@ const Workout = (props) => {
               })}
           </div>
           {routine && routine.length ? (
-            <button className="log__workout">Log Workout</button>
+            <button onClick={logWorkout} className="log__workout">
+              Log Workout
+            </button>
           ) : null}
         </div>
       </React.Fragment>
@@ -200,6 +227,9 @@ const Workout = (props) => {
         />
       </div>
       {view}
+      <div className={`message__modal ${workoutLogged ? "" : "hidden"}`}>
+        <p className="message__text">Workout Logged</p>
+      </div>
     </div>
   );
 };
