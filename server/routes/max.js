@@ -8,10 +8,9 @@ router.get("/:uid", async (req, res, next) => {
   if (isNaN(userId)) return next(new HttpError("Invalid user ID", 400));
 
   try {
-    const user = await db.query(
-      "SELECT * FROM users WHERE user_id = $1",
-      userId
-    );
+    const user = await db.query("SELECT * FROM users WHERE user_id = $1", [
+      userId,
+    ]);
     if (user.rowCount < 1)
       return next(new HttpError("User does not exist", 400));
 
@@ -31,7 +30,7 @@ router.get("/:uid", async (req, res, next) => {
 
     res.status(200).json(maxLifts.rows);
   } catch (ex) {
-    return next(new HttpError());
+    return next(new HttpError(ex.message));
   }
 });
 
