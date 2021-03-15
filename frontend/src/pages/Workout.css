@@ -3,6 +3,7 @@
   flex-direction: column;
   color: #fff;
   height: 100vh;
+  position: relative;
 }
 .workout__header {
   display: flex;
@@ -70,4 +71,21 @@
   width: 100%;
   text-transform: uppercase;
   font-weight: 600;
+}
+
+.message__modal {
+  position: absolute;
+  top: 70%;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 10px;
+  width: 70%;
+  font-size: 2.5rem;
+  text-align: center;
+  color: #27e77f;
+  background-color: #000;
+}
+
+.hidden {
+  display: none;
 }
