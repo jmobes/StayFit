@@ -10,6 +10,7 @@ const exercises = require("./routes/exercises");
 const routine_exercises = require("./routes/routine_exercises");
 const stats = require("./routes/stats");
 const routine_data = require("./routes/routine_data");
+const max = require("./routes/max");
 const app = express();
 
 app.use(express.json());
@@ -35,6 +36,7 @@ app.use("/api/exercises", exercises);
 app.use("/api/routine-exercises", routine_exercises);
 app.use("/api/stats", stats);
 app.use("/api/routine-data", routine_data);
+app.use("/api/max", max);
 
 app.use((req, res, next) => {
   const error = new HttpError("Could not find this route", 404);

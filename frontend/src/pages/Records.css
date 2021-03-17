@@ -1,0 +1,50 @@
+.records {
+  display: flex;
+  flex-direction: column;
+  color: #fff;
+  height: 100vh;
+  position: relative;
+}
+.records__header {
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem;
+}
+.records__title {
+  margin-top: 5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #27e77f;
+}
+.records__data {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  margin-top: 5rem;
+  flex: 1;
+  overflow: auto;
+}
+.records__data__label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 2rem;
+}
+.records__data__label--exercise,
+.records__data__label--weight {
+  padding: 1.5rem;
+  background-color: #1b1b1b;
+  border-radius: 10px;
+}
+.records__data__row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 2.5rem;
+  color: #27e77f;
+  text-transform: capitalize;
+  margin-top: 1rem;
+}
+.records__data__row:hover {
+  color: #fff;
+  transition: 0.2s;
+}

@@ -57,8 +57,7 @@ JOIN exercises e ON e.exercise_id = re.exercise_id
 JOIN stats s ON s.routine_exercise_id = re.routine_exercise_id
 ORDER BY e.name;
 
-DELETE FROM stats WHERE routine_exercise_id = 2;
-
+-- GET EXERCISE DATA FROM ROUTINE
 SELECT r.routine_id, e.name, s.weight, s.reps
 FROM stats s
 JOIN routine_exercises re
@@ -68,3 +67,13 @@ JOIN exercises e
 JOIN routines r
   ON r.routine_id = re.routine_id
 WHERE r.routine_id = 1;
+
+-- WORKS! RETRIEVES MAX WEIGHT FOR EACH EXERCISE BY A USER
+SELECT e.name, MAX(s.weight) AS max_weight, u.user_id
+FROM users u
+JOIN stats s ON u.user_id = s.user_id
+JOIN routine_exercises re
+  ON s.routine_exercise_id = re.routine_exercise_id
+JOIN exercises e ON e.exercise_id = re.exercise_id
+WHERE u.user_id = 2
+GROUP BY e.name, u.user_id;

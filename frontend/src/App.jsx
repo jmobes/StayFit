@@ -73,7 +73,7 @@ const App = () => {
         <ProtectedRoute path="/workout" logout={logout} component={Workout} />
         <ProtectedRoute path="/history" component={History} />
         <ProtectedRoute path="/progress" component={Progress} />
-        <ProtectedRoute path="/records" component={Records} />
+        <ProtectedRoute path="/records" logout={logout} component={Records} />
         <ProtectedRoute path="/" exact logout={logout} component={Home} />
       </Switch>
     </Router>
