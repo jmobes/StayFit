@@ -1,0 +1,17 @@
+.progress {
+  display: flex;
+  flex-direction: column;
+  color: #fff;
+  padding: 1rem;
+}
+.progress__header {
+  display: flex;
+  justify-content: space-between;
+}
+.progress__title {
+  color: #27e77f;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 5rem;
+}
