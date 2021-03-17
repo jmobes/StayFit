@@ -3,6 +3,7 @@ import React from "react";
 import "./Progress.css";
 import HeaderButton from "../components/HeaderButton";
 import TimelineIcon from "@material-ui/icons/Timeline";
+import Chart from "../components/Chart";
 
 const Progress = (props) => {
   return (
@@ -14,6 +15,7 @@ const Progress = (props) => {
       <div className="progress__title">
         <TimelineIcon style={{ fontSize: 100 }} />
       </div>
+      <Chart />
     </div>
   );
 };
