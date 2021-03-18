@@ -45,7 +45,7 @@ const Chart = () => {
             position: "right",
           },
           responsive: true,
-          maintainAspectRatio: true,
+          maintainAspectRatio: false,
           showLine: true,
         }}
       />
