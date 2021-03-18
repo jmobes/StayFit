@@ -9,6 +9,7 @@ import AddIcon from "@material-ui/icons/Add";
 const Progress = (props) => {
   const [exercises, setExercises] = useState();
   const [showExercises, setShowExercises] = useState(false);
+  const [selected, setSelected] = useState();
 
   useEffect(async () => {
     const user = JSON.parse(localStorage.getItem("user"));
@@ -33,7 +34,7 @@ const Progress = (props) => {
       <div className="progress__title">
         <TimelineIcon style={{ fontSize: 100 }} />
       </div>
-      <Chart />
+      {selected && <Chart exercise={selected} />}
       <div
         onClick={() => setShowExercises(true)}
         className="progress__select__exercise"
@@ -41,19 +42,6 @@ const Progress = (props) => {
         <p className="progress__select__exercise--text">select exercise</p>
         <AddIcon className="progress__select__icon" style={{ fontSize: 30 }} />
       </div>
-      {/* {exercises &&
-        showExercises && <div className="progress__exercise__list">
-        <div
-          onClick={() => setShowExercises(false)}
-          className="progress__exercise__cancel"
-        >
-          cancel
-        </div>
-        exercises.map((exercise) => {
-          return <p className="progress__exercise">{exercise.name}</p>;
-        })
-        </div>
-      } */}
       {exercises && showExercises && (
         <div className="progress__exercise__container">
           <div className="progress__exercise__cancel">
@@ -61,7 +49,18 @@ const Progress = (props) => {
           </div>
           <div className="progress__exercise__list">
             {exercises.map((exercise) => {
-              return <p className="progress__exercise">{exercise.name}</p>;
+              return (
+                <p
+                  onClick={() => {
+                    setSelected(exercise);
+                    setShowExercises(false);
+                  }}
+                  key={exercise.exercise_id}
+                  className="progress__exercise"
+                >
+                  {exercise.name}
+                </p>
+              );
             })}
           </div>
         </div>

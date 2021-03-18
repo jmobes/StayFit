@@ -38,7 +38,7 @@ const Records = (props) => {
         {max &&
           max.map((exercise) => {
             return (
-              <div className="records__data__row">
+              <div key={exercise.exercise_id} className="records__data__row">
                 <p className="records__data__row--exercise">{exercise.name}</p>
                 <p className="records__data__row--weight">
                   {exercise.max_weight}

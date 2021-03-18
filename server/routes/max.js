@@ -16,14 +16,15 @@ router.get("/:uid", async (req, res, next) => {
 
     const maxLifts = await db.query(
       `
-    SELECT e.name, MAX(s.weight) AS max_weight, u.user_id
+    SELECT e.name, MAX(s.weight) AS max_weight, u.user_id, e.exercise_id
     FROM users u
     JOIN stats s ON u.user_id = s.user_id
     JOIN routine_exercises re
       ON s.routine_exercise_id = re.routine_exercise_id
     JOIN exercises e ON e.exercise_id = re.exercise_id
     WHERE u.user_id = $1
-    GROUP BY e.name, u.user_id;
+    GROUP BY e.name, u.user_id, e.exercise_id
+    ORDER BY e.name;
     `,
       [userId]
     );
