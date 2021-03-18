@@ -41,14 +41,31 @@ const Progress = (props) => {
         <p className="progress__select__exercise--text">select exercise</p>
         <AddIcon className="progress__select__icon" style={{ fontSize: 30 }} />
       </div>
-      <div className="progress__exercise__list">
-        <div className="progress__exercise__cancel">cancel</div>
-        {exercises &&
-          showExercises &&
-          exercises.map((exercise) => {
-            return <p className="progress__exercise">{exercise.name}</p>;
-          })}
-      </div>
+      {/* {exercises &&
+        showExercises && <div className="progress__exercise__list">
+        <div
+          onClick={() => setShowExercises(false)}
+          className="progress__exercise__cancel"
+        >
+          cancel
+        </div>
+        exercises.map((exercise) => {
+          return <p className="progress__exercise">{exercise.name}</p>;
+        })
+        </div>
+      } */}
+      {exercises && showExercises && (
+        <div className="progress__exercise__container">
+          <div className="progress__exercise__cancel">
+            <span onClick={() => setShowExercises(false)}>cancel</span>
+          </div>
+          <div className="progress__exercise__list">
+            {exercises.map((exercise) => {
+              return <p className="progress__exercise">{exercise.name}</p>;
+            })}
+          </div>
+        </div>
+      )}
     </div>
   );
 };
