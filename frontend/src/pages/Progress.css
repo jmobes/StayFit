@@ -1,0 +1,76 @@
+.progress {
+  display: flex;
+  flex-direction: column;
+  color: #fff;
+  height: 100vh;
+  position: relative;
+}
+.progress__header {
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem;
+}
+.progress__title {
+  color: #27e77f;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 5rem;
+}
+.graph {
+  position: relative;
+  height: 40vh;
+  width: 95vw;
+}
+.progress__select__exercise {
+  display: flex;
+  font-size: 2rem;
+  justify-content: center;
+  align-items: center;
+  margin-top: 3rem;
+}
+.progress__select__exercise--text {
+  background-color: #1b1b1b;
+  padding: 0.5rem 1rem;
+  border-radius: 10px;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+.progress__select__icon {
+  cursor: pointer;
+}
+.progress__exercise__container {
+  height: 50vh;
+  width: 100%;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  overflow: auto;
+  font-size: 2rem;
+  text-transform: capitalize;
+  background-color: #1b1b1b;
+  color: #27e77f;
+}
+.progress__exercise__cancel {
+  color: red;
+  display: block;
+  font-size: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 3px solid #939292;
+  padding: 1rem;
+}
+.progress__exercise__cancel span {
+  cursor: pointer;
+}
+.progress__exercise__list {
+  height: 100%;
+  overflow: auto;
+}
+.progress__exercise {
+  font-size: 2.5rem;
+  padding: 0.25rem 0;
+  padding: 0.5rem 1rem;
+}
+.progress__exercise:not(:last-child) {
+  border-bottom: 3px solid #939292;
+}

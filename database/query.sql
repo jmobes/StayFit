@@ -77,3 +77,13 @@ JOIN routine_exercises re
 JOIN exercises e ON e.exercise_id = re.exercise_id
 WHERE u.user_id = 2
 GROUP BY e.name, u.user_id;
+
+-- Gets the date and highest weight per routine for an exercise
+SELECT u.user_name, r.date_end, r.routine_id, e.name, MAX(s.weight)
+FROM users u
+JOIN routines r ON u.user_id = r.user_id
+JOIN routine_exercises re on r.routine_id = re.routine_id
+JOIN stats s ON re.routine_exercise_id = s.routine_exercise_id
+JOIN exercises e ON re.exercise_id = e.exercise_id
+WHERE u.user_id = 2 AND e.exercise_id = 6
+GROUP BY u.user_name,r.routine_id, e.name;

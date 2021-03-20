@@ -33,6 +33,7 @@
   background-color: #1b1b1b;
   border-radius: 10px;
   margin-right: 1rem;
+  cursor: pointer;
 }
 .workout__select__icon {
   color: #27e77f;

@@ -71,8 +71,8 @@ const App = () => {
         />
         <Route path="/signup" component={Signup} />
         <ProtectedRoute path="/workout" logout={logout} component={Workout} />
-        <ProtectedRoute path="/history" component={History} />
-        <ProtectedRoute path="/progress" component={Progress} />
+        <ProtectedRoute path="/history" logout={logout} component={History} />
+        <ProtectedRoute path="/progress" logout={logout} component={Progress} />
         <ProtectedRoute path="/records" logout={logout} component={Records} />
         <ProtectedRoute path="/" exact logout={logout} component={Home} />
       </Switch>

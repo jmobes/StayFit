@@ -59,6 +59,7 @@
   background-color: #1b1b1b;
   border-radius: 50%;
   padding: 0.5rem;
+  cursor: pointer;
 }
 .log__exercise__button {
   background-color: #27e77f;
@@ -72,6 +73,7 @@
   text-transform: uppercase;
   font-weight: 600;
   margin: 2.5rem 0;
+  cursor: pointer;
 }
 .cancel__exercise__button {
   background-color: #757575;
@@ -84,6 +86,7 @@
   width: 100%;
   text-transform: uppercase;
   font-weight: 600;
+  cursor: pointer;
 }
 .log__exercise__error {
   position: absolute;
