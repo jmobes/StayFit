@@ -1,3 +1,30 @@
 .history {
+  display: flex;
+  flex-direction: column;
   color: #fff;
+  padding: 1rem;
+}
+.history__header {
+  display: flex;
+  justify-content: space-between;
+}
+.history__icon {
+  display: flex;
+  justify-content: center;
+  color: #27e77f;
+  margin-top: 5rem;
+}
+.history__calendar {
+  display: flex;
+  justify-content: center;
+  margin-top: 5rem;
+}
+.bg-gray {
+  background: green;
+}
+.react-calendar button {
+  height: 5vh;
+}
+.react-calendar .react-calendar__navigation__arrow {
+  width: 30px;
 }
