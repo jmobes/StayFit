@@ -68,11 +68,37 @@ router.get("/:uid/:rid", async (req, res, next) => {
        ON e.exercise_id = re.exercise_id
        JOIN routines r
        ON r.routine_id = re.routine_id
-       WHERE r.routine_id = $1`,
+       WHERE r.routine_id = $1
+       ORDER BY e.name`,
       [routine_id]
     );
 
     res.status(200).json(routineData.rows);
+  } catch (ex) {
+    return next(new HttpError());
+  }
+});
+
+router.get("/data/:uid/:date", async (req, res, next) => {
+  const userId = Number(req.params.uid);
+  const date = req.params.date;
+  if (isNaN(userId)) return next(new HttpError("Invalid user id"));
+
+  try {
+    const data = await db.query(
+      `
+    SELECT u.user_id, r.date_end, r.routine_id, e.name, s.weight, s.reps
+    FROM users u
+    JOIN routines r ON u.user_id = r.user_id
+    JOIN routine_exercises re ON r.routine_id = re.routine_id
+    JOIN exercises e ON e.exercise_id = re.exercise_id
+    JOIN stats s ON s.routine_exercise_id = re.routine_exercise_id
+    WHERE u.user_id = $1 AND r.date_end = $2
+    `,
+      [userId, date]
+    );
+
+    res.status(200).json(data.rows);
   } catch (ex) {
     return next(new HttpError());
   }
