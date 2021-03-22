@@ -13,6 +13,22 @@ router.get("/", async (req, res, next) => {
   }
 });
 
+router.get("/:uid", async (req, res, next) => {
+  try {
+    const userId = Number(req.params.uid);
+    if (isNaN(userId)) return next(new HttpError("Invalid User ID"));
+
+    const dates = await db.query(
+      "SELECT date_end FROM routines WHERE user_id = $1",
+      [userId]
+    );
+
+    res.status(200).json(dates.rows);
+  } catch (ex) {
+    return next(new HttpError());
+  }
+});
+
 router.get("/null-date/:id", async (req, res, next) => {
   const user_id = Number(req.params.id);
   if (isNaN(user_id)) {

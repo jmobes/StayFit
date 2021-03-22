@@ -14,13 +14,24 @@
   color: #27e77f;
   margin-top: 5rem;
 }
+.history__instructions {
+  color: gray;
+  text-align: center;
+  margin-top: 5rem;
+  font-size: 2rem;
+}
+.history__instructions-2 {
+  color: gray;
+  font-size: 1.75rem;
+  text-align: center;
+}
+.history__instructions-2 span {
+  color: green;
+}
 .history__calendar {
   display: flex;
   justify-content: center;
-  margin-top: 5rem;
-}
-.bg-gray {
-  background: green;
+  margin-top: 1rem;
 }
 .react-calendar button {
   height: 5vh;
@@ -28,3 +39,17 @@
 .react-calendar .react-calendar__navigation__arrow {
   width: 30px;
 }
+.bg-green {
+  background: green;
+}
+/* .react-calendar__tile,
+.react-calendar__tile--now,
+.react-calendar__tile--active,
+.react-calendar__tile--range,
+.react-calendar__tile--rangeStart,
+.react-calendar__tile--rangeEnd,
+.react-calendar__tile--rangeBothEnds,
+.react-calendar__month-view__days__day,
+.react-calendar__month-view__days__day--weekend {
+  background-color: green;
+} */
