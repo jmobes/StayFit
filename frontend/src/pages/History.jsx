@@ -9,6 +9,7 @@ const History = (props) => {
   const [value, onChange] = useState(new Date());
   const [dates, setDates] = useState();
   const [user, setUser] = useState();
+  const [workout, setWorkout] = useState();
 
   const getDates = () => {
     const user = JSON.parse(localStorage.getItem("user"));
@@ -19,6 +20,7 @@ const History = (props) => {
       .then((res) => res.json())
       .then((dates) => {
         dates.map((dateStr) => {
+          if (!dateStr.date_end) return;
           const split = dateStr.date_end.split("T");
           dateArray.push(split[0]);
         });
@@ -26,6 +28,16 @@ const History = (props) => {
         setDates(dateArray);
       })
       .catch((ex) => console.error(ex));
+  };
+
+  const formatDate = (date) => {
+    const year = date.getFullYear();
+    const month =
+      date.getMonth() + 1 < 10
+        ? "0" + (date.getMonth() + 1)
+        : date.getMonth() + 1;
+    const day = date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
+    return `${year}-${month}-${day}`;
   };
 
   useEffect(() => {
@@ -50,30 +62,94 @@ const History = (props) => {
       <div className="history__calendar">
         <Calendar
           onChange={(value, event) => {
-            console.log(value);
+            fetch(
+              `http://localhost:5000/api/routine-data/data/${user}/${formatDate(
+                value
+              )}`
+            )
+              .then((res) => res.json())
+              .then((data) => {
+                console.log(data);
+                setWorkout(data);
+              })
+              .catch((err) => console.error(err));
           }}
           value={value}
           tileClassName={({ date, view }) => {
             if (!dates) return;
-            const year = date.getFullYear();
-            const month =
-              date.getMonth() + 1 < 10
-                ? "0" + (date.getMonth() + 1)
-                : date.getMonth() + 1;
-            const day =
-              date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
-            const fullDate = `${year}-${month}-${day}`;
-            if (dates.find((ele) => ele === fullDate)) {
+
+            if (dates.find((ele) => ele === formatDate(date))) {
               return "bg-green";
             }
           }}
         />
       </div>
       <div className="history__routine">
-        <p className="history__message">Select a date to display data</p>
+        {workout &&
+          workout.map((current, index, arr) => {
+            const previous = arr[index - 1];
+            const next = arr[index + 1];
+            return !previous || previous.name !== current.name ? (
+              <React.Fragment key={index}>
+                <p className="history__routine__exercise">{current.name}</p>
+                <p className="history__routine__set">{`${current.weight} x ${current.reps}`}</p>
+              </React.Fragment>
+            ) : (
+              <p
+                key={index}
+                className="history__routine__set"
+              >{`${current.weight} x ${current.reps}`}</p>
+            );
+          })}
       </div>
     </div>
   );
 };
+
+// return (
+//   <div className="workout__data__exercise">
+//     {!previous || previous.name !== current.name ? (
+//       <React.Fragment>
+//         <p className="workout__data__exercise__name">
+//           {current.name}
+//         </p>
+//         <DeleteIcon />
+//       </React.Fragment>
+//     ) : (
+//       null
+//     )}
+//   </div>
+// <React.Fragment key={index}>
+//   {!previous || previous.name !== current.name ? (
+//     <React.Fragment>
+//       <p className="workout__data--name">{current.name}</p>
+//       <p
+//         style={{
+//           marginBottom: `${
+//             next && next.name === current.name ? "" : "1rem"
+//           }`,
+//         }}
+//         className="workout__data--set"
+//       >{`${current.weight} X ${current.reps} ${
+//         next && next.name === current.name ? "|" : ""
+//       }`}</p>
+//     </React.Fragment>
+//   ) : (
+//     <p
+//       style={{
+//         marginBottom: `${
+//           next && next.name === current.name ? "" : "1rem"
+//         }`,
+//         marginLeft: ".5rem",
+//       }}
+//       className="workout__data--set"
+//     >
+//       {`${current.weight} X ${current.reps} ${
+//         next && next.name === current.name ? "|" : ""
+//       }`}
+//     </p>
+//   )}
+// </React.Fragment>
+// );
 
 export default History;

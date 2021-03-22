@@ -157,51 +157,6 @@ const Workout = (props) => {
                 } else {
                   return null;
                 }
-                // return (
-                //   <div className="workout__data__exercise">
-                //     {!previous || previous.name !== current.name ? (
-                //       <React.Fragment>
-                //         <p className="workout__data__exercise__name">
-                //           {current.name}
-                //         </p>
-                //         <DeleteIcon />
-                //       </React.Fragment>
-                //     ) : (
-                //       null
-                //     )}
-                //   </div>
-                // <React.Fragment key={index}>
-                //   {!previous || previous.name !== current.name ? (
-                //     <React.Fragment>
-                //       <p className="workout__data--name">{current.name}</p>
-                //       <p
-                //         style={{
-                //           marginBottom: `${
-                //             next && next.name === current.name ? "" : "1rem"
-                //           }`,
-                //         }}
-                //         className="workout__data--set"
-                //       >{`${current.weight} X ${current.reps} ${
-                //         next && next.name === current.name ? "|" : ""
-                //       }`}</p>
-                //     </React.Fragment>
-                //   ) : (
-                //     <p
-                //       style={{
-                //         marginBottom: `${
-                //           next && next.name === current.name ? "" : "1rem"
-                //         }`,
-                //         marginLeft: ".5rem",
-                //       }}
-                //       className="workout__data--set"
-                //     >
-                //       {`${current.weight} X ${current.reps} ${
-                //         next && next.name === current.name ? "|" : ""
-                //       }`}
-                //     </p>
-                //   )}
-                // </React.Fragment>
-                // );
               })}
           </div>
           {routine && routine.length ? (
