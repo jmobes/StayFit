@@ -87,3 +87,12 @@ JOIN stats s ON re.routine_exercise_id = s.routine_exercise_id
 JOIN exercises e ON re.exercise_id = e.exercise_id
 WHERE u.user_id = 2 AND e.exercise_id = 6
 GROUP BY u.user_name,r.routine_id, e.name;
+
+-- Get exercise data from a given end_date
+SELECT u.user_id, r.date_end, r.routine_id, e.name, s.weight, s.reps
+FROM users u
+JOIN routines r ON u.user_id = r.user_id
+JOIN routine_exercises re ON r.routine_id = re.routine_id
+JOIN exercises e ON e.exercise_id = re.exercise_id
+JOIN stats s ON s.routine_exercise_id = re.routine_exercise_id
+WHERE u.user_id = 2 AND r.date_end = '2021-03-15';

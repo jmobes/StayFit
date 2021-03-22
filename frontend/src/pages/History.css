@@ -42,6 +42,12 @@
 .bg-green {
   background: green;
 }
+.history__routine {
+  margin-top: 2rem;
+  text-align: center;
+  font-size: 2.5rem;
+  color: grey;
+}
 /* .react-calendar__tile,
 .react-calendar__tile--now,
 .react-calendar__tile--active,

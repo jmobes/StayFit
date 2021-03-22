@@ -8,10 +8,12 @@ import HeaderButton from "../components/HeaderButton";
 const History = (props) => {
   const [value, onChange] = useState(new Date());
   const [dates, setDates] = useState();
+  const [user, setUser] = useState();
 
   const getDates = () => {
     const user = JSON.parse(localStorage.getItem("user"));
     const userId = user.userId;
+    setUser(userId);
     const dateArray = [];
     fetch(`http://localhost:5000/api/routines/${userId}`)
       .then((res) => res.json())
@@ -47,7 +49,9 @@ const History = (props) => {
       </p>
       <div className="history__calendar">
         <Calendar
-          onChange={onChange}
+          onChange={(value, event) => {
+            console.log(value);
+          }}
           value={value}
           tileClassName={({ date, view }) => {
             if (!dates) return;
@@ -64,6 +68,9 @@ const History = (props) => {
             }
           }}
         />
+      </div>
+      <div className="history__routine">
+        <p className="history__message">Select a date to display data</p>
       </div>
     </div>
   );
