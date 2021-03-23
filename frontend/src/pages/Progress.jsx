@@ -34,6 +34,11 @@ const Progress = (props) => {
       <div className="progress__title">
         <TimelineIcon style={{ fontSize: 100 }} />
       </div>
+      {!selected && (
+        <div className="progress__instructions">
+          Select an exercise to view a graph of your progress
+        </div>
+      )}
       {selected && <Chart exercise={selected} />}
       <div
         onClick={() => setShowExercises(true)}
