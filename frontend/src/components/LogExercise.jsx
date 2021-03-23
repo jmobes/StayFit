@@ -9,6 +9,7 @@ const LogExercise = (props) => {
   const [userId, setUserId] = useState();
   const [stats, setStats] = useState([{ set: 1, weight: "", reps: "" }]);
   const [error, setError] = useState("");
+  const [sets, setSets] = useState();
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("user"));
@@ -32,7 +33,6 @@ const LogExercise = (props) => {
   };
 
   const addSets = (routine_exercise_id) => {
-    console.log("ROUTINE-EXERCISE-ID: ", routine_exercise_id);
     try {
       stats.map((setData) => {
         const options = {
@@ -48,32 +48,28 @@ const LogExercise = (props) => {
         };
         fetch("http://localhost:5000/api/stats", options)
           .then((res) => res.json())
-          .then((data) => console.log("Added sets:", data))
+          .then((data) => setSets(data))
           .catch((err) => setError(err.message));
       });
       setError(null);
     } catch (e) {
-      console.error(e.message);
+      setError(e.message);
     }
   };
 
   const startRoutine = async () => {
     if (!userId) return;
 
-    console.log("Finding incomplete routines");
     try {
       const result = await fetch(
         `http://localhost:5000/api/routines/null-date/${userId}`
       );
       const unfinished = await result.json();
-      console.log("incomplete routine found:", unfinished);
       if (unfinished.length > 0) {
-        console.log("Resuming routine...");
         return new Promise((resolve, reject) => {
           resolve(unfinished[0].routine_id);
         });
       }
-      console.log("No incomplete routines found");
       const options = {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -86,8 +82,6 @@ const LogExercise = (props) => {
         options
       );
       const routine = await routineResult.json();
-      console.log(routine);
-      console.log("Creating new routine...");
       return new Promise((resolve, reject) => {
         resolve(routine.routine_id);
       });
@@ -97,7 +91,6 @@ const LogExercise = (props) => {
   };
 
   const addExerciseToRoutine = async (routine_id) => {
-    console.log(userId);
     if (!userId) return;
 
     try {
@@ -116,13 +109,10 @@ const LogExercise = (props) => {
         options
       );
       const routine_exercise = await result.json();
-      console.log("Routine-exercise created");
-      console.log("Routine-Exercise: ", routine_exercise);
       return new Promise((resolve, reject) => {
         resolve(routine_exercise.routine_exercise_id);
       });
     } catch (err) {
-      console.error(err);
       setError(err.message);
     }
   };
@@ -179,36 +169,37 @@ const LogExercise = (props) => {
         style={{ fontSize: 50 }}
         className="add__set__button"
       />
-      <button
-        onClick={async () => {
-          try {
-            stats.map((object) => {
-              const valuesArray = Object.values(object);
-              valuesArray.forEach((value, index) => {
-                if (!value) {
-                  throw new Error("Please fill out all fields");
-                }
+      <div className="log__exercise__buttons">
+        <button
+          onClick={async () => {
+            try {
+              stats.map((object) => {
+                const valuesArray = Object.values(object);
+                valuesArray.forEach((value, index) => {
+                  if (!value) {
+                    throw new Error("Please fill out all fields");
+                  }
+                });
               });
-            });
-            const routineId = await startRoutine();
-            const routine_exercise_id = await addExerciseToRoutine(routineId);
-            addSets(routine_exercise_id);
-            props.hideLogExercise();
-          } catch (err) {
-            console.error(err.message);
-            setError(err.message);
-          }
-        }}
-        className="log__exercise__button"
-      >
-        Log Exercise
-      </button>
-      <button
-        onClick={props.hideLogExercise}
-        className="cancel__exercise__button"
-      >
-        Cancel
-      </button>
+              const routineId = await startRoutine();
+              const routine_exercise_id = await addExerciseToRoutine(routineId);
+              addSets(routine_exercise_id);
+              props.hideLogExercise();
+            } catch (err) {
+              setError(err.message);
+            }
+          }}
+          className="log__exercise__button"
+        >
+          Log Exercise
+        </button>
+        <button
+          onClick={props.hideLogExercise}
+          className="cancel__exercise__button"
+        >
+          Cancel
+        </button>
+      </div>
       {error && <p className="log__exercise__error">{error}</p>}
     </div>
   );

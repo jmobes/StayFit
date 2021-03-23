@@ -13,11 +13,9 @@ const Records = (props) => {
       return;
     }
     const userId = user.userId;
-    console.log("USER_ID RETRIEVED: ", userId);
 
     const result = await fetch(`http://localhost:5000/api/max/${userId}`);
     const data = await result.json();
-    console.log("DATA: ", data);
     setMax(data);
   }, []);
 
@@ -29,6 +27,9 @@ const Records = (props) => {
       </div>
       <div className="records__title">
         <FlagIcon className="records__icon" style={{ fontSize: 100 }} />
+      </div>
+      <div className="records__instructions">
+        Each row is the heaviest weight you have lifted for the given exercise
       </div>
       <div className="records__data">
         <div className="records__data__label">

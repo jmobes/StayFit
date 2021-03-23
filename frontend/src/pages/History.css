@@ -48,21 +48,9 @@
   font-size: 2.5rem;
   color: grey;
   flex: 1;
-  /* overflow: auto; */
 }
 .history__routine__exercise {
   text-transform: uppercase;
   color: #27e77f;
   margin-top: 1rem;
 }
-/* .react-calendar__tile,
-.react-calendar__tile--now,
-.react-calendar__tile--active,
-.react-calendar__tile--range,
-.react-calendar__tile--rangeStart,
-.react-calendar__tile--rangeEnd,
-.react-calendar__tile--rangeBothEnds,
-.react-calendar__month-view__days__day,
-.react-calendar__month-view__days__day--weekend {
-  background-color: green;
-} */

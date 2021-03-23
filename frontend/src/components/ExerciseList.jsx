@@ -7,6 +7,7 @@ import AddIcon from "@material-ui/icons/Add";
 const ExerciseList = (props) => {
   const [exercises, setExercises] = useState();
   const [edit, setEdit] = useState(false);
+  const [error, setError] = useState();
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("user"));
@@ -42,7 +43,7 @@ const ExerciseList = (props) => {
           )
         )
       )
-      .catch((err) => console.error(err));
+      .catch((err) => setError(err));
   };
 
   return (

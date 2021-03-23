@@ -17,6 +17,7 @@ const Workout = (props) => {
   const [routine, setRoutine] = useState();
   const [routineId, setRoutineId] = useState();
   const [workoutLogged, setWorkoutLogged] = useState(false);
+  const [error, setError] = useState();
 
   useEffect(async () => {
     const user = JSON.parse(localStorage.getItem("user"));
@@ -29,7 +30,6 @@ const Workout = (props) => {
         `http://localhost:5000/api/routines/null-date/${userId}`
       );
       const unfinished = await result.json();
-      console.log("Unfinished routines:", unfinished);
       if (unfinished.length < 1) {
         return;
       }
@@ -39,10 +39,9 @@ const Workout = (props) => {
         `http://localhost:5000/api/routine-data/${userId}/${routineId}`
       );
       const routineInfo = await res.json();
-      console.log("STATS: ", routineInfo);
       setRoutine(routineInfo);
     } catch (err) {
-      console.error(err.message);
+      setError(err.message);
     }
   }, [displayExercises, createExercise, logExercise]);
 
@@ -70,7 +69,6 @@ const Workout = (props) => {
       }
     );
     const deleted = await result.json();
-    console.log("DELETED STATS: ", deleted);
     const routineCopy = [...routine];
     const updatedRoutine = routineCopy.filter(
       (stats) => stats.routine_exercise_id !== deleted[0].routine_exercise_id
@@ -94,7 +92,7 @@ const Workout = (props) => {
       setRoutine(null);
       setRoutineId(null);
     } catch (ex) {
-      console.error(ex.message);
+      setError(ex.message);
     }
     setWorkoutLogged(true);
     setTimeout(() => {

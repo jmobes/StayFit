@@ -18,7 +18,6 @@ const Chart = (props) => {
     fetch(`http://localhost:5000/api/progress/${userId}/${exerciseId}`)
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
         data.map((stats) => {
           const date = new Date(stats.date_end);
           const formattedDate =
@@ -50,7 +49,6 @@ const Chart = (props) => {
 
   useEffect(() => {
     chart();
-    console.log("CHART DATA: ", chartData);
   }, [props.exercise]);
 
   return (

@@ -17,11 +17,9 @@ const Progress = (props) => {
       return;
     }
     const userId = user.userId;
-    console.log("USER_ID RETRIEVED: ", userId);
 
     const result = await fetch(`http://localhost:5000/api/max/${userId}`);
     const data = await result.json();
-    console.log("DATA: ", data);
     setExercises(data);
   }, []);
 
