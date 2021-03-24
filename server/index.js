@@ -31,7 +31,6 @@ app.use((req, res, next) => {
 
 app.use("/api/users", users);
 app.use("/api/authenticate", authenticate);
-// app.use(authorize);
 app.use("/api/routines", routines);
 app.use("/api/exercises", exercises);
 app.use("/api/routine-exercises", routine_exercises);

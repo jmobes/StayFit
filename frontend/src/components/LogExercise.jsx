@@ -39,7 +39,6 @@ const LogExercise = (props) => {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            // set: setData.set,
             reps: setData.reps,
             weight: setData.weight,
             routine_exercise_id: routine_exercise_id.toString(),
@@ -51,7 +50,6 @@ const LogExercise = (props) => {
           .then((data) => setSets(data))
           .catch((err) => setError(err.message));
       });
-      setError(null);
     } catch (e) {
       setError(e.message);
     }

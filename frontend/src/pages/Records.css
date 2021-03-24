@@ -53,9 +53,16 @@
   color: #fff;
   transition: 0.2s;
 }
+.records__message {
+  margin-top: 1rem;
+  text-align: center;
+  color: #27e77f;
+  font-size: 2rem;
+}
 
 @media (min-width: 600px) {
   .records__data {
-    padding: 0 5rem;
+    width: 70%;
+    margin: 0 auto;
   }
 }

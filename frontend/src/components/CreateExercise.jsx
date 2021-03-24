@@ -20,7 +20,7 @@ const CreateExercise = (props) => {
     };
     fetch("http://localhost:5000/api/exercises", options)
       .then((result) => result.json())
-      .then((exercise) => setExercise(exercise))
+      .then((exercise) => setExercise)
       .catch((err) => console.error(err));
 
     props.hideCreateExercise();
