@@ -58,7 +58,6 @@ router.delete("/:rid/:eid", async (req, res, next) => {
     );
     if (routine.rowCount < 1)
       return next(new HttpError("Routine does not exist", 404));
-    console.log("ROUTINE: ", routine.rows);
 
     const exercise = await db.query(
       "SELECT * FROM exercises WHERE exercise_id = $1",
@@ -66,7 +65,6 @@ router.delete("/:rid/:eid", async (req, res, next) => {
     );
     if (exercise.rowCount < 1)
       return next(new HttpError("Exercise with the given ID does not exist"));
-    console.log("EXERCISE: ", exercise.rows);
 
     const routineExercise = await db.query(
       "SELECT * FROM routine_exercises WHERE exercise_id = $1 AND routine_id = $2",
@@ -74,19 +72,16 @@ router.delete("/:rid/:eid", async (req, res, next) => {
     );
     if (routineExercise.rowCount < 1)
       return next(new HttpError("Nothing to delete", 400));
-    console.log("ROUTINE EXERCISE: ", routineExercise.rows);
 
     const stats = await db.query(
       "DELETE FROM stats WHERE routine_exercise_id = $1 RETURNING *",
       [routineExercise.rows[0].routine_exercise_id]
     );
-    console.log("STATS DELETED: ", stats.rows);
 
     const deleteRoutineExercise = await db.query(
       "DELETE FROM routine_exercises WHERE exercise_id = $1 AND routine_id = $2 RETURNING *",
       [exerciseId, routineId]
     );
-    console.log("ROUTINE EXERCISE DELETED: ", deleteRoutineExercise.rows);
 
     res.status(200).json(stats.rows);
   } catch (ex) {

@@ -13,11 +13,9 @@ const Records = (props) => {
       return;
     }
     const userId = user.userId;
-    console.log("USER_ID RETRIEVED: ", userId);
 
     const result = await fetch(`http://localhost:5000/api/max/${userId}`);
     const data = await result.json();
-    console.log("DATA: ", data);
     setMax(data);
   }, []);
 
@@ -30,12 +28,17 @@ const Records = (props) => {
       <div className="records__title">
         <FlagIcon className="records__icon" style={{ fontSize: 100 }} />
       </div>
+      <div className="records__instructions">
+        <p className="records__instructions--1">
+          Each row is the heaviest weight lifted for the given exercise
+        </p>
+      </div>
       <div className="records__data">
         <div className="records__data__label">
           <p className="records__data__label--exercise">Exercise</p>
           <p className="records__data__label--weight">Weight</p>
         </div>
-        {max &&
+        {max && max.length ? (
           max.map((exercise) => {
             return (
               <div key={exercise.exercise_id} className="records__data__row">
@@ -45,7 +48,10 @@ const Records = (props) => {
                 </p>
               </div>
             );
-          })}
+          })
+        ) : (
+          <p className="records__message">No exercise data available</p>
+        )}
       </div>
     </div>
   );

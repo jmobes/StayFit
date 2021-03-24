@@ -10,6 +10,7 @@ const History = (props) => {
   const [dates, setDates] = useState();
   const [user, setUser] = useState();
   const [workout, setWorkout] = useState();
+  const [error, setError] = useState();
 
   const getDates = () => {
     const user = JSON.parse(localStorage.getItem("user"));
@@ -24,10 +25,9 @@ const History = (props) => {
           const split = dateStr.date_end.split("T");
           dateArray.push(split[0]);
         });
-        console.log(dateArray);
         setDates(dateArray);
       })
-      .catch((ex) => console.error(ex));
+      .catch((ex) => setError(ex));
   };
 
   const formatDate = (date) => {
@@ -69,10 +69,9 @@ const History = (props) => {
             )
               .then((res) => res.json())
               .then((data) => {
-                console.log(data);
                 setWorkout(data);
               })
-              .catch((err) => console.error(err));
+              .catch((err) => setError(err));
           }}
           value={value}
           tileClassName={({ date, view }) => {

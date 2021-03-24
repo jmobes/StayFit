@@ -112,3 +112,9 @@
   color: #27e77f;
   cursor: pointer;
 }
+@media (min-width: 600px) {
+  .form__signup {
+    width: 60%;
+    margin: 3rem auto;
+  }
+}

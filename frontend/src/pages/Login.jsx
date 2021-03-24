@@ -14,9 +14,6 @@ const Login = (props) => {
         <span className="title__text title__text--2">T</span>
       </h1>
       <LoginForm login={props.login} error={props.error} />
-      <p className="login__guest">
-        Login as <span className="login__guest--text">GUEST</span>
-      </p>
       <p className="link__signup">
         Don't have an account?{" "}
         <Link to="/signup">

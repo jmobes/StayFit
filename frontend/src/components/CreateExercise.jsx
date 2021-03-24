@@ -3,6 +3,7 @@ import "./CreateExercise.css";
 
 const CreateExercise = (props) => {
   const [name, setName] = useState("");
+  const [exercise, setExercise] = useState();
 
   const addExerciseToList = () => {
     const user = JSON.parse(localStorage.getItem("user"));
@@ -19,7 +20,7 @@ const CreateExercise = (props) => {
     };
     fetch("http://localhost:5000/api/exercises", options)
       .then((result) => result.json())
-      .then((exercise) => console.log(exercise))
+      .then((exercise) => setExercise)
       .catch((err) => console.error(err));
 
     props.hideCreateExercise();

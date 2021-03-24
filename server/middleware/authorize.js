@@ -6,7 +6,6 @@ function authorize(req, res, next) {
     return next();
   }
   const token = req.header("Authorization");
-  console.log(token);
   if (!token) {
     return next(new HttpError("Access denied. No token provided.", 401));
   }

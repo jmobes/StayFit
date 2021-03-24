@@ -61,6 +61,10 @@
   padding: 0.5rem;
   cursor: pointer;
 }
+.log__exercise__buttons {
+  padding: 0 2rem;
+  flex: 1;
+}
 .log__exercise__button {
   background-color: #27e77f;
   color: #000;
@@ -96,4 +100,16 @@
   width: 100%;
   text-align: center;
   transform: translateX(-50%);
+}
+
+@media (max-width: 340px) {
+  .log__exercise {
+    font-size: 1.5rem;
+  }
+  .log__exercise__button {
+    font-size: 1.75rem;
+  }
+  .cancel__exercise__button {
+    font-size: 1.75rem;
+  }
 }

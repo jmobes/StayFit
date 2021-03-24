@@ -17,10 +17,17 @@
   align-items: center;
   margin-top: 5rem;
 }
+.progress__instructions {
+  text-align: center;
+  font-size: 2.5rem;
+  padding: 1rem;
+}
 .graph {
-  position: relative;
   height: 40vh;
-  width: 95vw;
+  width: 90%;
+  margin: 0 auto;
+  background: #0b0b0b;
+  border-radius: 10px;
 }
 .progress__select__exercise {
   display: flex;
@@ -73,4 +80,13 @@
 }
 .progress__exercise:not(:last-child) {
   border-bottom: 3px solid #939292;
+}
+
+@media (min-width: 700px) {
+  .progress__instructions {
+    font-size: 3rem;
+  }
+  .graph {
+    width: 50%;
+  }
 }

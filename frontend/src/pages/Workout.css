@@ -20,7 +20,7 @@
   color: rgba(39, 231, 127);
 }
 .workout__select {
-  margin-top: 10rem;
+  margin-top: 6rem;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -72,6 +72,7 @@
   width: 100%;
   text-transform: uppercase;
   font-weight: 600;
+  cursor: pointer;
 }
 
 .message__modal {
@@ -80,11 +81,11 @@
   left: 50%;
   transform: translateX(-50%);
   border-radius: 10px;
-  width: 70%;
   font-size: 2.5rem;
   text-align: center;
   color: #27e77f;
   background-color: #000;
+  padding: 1rem 2rem;
 }
 
 .hidden {
