@@ -16,6 +16,10 @@
   text-align: center;
   margin-top: 3rem;
 }
+.login__guest span {
+  color: #27e77f;
+  cursor: pointer;
+}
 .link__signup {
   color: rgba(255, 255, 255, 0.5);
   font-size: 1.25rem;

@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import "./Login.css";
 
 import LoginForm from "../components/LoginForm";
@@ -14,6 +14,20 @@ const Login = (props) => {
         <span className="title__text title__text--2">T</span>
       </h1>
       <LoginForm login={props.login} error={props.error} />
+      <p className="login__guest">
+        Login as{" "}
+        <span
+          onClick={async () => {
+            const authenticated = await props.login("guest@guest.com", "guest");
+            if (authenticated) {
+              props.history.push("/");
+            }
+          }}
+          className="login__guest--text"
+        >
+          GUEST
+        </span>
+      </p>
       <p className="link__signup">
         Don't have an account?{" "}
         <Link to="/signup">
@@ -24,4 +38,4 @@ const Login = (props) => {
   );
 };
 
-export default Login;
+export default withRouter(Login);
