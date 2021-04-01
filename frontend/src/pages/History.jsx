@@ -17,7 +17,7 @@ const History = (props) => {
     const userId = user.userId;
     setUser(userId);
     const dateArray = [];
-    fetch(`http://localhost:5000/api/routines/${userId}`)
+    fetch(`/api/routines/${userId}`)
       .then((res) => res.json())
       .then((dates) => {
         dates.map((dateStr) => {
@@ -62,11 +62,7 @@ const History = (props) => {
       <div className="history__calendar">
         <Calendar
           onChange={(value, event) => {
-            fetch(
-              `http://localhost:5000/api/routine-data/data/${user}/${formatDate(
-                value
-              )}`
-            )
+            fetch(`/api/routine-data/data/${user}/${formatDate(value)}`)
               .then((res) => res.json())
               .then((data) => {
                 setWorkout(data);
@@ -104,51 +100,5 @@ const History = (props) => {
     </div>
   );
 };
-
-// return (
-//   <div className="workout__data__exercise">
-//     {!previous || previous.name !== current.name ? (
-//       <React.Fragment>
-//         <p className="workout__data__exercise__name">
-//           {current.name}
-//         </p>
-//         <DeleteIcon />
-//       </React.Fragment>
-//     ) : (
-//       null
-//     )}
-//   </div>
-// <React.Fragment key={index}>
-//   {!previous || previous.name !== current.name ? (
-//     <React.Fragment>
-//       <p className="workout__data--name">{current.name}</p>
-//       <p
-//         style={{
-//           marginBottom: `${
-//             next && next.name === current.name ? "" : "1rem"
-//           }`,
-//         }}
-//         className="workout__data--set"
-//       >{`${current.weight} X ${current.reps} ${
-//         next && next.name === current.name ? "|" : ""
-//       }`}</p>
-//     </React.Fragment>
-//   ) : (
-//     <p
-//       style={{
-//         marginBottom: `${
-//           next && next.name === current.name ? "" : "1rem"
-//         }`,
-//         marginLeft: ".5rem",
-//       }}
-//       className="workout__data--set"
-//     >
-//       {`${current.weight} X ${current.reps} ${
-//         next && next.name === current.name ? "|" : ""
-//       }`}
-//     </p>
-//   )}
-// </React.Fragment>
-// );
 
 export default History;

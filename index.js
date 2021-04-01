@@ -12,9 +12,14 @@ const stats = require("./routes/stats");
 const routine_data = require("./routes/routine_data");
 const max = require("./routes/max");
 const progress = require("./routes/progress");
+const PORT = process.env.PORT || 5000;
+const path = require("path");
 const app = express();
 
 app.use(express.json());
+app.use(cors());
+
+app.use(express.static(path.join(__dirname, "frontend/build")));
 
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
@@ -39,6 +44,15 @@ app.use("/api/routine-data", routine_data);
 app.use("/api/max", max);
 app.use("/api/progress", progress);
 
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname, "frontend/build")));
+  console.log(path.join(__dirname, "frontend/build"));
+}
+
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "/frontend/build/index.html"));
+});
+
 app.use((req, res, next) => {
   const error = new HttpError("Could not find this route", 404);
   throw error;
@@ -53,5 +67,5 @@ app.use((error, req, res, next) => {
 });
 
 app.listen(process.env.PORT, () => {
-  console.log(`express server listening on port ${process.env.PORT}`);
+  console.log(`express server listening on port ${PORT}`);
 });

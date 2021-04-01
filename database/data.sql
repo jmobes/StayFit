@@ -1,3 +1,4 @@
+INSERT INTO users(user_name, email, password) VALUES ('root', 'root@root.com', 'root123');
 INSERT INTO exercises(user_id, name) VALUES ('1', 'squat');
 INSERT INTO exercises(user_id, name) VALUES ('1', 'chest press');
 INSERT INTO exercises(user_id, name) VALUES ('1', 'deadlift');
