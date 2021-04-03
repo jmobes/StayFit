@@ -17,7 +17,7 @@ const History = (props) => {
     const userId = user.userId;
     setUser(userId);
     const dateArray = [];
-    fetch(`http://localhost:5000/api/routines/${userId}`)
+    fetch(`/api/routines/${userId}`)
       .then((res) => res.json())
       .then((dates) => {
         dates.map((dateStr) => {
@@ -62,11 +62,7 @@ const History = (props) => {
       <div className="history__calendar">
         <Calendar
           onChange={(value, event) => {
-            fetch(
-              `http://localhost:5000/api/routine-data/data/${user}/${formatDate(
-                value
-              )}`
-            )
+            fetch(`/api/routine-data/data/${user}/${formatDate(value)}`)
               .then((res) => res.json())
               .then((data) => {
                 setWorkout(data);

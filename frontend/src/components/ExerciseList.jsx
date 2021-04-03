@@ -17,7 +17,7 @@ const ExerciseList = (props) => {
     }
     const token = user.token;
     const user_id = user.userId;
-    fetch(`http://localhost:5000/api/exercises/${user_id}`, {
+    fetch(`/api/exercises/${user_id}`, {
       headers: {
         Authorization: token,
       },
@@ -34,7 +34,7 @@ const ExerciseList = (props) => {
         "Content-Type": "application/json",
       },
     };
-    fetch(`http://localhost:5000/api/routine-data/${id}`, options)
+    fetch(`/api/routine-data/${id}`, options)
       .then((result) => result.json())
       .then((deleted) =>
         setExercises(

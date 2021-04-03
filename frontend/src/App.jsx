@@ -30,10 +30,7 @@ const App = () => {
       body: JSON.stringify({ email: email, password: password }),
     };
     try {
-      const result = await fetch(
-        "http://localhost:5000/api/authenticate",
-        options
-      );
+      const result = await fetch("/api/authenticate", options);
       const responseData = await result.json();
       if (!result.ok) {
         throw new Error(responseData);
