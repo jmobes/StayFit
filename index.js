@@ -66,6 +66,6 @@ app.use((error, req, res, next) => {
   res.json(error.message || "An unexpected error occurred");
 });
 
-app.listen(process.env.PORT, () => {
+app.listen(PORT, () => {
   console.log(`express server listening on port ${PORT}`);
 });
