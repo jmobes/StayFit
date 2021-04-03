@@ -113,3 +113,25 @@
     font-size: 1.75rem;
   }
 }
+
+@media (min-width: 750px) {
+  .log__exercise__button {
+    width: 75%;
+    display: block;
+    margin: 2.5rem auto;
+  }
+  .cancel__exercise__button {
+    width: 75%;
+    margin: 0 auto;
+    display: block;
+  }
+}
+
+@media (min-width: 1000px) {
+  .log__exercise__button {
+    width: 50%;
+  }
+  .cancel__exercise__button {
+    width: 50%;
+  }
+}

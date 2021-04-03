@@ -60,6 +60,7 @@
 }
 .workout__data__exercise__delete {
   color: #555553;
+  cursor: pointer;
 }
 .log__workout {
   background-color: #27e77f;

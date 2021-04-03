@@ -6,17 +6,6 @@ const HttpError = require("../models/Http-Error");
 const { validateUser } = require("../validation/validate");
 const router = express.Router();
 
-router.get("/", async (req, res, next) => {
-  let users;
-  try {
-    users = await db.query("SELECT * FROM users");
-  } catch (ex) {
-    return next(new HttpError());
-  }
-
-  res.status(200).json(users.rows);
-});
-
 router.get("/:id", async (req, res, next) => {
   const userId = Number(req.params.id);
   if (isNaN(userId)) {

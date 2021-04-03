@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "./LogExercise.css";
 
 import Inputs from "./Inputs";
@@ -10,6 +10,7 @@ const LogExercise = (props) => {
   const [stats, setStats] = useState([{ set: 1, weight: "", reps: "" }]);
   const [error, setError] = useState("");
   const [sets, setSets] = useState();
+  const inputRef = useRef();
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("user"));
@@ -20,6 +21,10 @@ const LogExercise = (props) => {
     setExerciseId(props.exercise.exercise_id);
     setUserId(userId);
   }, []);
+
+  useEffect(() => {
+    inputRef.current.focus();
+  }, [stats.length]);
 
   const handleChange = (e) => {
     if (Number(e.target.value) || e.target.value === "") {
@@ -137,6 +142,7 @@ const LogExercise = (props) => {
                   data-index={index}
                   value={stats[index].weight}
                   onChange={handleChange}
+                  ref={inputRef}
                 />
                 <input
                   placeholder="reps"
