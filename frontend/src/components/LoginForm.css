@@ -65,6 +65,9 @@
   color: #fff;
   background-color: #008d40;
   cursor: pointer;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
 }
 .error {
   border: 2px solid red;

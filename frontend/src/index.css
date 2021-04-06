@@ -25,9 +25,3 @@ a:visited {
   text-decoration: none;
   color: #27e77f;
 }
-
-input {
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-}
