@@ -46,3 +46,9 @@ https://app-stay-fit.herokuapp.com
 11 - CSS
 
 ## Preview
+![Screen Shot 2021-05-01 at 2 40 36 AM](https://user-images.githubusercontent.com/28551626/116778521-397ef480-aa27-11eb-9f4b-290932f72c5e.png)
+![Screen Shot 2021-05-01 at 2 40 59 AM](https://user-images.githubusercontent.com/28551626/116778526-44398980-aa27-11eb-9d5d-fcc2db3d4b7f.png)
+![Screen Shot 2021-05-01 at 2 41 22 AM](https://user-images.githubusercontent.com/28551626/116778531-4d2a5b00-aa27-11eb-9b27-020bf9688e09.png)
+![Screen Shot 2021-05-01 at 2 41 45 AM](https://user-images.githubusercontent.com/28551626/116778534-53203c00-aa27-11eb-9105-743db9e151b6.png)
+![Screen Shot 2021-05-01 at 2 42 02 AM](https://user-images.githubusercontent.com/28551626/116778540-59aeb380-aa27-11eb-8a75-aa9d0c282b13.png)
+![Screen Shot 2021-05-01 at 2 42 39 AM](https://user-images.githubusercontent.com/28551626/116778547-5f0bfe00-aa27-11eb-8a6f-3da3980808a0.png)
