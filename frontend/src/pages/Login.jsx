@@ -9,10 +9,6 @@ const Login = (props) => {
   return (
     <>
       {props.loading ? <Spinner /> : null}
-      <h1 className="title">
-        <span className="title__text title__text--1">Stay Fi</span>
-        <span className="title__text title__text--2">T</span>
-      </h1>
       <LoginForm login={props.login} error={props.error} />
       <p className="login__guest">
         Login as{" "}

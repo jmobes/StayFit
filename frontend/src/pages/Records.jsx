@@ -14,17 +14,13 @@ const Records = (props) => {
     }
     const userId = user.userId;
 
-    const result = await fetch(`/api/max/${userId}`);
+    const result = await fetch(`http://localhost:5000/api/max/${userId}`);
     const data = await result.json();
     setMax(data);
   }, []);
 
   return (
     <div className="records">
-      <div className="records__header">
-        <HeaderButton text="home" />
-        <HeaderButton text="logout" logout={props.logout} />
-      </div>
       <div className="records__title">
         <FlagIcon className="records__icon" style={{ fontSize: 100 }} />
       </div>

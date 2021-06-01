@@ -13,6 +13,8 @@ import History from "./pages/History";
 import Progress from "./pages/Progress";
 import Records from "./pages/Records";
 import ProtectedRoute from "./components/ProtectedRoute";
+import Header from "./components/Header";
+import HomeLogout from "./components/HomeLogout";
 
 const App = () => {
   const [token, setToken] = useState();
@@ -30,7 +32,10 @@ const App = () => {
       body: JSON.stringify({ email: email, password: password }),
     };
     try {
-      const result = await fetch("/api/authenticate", options);
+      const result = await fetch(
+        "http://localhost:5000/api/authenticate",
+        options
+      );
       const responseData = await result.json();
       if (!result.ok) {
         throw new Error(responseData);
@@ -60,20 +65,30 @@ const App = () => {
   };
 
   return (
-    <Router>
-      <Switch>
-        <Route
-          path="/login"
-          render={() => <Login error={error} loading={loading} login={login} />}
-        />
-        <Route path="/signup" component={Signup} />
-        <ProtectedRoute path="/workout" logout={logout} component={Workout} />
-        <ProtectedRoute path="/history" logout={logout} component={History} />
-        <ProtectedRoute path="/progress" logout={logout} component={Progress} />
-        <ProtectedRoute path="/records" logout={logout} component={Records} />
-        <ProtectedRoute path="/" exact logout={logout} component={Home} />
-      </Switch>
-    </Router>
+    <React.Fragment>
+      <Router>
+        <HomeLogout logout={logout} />
+        <Header />
+        <Switch>
+          <Route
+            path="/login"
+            render={() => (
+              <Login error={error} loading={loading} login={login} />
+            )}
+          />
+          <Route path="/signup" component={Signup} />
+          <ProtectedRoute path="/workout" logout={logout} component={Workout} />
+          <ProtectedRoute path="/history" logout={logout} component={History} />
+          <ProtectedRoute
+            path="/progress"
+            logout={logout}
+            component={Progress}
+          />
+          <ProtectedRoute path="/records" logout={logout} component={Records} />
+          <ProtectedRoute path="/" exact logout={logout} component={Home} />
+        </Switch>
+      </Router>
+    </React.Fragment>
   );
 };
 

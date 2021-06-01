@@ -50,7 +50,7 @@ const LogExercise = (props) => {
             user_id: userId.toString(),
           }),
         };
-        fetch("/api/stats", options)
+        fetch("http://localhost:5000/api/stats", options)
           .then((res) => res.json())
           .then((data) => setSets(data))
           .catch((err) => setError(err.message));
@@ -64,7 +64,9 @@ const LogExercise = (props) => {
     if (!userId) return;
 
     try {
-      const result = await fetch(`/api/routines/null-date/${userId}`);
+      const result = await fetch(
+        `http://localhost:5000/api/routines/null-date/${userId}`
+      );
       const unfinished = await result.json();
       if (unfinished.length > 0) {
         return new Promise((resolve, reject) => {
@@ -78,7 +80,10 @@ const LogExercise = (props) => {
           user_id: userId.toString(),
         }),
       };
-      const routineResult = await fetch(`/api/routines`, options);
+      const routineResult = await fetch(
+        `http://localhost:5000/api/routines`,
+        options
+      );
       const routine = await routineResult.json();
       return new Promise((resolve, reject) => {
         resolve(routine.routine_id);
@@ -102,7 +107,10 @@ const LogExercise = (props) => {
           exercise_id: exerciseId.toString(),
         }),
       };
-      const result = await fetch(`/api/routine-exercises`, options);
+      const result = await fetch(
+        `http://localhost:5000/api/routine-exercises`,
+        options
+      );
       const routine_exercise = await result.json();
       return new Promise((resolve, reject) => {
         resolve(routine_exercise.routine_exercise_id);
