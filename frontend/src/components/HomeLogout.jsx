@@ -6,7 +6,7 @@ import HeaderButton from "./HeaderButton";
 const HomeLogout = (props) => {
   return (
     <div className="homelogout">
-      <HeaderButton text="home" logout={props.logout} />
+      <HeaderButton text="home" />
       <HeaderButton text="logout" logout={props.logout} />
     </div>
   );
