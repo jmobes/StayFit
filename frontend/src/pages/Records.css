@@ -2,7 +2,6 @@
   display: flex;
   flex-direction: column;
   color: #fff;
-  height: 100vh;
   position: relative;
 }
 .records__header {
@@ -11,11 +10,15 @@
   padding: 1rem;
 }
 .records__title {
-  margin-top: 5rem;
+  margin-top: 3rem;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   color: #27e77f;
+}
+.records__text {
+  font-size: 2rem;
 }
 .records__instructions {
   margin-top: 1rem;

@@ -23,6 +23,7 @@ const Records = (props) => {
     <div className="records">
       <div className="records__title">
         <FlagIcon className="records__icon" style={{ fontSize: 100 }} />
+        <h3 className="records__text">RECORDS</h3>
       </div>
       <div className="records__instructions">
         <p className="records__instructions--1">
