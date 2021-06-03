@@ -27,6 +27,7 @@ const Progress = (props) => {
     <div className="progress">
       <div className="progress__title">
         <TimelineIcon style={{ fontSize: 100 }} />
+        <h3 className="progress__text">PROGRESS</h3>
       </div>
       {!selected && (
         <div className="progress__instructions">

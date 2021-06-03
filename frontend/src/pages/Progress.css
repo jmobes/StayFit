@@ -2,8 +2,8 @@
   display: flex;
   flex-direction: column;
   color: #fff;
-  height: 100vh;
   position: relative;
+  flex: 1;
 }
 .progress__header {
   display: flex;
@@ -13,9 +13,13 @@
 .progress__title {
   color: #27e77f;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-top: 5rem;
+  margin-top: 3rem;
+}
+.progress__text {
+  font-size: 2rem;
 }
 .progress__instructions {
   text-align: center;
@@ -47,12 +51,8 @@
   cursor: pointer;
 }
 .progress__exercise__container {
-  height: 50vh;
-  width: 100%;
-  position: absolute;
-  top: 50%;
-  left: 0;
-  overflow: auto;
+  margin-top: 1rem;
+  flex: 1;
   font-size: 2rem;
   text-transform: capitalize;
   background-color: #1b1b1b;
@@ -68,10 +68,6 @@
 }
 .progress__exercise__cancel span {
   cursor: pointer;
-}
-.progress__exercise__list {
-  height: 100%;
-  overflow: auto;
 }
 .progress__exercise {
   font-size: 2.5rem;
