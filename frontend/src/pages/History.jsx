@@ -46,8 +46,9 @@ const History = (props) => {
 
   return (
     <div className="history">
-      <div className="history__icon">
-        <HistoryIcon style={{ fontSize: 100 }} />
+      <div className="history__title">
+        <HistoryIcon className="history__icon" style={{ fontSize: 100 }} />
+        <h3 className="history__text">HISTORY</h3>
       </div>
       <p className="history__instructions">
         Select a date to view a past routine.

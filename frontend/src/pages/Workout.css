@@ -2,8 +2,8 @@
   display: flex;
   flex-direction: column;
   color: #fff;
-  height: 100vh;
   position: relative;
+  flex: 1;
 }
 .workout__header {
   display: flex;
@@ -13,8 +13,15 @@
 .workout__title {
   margin-top: 5rem;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+.workout__text {
+  font-size: 2rem;
+  text-align: center;
+  text-transform: uppercase;
+  color: rgba(39, 231, 127);
 }
 .workout__icon {
   color: rgba(39, 231, 127);
@@ -48,10 +55,9 @@
   text-transform: capitalize;
   padding: 1rem;
 }
-.workout__data__ctn {
+/* .workout__data__ctn {
   height: 350px;
-  overflow: auto;
-}
+} */
 .workout__data__exercise {
   display: flex;
   align-items: center;

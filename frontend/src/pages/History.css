@@ -3,17 +3,22 @@
   flex-direction: column;
   color: #fff;
   padding: 1rem;
-  height: 100vh;
 }
 .history__header {
   display: flex;
   justify-content: space-between;
 }
-.history__icon {
+.history__title {
   display: flex;
+  flex-direction: column;
   justify-content: center;
+  align-items: center;
   color: #27e77f;
   margin-top: 3rem;
+  text-align: center;
+}
+.history__text {
+  font-size: 2rem;
 }
 .history__instructions {
   color: gray;

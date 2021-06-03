@@ -14,6 +14,7 @@ html {
 
 body {
   background-color: #000;
+  height: 100vh;
 }
 .hidden {
   display: none;
@@ -24,4 +25,9 @@ a:link,
 a:visited {
   text-decoration: none;
   color: #27e77f;
+}
+#root {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }

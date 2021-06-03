@@ -67,8 +67,7 @@ const App = () => {
   return (
     <React.Fragment>
       <Router>
-        <HomeLogout logout={logout} />
-        <Header />
+        <HomeLogout logout={logout} /> <Header />
         <Switch>
           <Route
             path="/login"

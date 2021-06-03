@@ -174,6 +174,7 @@ const Workout = (props) => {
           className="workout__icon"
           style={{ fontSize: 100 }}
         />
+        <h3 className="workout__text">WORKOUT</h3>
       </div>
       {view}
       <div className={`message__modal ${workoutLogged ? "" : "hidden"}`}>
