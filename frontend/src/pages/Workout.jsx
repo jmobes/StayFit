@@ -175,6 +175,9 @@ const Workout = (props) => {
           style={{ fontSize: 100 }}
         />
         <h3 className="workout__text">WORKOUT</h3>
+        <p className="workout__instructions">
+          Select or create an exercise from the dropdown list to get started
+        </p>
       </div>
       {view}
       <div className={`message__modal ${workoutLogged ? "" : "hidden"}`}>
