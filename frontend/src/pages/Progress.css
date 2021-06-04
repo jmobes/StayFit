@@ -16,7 +16,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-top: 3rem;
+  margin: 3rem 0;
 }
 .progress__text {
   font-size: 2rem;
@@ -32,6 +32,7 @@
   margin: 0 auto;
   background: #0b0b0b;
   border-radius: 10px;
+  min-height: 300px;
 }
 .progress__select__exercise {
   display: flex;
@@ -39,6 +40,7 @@
   justify-content: center;
   align-items: center;
   margin-top: 3rem;
+  margin-bottom: 1.5rem;
 }
 .progress__select__exercise--text {
   background-color: #1b1b1b;
@@ -51,7 +53,6 @@
   cursor: pointer;
 }
 .progress__exercise__container {
-  margin-top: 1rem;
   flex: 1;
   font-size: 2rem;
   text-transform: capitalize;

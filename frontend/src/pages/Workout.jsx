@@ -177,7 +177,7 @@ const Workout = (props) => {
         <h3 className="workout__text">WORKOUT</h3>
         {logExercise ? (
           <p className="workout__instructions">
-            Enter exercise data. Click the + icon to add a new set.
+            Enter exercise data. Click the <span>+</span> icon to add a new set.
           </p>
         ) : (
           <p className="workout__instructions">
