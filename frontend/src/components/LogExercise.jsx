@@ -174,6 +174,7 @@ const LogExercise = (props) => {
         className="add__set__button"
       />
       <div className="log__exercise__buttons">
+        {error && <p className="log__exercise__error">{error}</p>}
         <button
           onClick={async () => {
             try {
@@ -204,7 +205,6 @@ const LogExercise = (props) => {
           Cancel
         </button>
       </div>
-      {error && <p className="log__exercise__error">{error}</p>}
     </div>
   );
 };
