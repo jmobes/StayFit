@@ -18,6 +18,7 @@ const Workout = (props) => {
   const [routineId, setRoutineId] = useState();
   const [workoutLogged, setWorkoutLogged] = useState(false);
   const [error, setError] = useState();
+  const [loading, setLoading] = useState(false);
 
   useEffect(async () => {
     const user = JSON.parse(localStorage.getItem("user"));
