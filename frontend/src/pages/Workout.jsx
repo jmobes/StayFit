@@ -4,10 +4,10 @@ import "./Workout.css";
 import HeaderButton from "../components/HeaderButton";
 import FitnessCenterIcon from "@material-ui/icons/FitnessCenter";
 import AddIcon from "@material-ui/icons/Add";
-import ExerciseList from "../components/ExerciseList";
 import CreateExercise from "../components/CreateExercise";
 import LogExercise from "../components/LogExercise";
 import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
+import DisplayExercises from "../components/DisplayExercises";
 
 const Workout = (props) => {
   const [displayExercises, setDisplayExercises] = useState(false);
@@ -43,6 +43,7 @@ const Workout = (props) => {
       setRoutine(routineInfo);
     } catch (err) {
       setError(err.message);
+      console.log("ERROR!!!");
     }
   }, [displayExercises, createExercise, logExercise]);
 
@@ -104,7 +105,7 @@ const Workout = (props) => {
   let view;
   if (displayExercises) {
     view = (
-      <ExerciseList
+      <DisplayExercises
         showList={setDisplayExercises}
         showAddExercise={showAddExercise}
         showLogExercise={showLogExercise}
