@@ -76,6 +76,10 @@
   color: #555553;
   cursor: pointer;
 }
+.workout__data__row p {
+  font-size: 2.5rem;
+  text-align: center;
+}
 .log__workout {
   background-color: #27e77f;
   color: #000;

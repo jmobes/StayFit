@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-// import "./DisplayExercises.css";
 import ExerciseList from "./ExerciseList";
 
 const DisplayExercises = (props) => {

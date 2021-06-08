@@ -3,11 +3,10 @@ import "./Workout.css";
 
 import HeaderButton from "../components/HeaderButton";
 import FitnessCenterIcon from "@material-ui/icons/FitnessCenter";
-import AddIcon from "@material-ui/icons/Add";
 import CreateExercise from "../components/CreateExercise";
 import LogExercise from "../components/LogExercise";
-import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
 import DisplayExercises from "../components/DisplayExercises";
+import LogRoutine from "../components/LogRoutine";
 
 const Workout = (props) => {
   const [displayExercises, setDisplayExercises] = useState(false);
@@ -42,8 +41,7 @@ const Workout = (props) => {
       const routineInfo = await res.json();
       setRoutine(routineInfo);
     } catch (err) {
-      setError(err.message);
-      console.log("ERROR!!!");
+      setError("Network error. Could not process request.");
     }
   }, [displayExercises, createExercise, logExercise]);
 
@@ -94,7 +92,7 @@ const Workout = (props) => {
       setRoutine(null);
       setRoutineId(null);
     } catch (ex) {
-      setError(ex.message);
+      setError("Network error. Could not process request.");
     }
     setWorkoutLogged(true);
     setTimeout(() => {
@@ -121,53 +119,14 @@ const Workout = (props) => {
     );
   } else {
     view = (
-      <React.Fragment>
-        <div
-          className="workout__select"
-          onClick={() => setDisplayExercises(true)}
-        >
-          <p className="workout__select__title">select exercise</p>
-          <AddIcon className="workout__select__icon" style={{ fontSize: 30 }} />
-        </div>
-        <div className="workout__data">
-          <div className="workout__data__ctn">
-            <div className="workout__data__row">
-              {routine &&
-                !!routine.length &&
-                routine.map((current, index, arr) => {
-                  const previous = arr[index - 1];
-                  const next = arr[index + 1];
-                  if (!previous || previous.name !== current.name) {
-                    return (
-                      <div key={index} className="workout__data__exercise">
-                        <p className="workout__data__exercise__name">
-                          {current.name}
-                        </p>
-                        <DeleteOutlineIcon
-                          style={{ fontSize: 35 }}
-                          className="workout__data__exercise__delete"
-                          onClick={() =>
-                            deleteExerciseFromRoutine(
-                              current.exercise_id,
-                              routineId
-                            )
-                          }
-                        />
-                      </div>
-                    );
-                  } else {
-                    return null;
-                  }
-                })}
-            </div>
-          </div>
-          {routine && routine.length ? (
-            <button onClick={logWorkout} className="log__workout">
-              Log Workout
-            </button>
-          ) : null}
-        </div>
-      </React.Fragment>
+      <LogRoutine
+        setDisplayExercises={setDisplayExercises}
+        routine={routine}
+        deleteExerciseFromRoutine={deleteExerciseFromRoutine}
+        routineId={routineId}
+        logWorkout={logWorkout}
+        error={error}
+      />
     );
   }
 

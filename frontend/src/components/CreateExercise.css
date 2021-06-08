@@ -46,6 +46,7 @@
   cursor: pointer;
 }
 .exercise__create__error {
-  font-size: 1.5rem;
+  font-size: 2rem;
   color: red;
+  text-align: center;
 }

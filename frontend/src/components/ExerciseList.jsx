@@ -24,7 +24,7 @@ const ExerciseList = (props) => {
     })
       .then((res) => res.json())
       .then((data) => setExercises(data))
-      .catch((err) => setError("Network error. Cannot retrieve exercises..."));
+      .catch((err) => setError("Network error. Cannot retrieve exercises."));
   }, []);
 
   const deleteExercise = (id) => {
@@ -43,7 +43,7 @@ const ExerciseList = (props) => {
           )
         )
       )
-      .catch((err) => setError("Network error. Unable to process request..."));
+      .catch((err) => setError("Network error. Unable to process request."));
   };
 
   return (
