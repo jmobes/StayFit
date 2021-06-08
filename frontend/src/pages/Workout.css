@@ -62,10 +62,10 @@
   font-size: 2rem;
   text-transform: capitalize;
   padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
-/* .workout__data__ctn {
-  height: 350px;
-} */
 .workout__data__exercise {
   display: flex;
   align-items: center;

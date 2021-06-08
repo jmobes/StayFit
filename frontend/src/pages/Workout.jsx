@@ -130,33 +130,35 @@ const Workout = (props) => {
         </div>
         <div className="workout__data">
           <div className="workout__data__ctn">
-            {routine &&
-              !!routine.length &&
-              routine.map((current, index, arr) => {
-                const previous = arr[index - 1];
-                const next = arr[index + 1];
-                if (!previous || previous.name !== current.name) {
-                  return (
-                    <div key={index} className="workout__data__exercise">
-                      <p className="workout__data__exercise__name">
-                        {current.name}
-                      </p>
-                      <DeleteOutlineIcon
-                        style={{ fontSize: 35 }}
-                        className="workout__data__exercise__delete"
-                        onClick={() =>
-                          deleteExerciseFromRoutine(
-                            current.exercise_id,
-                            routineId
-                          )
-                        }
-                      />
-                    </div>
-                  );
-                } else {
-                  return null;
-                }
-              })}
+            <div className="workout__data__row">
+              {routine &&
+                !!routine.length &&
+                routine.map((current, index, arr) => {
+                  const previous = arr[index - 1];
+                  const next = arr[index + 1];
+                  if (!previous || previous.name !== current.name) {
+                    return (
+                      <div key={index} className="workout__data__exercise">
+                        <p className="workout__data__exercise__name">
+                          {current.name}
+                        </p>
+                        <DeleteOutlineIcon
+                          style={{ fontSize: 35 }}
+                          className="workout__data__exercise__delete"
+                          onClick={() =>
+                            deleteExerciseFromRoutine(
+                              current.exercise_id,
+                              routineId
+                            )
+                          }
+                        />
+                      </div>
+                    );
+                  } else {
+                    return null;
+                  }
+                })}
+            </div>
           </div>
           {routine && routine.length ? (
             <button onClick={logWorkout} className="log__workout">
