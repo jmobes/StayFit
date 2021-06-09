@@ -38,6 +38,7 @@ const LogExercise = (props) => {
   };
 
   const addSets = (routine_exercise_id) => {
+    console.log("ROUTINE_EXERCISE_ID: ", routine_exercise_id);
     try {
       stats.map((setData) => {
         const options = {
@@ -53,7 +54,7 @@ const LogExercise = (props) => {
         fetch("http://localhost:5000/api/stats", options)
           .then((res) => res.json())
           .then((data) => setSets(data))
-          .catch((err) => setError(err.message));
+          .catch((err) => setError("Network error. Unable to add set(s)."));
       });
     } catch (e) {
       setError(e.message);
@@ -89,7 +90,7 @@ const LogExercise = (props) => {
         resolve(routine.routine_id);
       });
     } catch (err) {
-      setError(err.message);
+      setError("Network error. Unable to log exercise.");
     }
   };
 
@@ -116,7 +117,7 @@ const LogExercise = (props) => {
         resolve(routine_exercise.routine_exercise_id);
       });
     } catch (err) {
-      setError(err.message);
+      setError("Network error. Unable to log exercise.");
     }
   };
 
@@ -188,6 +189,9 @@ const LogExercise = (props) => {
               });
               const routineId = await startRoutine();
               const routine_exercise_id = await addExerciseToRoutine(routineId);
+              if (!routine_exercise_id) {
+                throw new Error("Network error. Unable to add sets.");
+              }
               addSets(routine_exercise_id);
               props.hideLogExercise();
             } catch (err) {
