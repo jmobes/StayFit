@@ -3,11 +3,10 @@ import "./Workout.css";
 
 import HeaderButton from "../components/HeaderButton";
 import FitnessCenterIcon from "@material-ui/icons/FitnessCenter";
-import AddIcon from "@material-ui/icons/Add";
-import ExerciseList from "../components/ExerciseList";
 import CreateExercise from "../components/CreateExercise";
 import LogExercise from "../components/LogExercise";
-import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
+import DisplayExercises from "../components/DisplayExercises";
+import LogRoutine from "../components/LogRoutine";
 
 const Workout = (props) => {
   const [displayExercises, setDisplayExercises] = useState(false);
@@ -18,6 +17,7 @@ const Workout = (props) => {
   const [routineId, setRoutineId] = useState();
   const [workoutLogged, setWorkoutLogged] = useState(false);
   const [error, setError] = useState();
+  const [loading, setLoading] = useState(false);
 
   useEffect(async () => {
     const user = JSON.parse(localStorage.getItem("user"));
@@ -26,18 +26,22 @@ const Workout = (props) => {
     }
     const userId = user.userId;
     try {
-      const result = await fetch(`/api/routines/null-date/${userId}`);
+      const result = await fetch(
+        `http://localhost:5000/api/routines/null-date/${userId}`
+      );
       const unfinished = await result.json();
       if (unfinished.length < 1) {
         return;
       }
       const routineId = unfinished[0].routine_id;
       setRoutineId(routineId);
-      const res = await fetch(`/api/routine-data/${userId}/${routineId}`);
+      const res = await fetch(
+        `http://localhost:5000/api/routine-data/${userId}/${routineId}`
+      );
       const routineInfo = await res.json();
       setRoutine(routineInfo);
     } catch (err) {
-      setError(err.message);
+      setError("Network error. Could not process request.");
     }
   }, [displayExercises, createExercise, logExercise]);
 
@@ -57,10 +61,13 @@ const Workout = (props) => {
   const deleteExerciseFromRoutine = async (exerciseId, routineId) => {
     if (!Number(exerciseId) || !Number(routineId)) return;
 
-    const result = await fetch(`/api/stats/${routineId}/${exerciseId}`, {
-      method: "DELETE",
-      headers: { "Content-Type": "application/json" },
-    });
+    const result = await fetch(
+      `http://localhost:5000/api/stats/${routineId}/${exerciseId}`,
+      {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+      }
+    );
     const deleted = await result.json();
     const routineCopy = [...routine];
     const updatedRoutine = routineCopy.filter(
@@ -77,23 +84,26 @@ const Workout = (props) => {
       headers: { "Content-Type": "application/json" },
     };
     try {
-      const routine = await fetch(`/api/routines/${routineId}`, options);
+      const routine = await fetch(
+        `http://localhost:5000/api/routines/${routineId}`,
+        options
+      );
       const updatedRoutine = await routine.json();
       setRoutine(null);
       setRoutineId(null);
+      setWorkoutLogged(true);
+      setTimeout(() => {
+        setWorkoutLogged(false);
+      }, 5000);
     } catch (ex) {
-      setError(ex.message);
+      setError("Network error. Could not process request.");
     }
-    setWorkoutLogged(true);
-    setTimeout(() => {
-      setWorkoutLogged(false);
-    }, 5000);
   };
 
   let view;
   if (displayExercises) {
     view = (
-      <ExerciseList
+      <DisplayExercises
         showList={setDisplayExercises}
         showAddExercise={showAddExercise}
         showLogExercise={showLogExercise}
@@ -109,65 +119,34 @@ const Workout = (props) => {
     );
   } else {
     view = (
-      <React.Fragment>
-        <div
-          className="workout__select"
-          onClick={() => setDisplayExercises(true)}
-        >
-          <p className="workout__select__title">select exercise</p>
-          <AddIcon className="workout__select__icon" style={{ fontSize: 30 }} />
-        </div>
-        <div className="workout__data">
-          <div className="workout__data__ctn">
-            {routine &&
-              !!routine.length &&
-              routine.map((current, index, arr) => {
-                const previous = arr[index - 1];
-                const next = arr[index + 1];
-                if (!previous || previous.name !== current.name) {
-                  return (
-                    <div key={index} className="workout__data__exercise">
-                      <p className="workout__data__exercise__name">
-                        {current.name}
-                      </p>
-                      <DeleteOutlineIcon
-                        style={{ fontSize: 35 }}
-                        className="workout__data__exercise__delete"
-                        onClick={() =>
-                          deleteExerciseFromRoutine(
-                            current.exercise_id,
-                            routineId
-                          )
-                        }
-                      />
-                    </div>
-                  );
-                } else {
-                  return null;
-                }
-              })}
-          </div>
-          {routine && routine.length ? (
-            <button onClick={logWorkout} className="log__workout">
-              Log Workout
-            </button>
-          ) : null}
-        </div>
-      </React.Fragment>
+      <LogRoutine
+        setDisplayExercises={setDisplayExercises}
+        routine={routine}
+        deleteExerciseFromRoutine={deleteExerciseFromRoutine}
+        routineId={routineId}
+        logWorkout={logWorkout}
+        error={error}
+      />
     );
   }
 
   return (
     <div className="workout">
-      <div className="workout__header">
-        <HeaderButton text="home" />
-        <HeaderButton text="logout" logout={props.logout} />
-      </div>
       <div className="workout__title">
         <FitnessCenterIcon
           className="workout__icon"
           style={{ fontSize: 100 }}
         />
+        <h3 className="workout__text">WORKOUT</h3>
+        {logExercise ? (
+          <p className="workout__instructions">
+            Enter exercise data. Click the <span>+</span> icon to add a new set.
+          </p>
+        ) : (
+          <p className="workout__instructions">
+            Select or create an exercise from the dropdown list to get started
+          </p>
+        )}
       </div>
       {view}
       <div className={`message__modal ${workoutLogged ? "" : "hidden"}`}>

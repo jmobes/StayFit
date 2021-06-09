@@ -15,7 +15,7 @@ const Chart = (props) => {
     setChartData(null);
     setError(null);
 
-    fetch(`/api/progress/${userId}/${exerciseId}`)
+    fetch(`http://localhost:5000/api/progress/${userId}/${exerciseId}`)
       .then((res) => res.json())
       .then((data) => {
         data.map((stats) => {

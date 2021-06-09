@@ -2,8 +2,8 @@
   display: flex;
   flex-direction: column;
   color: #fff;
-  height: 100vh;
   position: relative;
+  flex: 1;
 }
 .workout__header {
   display: flex;
@@ -11,16 +11,31 @@
   padding: 1rem;
 }
 .workout__title {
-  margin-top: 5rem;
+  margin-top: 3rem;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+.workout__text {
+  font-size: 2rem;
+  text-align: center;
+  text-transform: uppercase;
+  color: rgba(39, 231, 127);
 }
 .workout__icon {
   color: rgba(39, 231, 127);
 }
+.workout__instructions {
+  margin-top: 3rem;
+  font-size: 2rem;
+  text-align: center;
+}
+.workout__instructions span {
+  color: rgb(39, 231, 127);
+}
 .workout__select {
-  margin-top: 6rem;
+  margin-top: 3rem;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -47,10 +62,9 @@
   font-size: 2rem;
   text-transform: capitalize;
   padding: 1rem;
-}
-.workout__data__ctn {
-  height: 350px;
-  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 .workout__data__exercise {
   display: flex;
@@ -61,6 +75,11 @@
 .workout__data__exercise__delete {
   color: #555553;
   cursor: pointer;
+}
+.workout__data__row p {
+  font-size: 2rem;
+  text-align: center;
+  color: red;
 }
 .log__workout {
   background-color: #27e77f;

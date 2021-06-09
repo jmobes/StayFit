@@ -28,7 +28,7 @@ const Signup = (props) => {
     };
 
     try {
-      const res = await fetch("/api/users", options);
+      const res = await fetch("http://localhost:5000/api/users", options);
       const user = await res.json();
       if (!res.ok) {
         throw new Error(user);
@@ -41,10 +41,6 @@ const Signup = (props) => {
 
   return (
     <>
-      <h1 className="title">
-        <span className="title__text title__text--1">Stay Fi</span>
-        <span className="title__text title__text--2">T</span>
-      </h1>
       <form onSubmit={handleSubmit} className="form__signup">
         <div
           className={`${

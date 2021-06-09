@@ -10,9 +10,6 @@ import FlagIcon from "@material-ui/icons/Flag";
 const Home = (props) => {
   return (
     <div className="home">
-      <div className="home__header">
-        <HeaderButton text="logout" logout={props.logout} />
-      </div>
       <div className="home__nav">
         <ul className="home__nav__list">
           <Link to="/workout">

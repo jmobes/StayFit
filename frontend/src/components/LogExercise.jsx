@@ -38,6 +38,7 @@ const LogExercise = (props) => {
   };
 
   const addSets = (routine_exercise_id) => {
+    console.log("ROUTINE_EXERCISE_ID: ", routine_exercise_id);
     try {
       stats.map((setData) => {
         const options = {
@@ -50,10 +51,10 @@ const LogExercise = (props) => {
             user_id: userId.toString(),
           }),
         };
-        fetch("/api/stats", options)
+        fetch("http://localhost:5000/api/stats", options)
           .then((res) => res.json())
           .then((data) => setSets(data))
-          .catch((err) => setError(err.message));
+          .catch((err) => setError("Network error. Unable to add set(s)."));
       });
     } catch (e) {
       setError(e.message);
@@ -64,7 +65,9 @@ const LogExercise = (props) => {
     if (!userId) return;
 
     try {
-      const result = await fetch(`/api/routines/null-date/${userId}`);
+      const result = await fetch(
+        `http://localhost:5000/api/routines/null-date/${userId}`
+      );
       const unfinished = await result.json();
       if (unfinished.length > 0) {
         return new Promise((resolve, reject) => {
@@ -78,13 +81,16 @@ const LogExercise = (props) => {
           user_id: userId.toString(),
         }),
       };
-      const routineResult = await fetch(`/api/routines`, options);
+      const routineResult = await fetch(
+        `http://localhost:5000/api/routines`,
+        options
+      );
       const routine = await routineResult.json();
       return new Promise((resolve, reject) => {
         resolve(routine.routine_id);
       });
     } catch (err) {
-      setError(err.message);
+      setError("Network error. Unable to log exercise.");
     }
   };
 
@@ -102,13 +108,16 @@ const LogExercise = (props) => {
           exercise_id: exerciseId.toString(),
         }),
       };
-      const result = await fetch(`/api/routine-exercises`, options);
+      const result = await fetch(
+        `http://localhost:5000/api/routine-exercises`,
+        options
+      );
       const routine_exercise = await result.json();
       return new Promise((resolve, reject) => {
         resolve(routine_exercise.routine_exercise_id);
       });
     } catch (err) {
-      setError(err.message);
+      setError("Network error. Unable to log exercise.");
     }
   };
 
@@ -166,6 +175,7 @@ const LogExercise = (props) => {
         className="add__set__button"
       />
       <div className="log__exercise__buttons">
+        {error && <p className="log__exercise__error">{error}</p>}
         <button
           onClick={async () => {
             try {
@@ -179,6 +189,9 @@ const LogExercise = (props) => {
               });
               const routineId = await startRoutine();
               const routine_exercise_id = await addExerciseToRoutine(routineId);
+              if (!routine_exercise_id) {
+                throw new Error("Network error. Unable to add sets.");
+              }
               addSets(routine_exercise_id);
               props.hideLogExercise();
             } catch (err) {
@@ -196,7 +209,6 @@ const LogExercise = (props) => {
           Cancel
         </button>
       </div>
-      {error && <p className="log__exercise__error">{error}</p>}
     </div>
   );
 };

@@ -1,9 +1,10 @@
 .log__exercise {
   display: flex;
   flex-direction: column;
-  margin-top: 5rem;
+  margin-top: 3rem;
   font-size: 2rem;
   padding: 1rem;
+  position: relative;
 }
 .log__exercise__title {
   align-self: center;
@@ -32,8 +33,6 @@
 .log__exercise__data__rows {
   display: flex;
   flex-direction: column;
-  height: 200px;
-  overflow: auto;
 }
 .log__exercise__data__row {
   display: flex;
@@ -93,13 +92,9 @@
   cursor: pointer;
 }
 .log__exercise__error {
-  position: absolute;
-  left: 50%;
-  top: 28%;
+  margin-top: 2.5rem;
   color: red;
-  width: 100%;
   text-align: center;
-  transform: translateX(-50%);
 }
 
 @media (max-width: 340px) {

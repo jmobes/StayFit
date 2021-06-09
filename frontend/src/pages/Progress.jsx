@@ -10,6 +10,7 @@ const Progress = (props) => {
   const [exercises, setExercises] = useState();
   const [showExercises, setShowExercises] = useState(false);
   const [selected, setSelected] = useState();
+  const [error, setError] = useState();
 
   useEffect(async () => {
     const user = JSON.parse(localStorage.getItem("user"));
@@ -18,19 +19,20 @@ const Progress = (props) => {
     }
     const userId = user.userId;
 
-    const result = await fetch(`/api/max/${userId}`);
-    const data = await result.json();
-    setExercises(data);
+    try {
+      const result = await fetch(`http://localhost:5000/api/max/${userId}`);
+      const data = await result.json();
+      setExercises(data);
+    } catch (err) {
+      setError("Network error. Try again later.");
+    }
   }, []);
 
   return (
     <div className="progress">
-      <div className="progress__header">
-        <HeaderButton text="home" />
-        <HeaderButton text="logout" logout={props.logout} />
-      </div>
       <div className="progress__title">
         <TimelineIcon style={{ fontSize: 100 }} />
+        <h3 className="progress__text">PROGRESS</h3>
       </div>
       {!selected && (
         <div className="progress__instructions">
@@ -38,6 +40,7 @@ const Progress = (props) => {
         </div>
       )}
       {selected && <Chart exercise={selected} />}
+      {error ? <p className="progress__error">{error}</p> : null}
       <div
         onClick={() => setShowExercises(true)}
         className="progress__select__exercise"
@@ -51,20 +54,26 @@ const Progress = (props) => {
             <span onClick={() => setShowExercises(false)}>cancel</span>
           </div>
           <div className="progress__exercise__list">
-            {exercises.map((exercise) => {
-              return (
-                <p
-                  onClick={() => {
-                    setSelected(exercise);
-                    setShowExercises(false);
-                  }}
-                  key={exercise.exercise_id}
-                  className="progress__exercise"
-                >
-                  {exercise.name}
-                </p>
-              );
-            })}
+            {exercises && exercises.length ? (
+              exercises.map((exercise) => {
+                return (
+                  <p
+                    onClick={() => {
+                      setSelected(exercise);
+                      setShowExercises(false);
+                    }}
+                    key={exercise.exercise_id}
+                    className="progress__exercise"
+                  >
+                    {exercise.name}
+                  </p>
+                );
+              })
+            ) : (
+              <p className="progress__error">
+                No exercise data found. Complete a workout to view progress.
+              </p>
+            )}
           </div>
         </div>
       )}

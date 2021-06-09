@@ -44,3 +44,10 @@
   color: #27e77f;
   overflow: auto;
 }
+.exercise__list__container p {
+  font-size: 2rem;
+  text-align: center;
+}
+.exercise__list__error {
+  color: red;
+}

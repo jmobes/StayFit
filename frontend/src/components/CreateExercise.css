@@ -31,6 +31,7 @@
   border-radius: 10px;
   outline: none;
   width: 100%;
+  cursor: pointer;
 }
 .exercise__create__btn--cancel {
   margin-top: 3rem;
@@ -42,8 +43,10 @@
   border-radius: 10px;
   outline: none;
   width: 100%;
+  cursor: pointer;
 }
 .exercise__create__error {
-  font-size: 1.5rem;
+  font-size: 2rem;
   color: red;
+  text-align: center;
 }

@@ -17,14 +17,14 @@ const ExerciseList = (props) => {
     }
     const token = user.token;
     const user_id = user.userId;
-    fetch(`/api/exercises/${user_id}`, {
+    fetch(`http://localhost:5000/api/exercises/${user_id}`, {
       headers: {
         Authorization: token,
       },
     })
       .then((res) => res.json())
       .then((data) => setExercises(data))
-      .catch((err) => setExercises(null));
+      .catch((err) => setError("Network error. Cannot retrieve exercises."));
   }, []);
 
   const deleteExercise = (id) => {
@@ -34,7 +34,7 @@ const ExerciseList = (props) => {
         "Content-Type": "application/json",
       },
     };
-    fetch(`/api/routine-data/${id}`, options)
+    fetch(`http://localhost:5000/api/routine-data/${id}`, options)
       .then((result) => result.json())
       .then((deleted) =>
         setExercises(
@@ -43,7 +43,7 @@ const ExerciseList = (props) => {
           )
         )
       )
-      .catch((err) => setError(err));
+      .catch((err) => setError("Network error. Unable to process request."));
   };
 
   return (
@@ -70,7 +70,7 @@ const ExerciseList = (props) => {
         />
       </div>
       <div className="exercise__list__container">
-        {exercises &&
+        {exercises && !error ? (
           exercises.map((exercise) => {
             return (
               <ExerciseListItem
@@ -81,7 +81,10 @@ const ExerciseList = (props) => {
                 showLogExercise={props.showLogExercise}
               />
             );
-          })}
+          })
+        ) : (
+          <p className="exercise__list__error">{error}</p>
+        )}
       </div>
     </div>
   );

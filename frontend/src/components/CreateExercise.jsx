@@ -4,11 +4,15 @@ import "./CreateExercise.css";
 const CreateExercise = (props) => {
   const [name, setName] = useState("");
   const [exercise, setExercise] = useState();
+  const [error, setError] = useState();
 
   const addExerciseToList = () => {
     const user = JSON.parse(localStorage.getItem("user"));
     const userId = user.userId.toString();
-    if (!name || name.length < 3 || !userId) return;
+    if (!name || name.length < 3 || !userId) {
+      setError("Exercise must be at least 3 characters");
+      return;
+    }
     const exercise = {
       user_id: userId,
       name: name,
@@ -18,12 +22,19 @@ const CreateExercise = (props) => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(exercise),
     };
-    fetch("/api/exercises", options)
-      .then((result) => result.json())
-      .then((exercise) => setExercise)
-      .catch((err) => console.error(err));
-
-    props.hideCreateExercise();
+    fetch("http://localhost:5000/api/exercises", options)
+      .then((result) => {
+        if (!result.ok) {
+          throw new Error("Duplicate Exercise");
+        }
+        return result.json();
+      })
+      .then((exercise) => {
+        props.hideCreateExercise();
+      })
+      .catch((err) =>
+        setError(err.message || "Network error. Unable to create exercise.")
+      );
   };
 
   return (
@@ -35,13 +46,7 @@ const CreateExercise = (props) => {
         className="exercise__create__input"
         onChange={(e) => setName(e.target.value)}
       />
-      <p
-        className={`exercise__create__error ${
-          !name || name.length >= 3 ? "hidden" : ""
-        }`}
-      >
-        Exercise must be at least 3 characters
-      </p>
+      {error ? <p className="exercise__create__error">{error}</p> : null}
       <button
         onClick={addExerciseToList}
         className="exercise__create__btn--add"
