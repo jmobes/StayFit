@@ -65,10 +65,24 @@ router.post("/", async (req, res, next) => {
       return next(new HttpError("Could not find user", 404));
     }
 
+    const duplicate = await db.query(
+      "SELECT * FROM exercises WHERE name = $1",
+      [req.body.name]
+    );
+
+    if (duplicate.rows.length) {
+      duplicate.rows.forEach((data) => {
+        if (data.user_id === 1 || data.user_id === req.body.user_id) {
+          return next(new HttpError("Duplicate exercise"), 400);
+        }
+      });
+    }
+
     const exercise = await db.query(
       "INSERT INTO exercises (user_id, name) VALUES ($1, $2) RETURNING *",
       [req.body.user_id, req.body.name.toLowerCase()]
     );
+
     res.status(201).json(exercise.rows[0]);
   } catch (ex) {
     return next(new HttpError());
