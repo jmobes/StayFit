@@ -83,7 +83,7 @@ const ExerciseList = (props) => {
             );
           })
         ) : (
-          <p>{error}</p>
+          <p className="exercise__list__error">{error}</p>
         )}
       </div>
     </div>
