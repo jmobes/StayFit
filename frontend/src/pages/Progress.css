@@ -79,6 +79,17 @@
 .progress__exercise:not(:last-child) {
   border-bottom: 3px solid #939292;
 }
+.progress__message {
+  color: #27e77f;
+  font-size: 2rem;
+  text-align: center;
+}
+.progress__error {
+  margin-top: 2rem;
+  color: red;
+  font-size: 2rem;
+  text-align: center;
+}
 
 @media (min-width: 700px) {
   .progress__instructions {
