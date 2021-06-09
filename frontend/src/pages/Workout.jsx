@@ -17,7 +17,7 @@ const Workout = (props) => {
   const [routineId, setRoutineId] = useState();
   const [workoutLogged, setWorkoutLogged] = useState(false);
   const [error, setError] = useState();
-  const [loading, setLoading] = useState(false);
+  const [processing, setProcessing] = useState(false);
 
   useEffect(async () => {
     const user = JSON.parse(localStorage.getItem("user"));
@@ -59,25 +59,34 @@ const Workout = (props) => {
   };
 
   const deleteExerciseFromRoutine = async (exerciseId, routineId) => {
+    if (processing) return;
     if (!Number(exerciseId) || !Number(routineId)) return;
+    setProcessing(true);
 
-    const result = await fetch(
-      `http://localhost:5000/api/stats/${routineId}/${exerciseId}`,
-      {
-        method: "DELETE",
-        headers: { "Content-Type": "application/json" },
-      }
-    );
-    const deleted = await result.json();
-    const routineCopy = [...routine];
-    const updatedRoutine = routineCopy.filter(
-      (stats) => stats.routine_exercise_id !== deleted[0].routine_exercise_id
-    );
-    setRoutine(updatedRoutine);
+    try {
+      const result = await fetch(
+        `http://localhost:5000/api/stats/${routineId}/${exerciseId}`,
+        {
+          method: "DELETE",
+          headers: { "Content-Type": "application/json" },
+        }
+      );
+      const deleted = await result.json();
+      const routineCopy = [...routine];
+      const updatedRoutine = routineCopy.filter(
+        (stats) => stats.routine_exercise_id !== deleted[0].routine_exercise_id
+      );
+      setRoutine(updatedRoutine);
+    } catch (err) {
+      setError("Network error. Try again later");
+    }
+    setProcessing(false);
   };
 
   const logWorkout = async () => {
+    if (processing) return;
     if (!routineId) return;
+    setProcessing(true);
 
     const options = {
       method: "PATCH",
@@ -98,6 +107,7 @@ const Workout = (props) => {
     } catch (ex) {
       setError("Network error. Could not process request.");
     }
+    setProcessing(false);
   };
 
   let view;

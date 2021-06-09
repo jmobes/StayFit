@@ -7,7 +7,9 @@ const HomeLogout = (props) => {
   return (
     <div className="homelogout">
       <HeaderButton text="home" />
-      <HeaderButton text="logout" logout={props.logout} />
+      {props.loggedIn ? (
+        <HeaderButton text="logout" logout={props.logout} />
+      ) : null}
     </div>
   );
 };

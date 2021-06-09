@@ -11,6 +11,7 @@ const History = (props) => {
   const [user, setUser] = useState();
   const [workout, setWorkout] = useState();
   const [error, setError] = useState();
+  const [processing, setProcessing] = useState(false);
 
   const getDates = () => {
     const user = JSON.parse(localStorage.getItem("user"));
@@ -59,6 +60,8 @@ const History = (props) => {
       <div className="history__calendar">
         <Calendar
           onChange={(value, event) => {
+            if (processing) return;
+            setProcessing(true);
             fetch(
               `http://localhost:5000/api/routine-data/data/${user}/${formatDate(
                 value
@@ -69,6 +72,7 @@ const History = (props) => {
                 setWorkout(data);
               })
               .catch((err) => setError("Network error. Try again later."));
+            setProcessing(false);
           }}
           value={value}
           tileClassName={({ date, view }) => {

@@ -77,9 +77,8 @@
   cursor: pointer;
 }
 .workout__data__row p {
-  font-size: 2rem;
   text-align: center;
-  color: red;
+  color: #27e77f;
 }
 .log__workout {
   background-color: #27e77f;

@@ -20,6 +20,7 @@ const App = () => {
   const [token, setToken] = useState();
   const [error, setError] = useState();
   const [loading, setLoading] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(false);
 
   const login = async (email, password) => {
     if (!email || !password) {
@@ -41,6 +42,7 @@ const App = () => {
         throw new Error(responseData);
       }
       setToken(responseData.token);
+      setLoggedIn(true);
       localStorage.setItem(
         "user",
         JSON.stringify({
@@ -60,6 +62,7 @@ const App = () => {
 
   const logout = () => {
     setToken(null);
+    setLoggedIn(false);
     setError(null);
     localStorage.removeItem("user");
   };
@@ -67,7 +70,8 @@ const App = () => {
   return (
     <React.Fragment>
       <Router>
-        <HomeLogout logout={logout} /> <Header />
+        <HomeLogout logout={logout} loggedIn={loggedIn} />
+        <Header />
         <Switch>
           <Route
             path="/login"

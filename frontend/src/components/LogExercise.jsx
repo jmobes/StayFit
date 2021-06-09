@@ -10,6 +10,7 @@ const LogExercise = (props) => {
   const [stats, setStats] = useState([{ set: 1, weight: "", reps: "" }]);
   const [error, setError] = useState("");
   const [sets, setSets] = useState();
+  const [processing, setProcessing] = useState(false);
   const inputRef = useRef();
 
   useEffect(() => {
@@ -20,6 +21,10 @@ const LogExercise = (props) => {
     const userId = user.userId;
     setExerciseId(props.exercise.exercise_id);
     setUserId(userId);
+
+    return () => {
+      setProcessing(false);
+    };
   }, []);
 
   useEffect(() => {
@@ -38,7 +43,6 @@ const LogExercise = (props) => {
   };
 
   const addSets = (routine_exercise_id) => {
-    console.log("ROUTINE_EXERCISE_ID: ", routine_exercise_id);
     try {
       stats.map((setData) => {
         const options = {
@@ -178,6 +182,8 @@ const LogExercise = (props) => {
         {error && <p className="log__exercise__error">{error}</p>}
         <button
           onClick={async () => {
+            if (processing) return;
+            setProcessing(true);
             try {
               stats.map((object) => {
                 const valuesArray = Object.values(object);
@@ -197,6 +203,7 @@ const LogExercise = (props) => {
             } catch (err) {
               setError(err.message);
             }
+            setProcessing(false);
           }}
           className="log__exercise__button"
         >
