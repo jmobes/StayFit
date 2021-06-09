@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Route,
   BrowserRouter as Router,
@@ -20,7 +20,13 @@ const App = () => {
   const [token, setToken] = useState();
   const [error, setError] = useState();
   const [loading, setLoading] = useState(false);
-  const [loggedIn, setLoggedIn] = useState(false);
+
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (user) {
+      setToken(user.token);
+    }
+  }, []);
 
   const login = async (email, password) => {
     if (!email || !password) {
@@ -33,16 +39,12 @@ const App = () => {
       body: JSON.stringify({ email: email, password: password }),
     };
     try {
-      const result = await fetch(
-        "http://localhost:5000/api/authenticate",
-        options
-      );
+      const result = await fetch("/api/authenticate", options);
       const responseData = await result.json();
       if (!result.ok) {
         throw new Error(responseData);
       }
       setToken(responseData.token);
-      setLoggedIn(true);
       localStorage.setItem(
         "user",
         JSON.stringify({
@@ -62,7 +64,6 @@ const App = () => {
 
   const logout = () => {
     setToken(null);
-    setLoggedIn(false);
     setError(null);
     localStorage.removeItem("user");
   };
@@ -70,7 +71,7 @@ const App = () => {
   return (
     <React.Fragment>
       <Router>
-        <HomeLogout logout={logout} loggedIn={loggedIn} />
+        <HomeLogout logout={logout} token={token} />
         <Header />
         <Switch>
           <Route

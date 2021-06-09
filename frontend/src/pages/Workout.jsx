@@ -26,18 +26,14 @@ const Workout = (props) => {
     }
     const userId = user.userId;
     try {
-      const result = await fetch(
-        `http://localhost:5000/api/routines/null-date/${userId}`
-      );
+      const result = await fetch(`/api/routines/null-date/${userId}`);
       const unfinished = await result.json();
       if (unfinished.length < 1) {
         return;
       }
       const routineId = unfinished[0].routine_id;
       setRoutineId(routineId);
-      const res = await fetch(
-        `http://localhost:5000/api/routine-data/${userId}/${routineId}`
-      );
+      const res = await fetch(`/api/routine-data/${userId}/${routineId}`);
       const routineInfo = await res.json();
       setRoutine(routineInfo);
     } catch (err) {
@@ -64,13 +60,10 @@ const Workout = (props) => {
     setProcessing(true);
 
     try {
-      const result = await fetch(
-        `http://localhost:5000/api/stats/${routineId}/${exerciseId}`,
-        {
-          method: "DELETE",
-          headers: { "Content-Type": "application/json" },
-        }
-      );
+      const result = await fetch(`/api/stats/${routineId}/${exerciseId}`, {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+      });
       const deleted = await result.json();
       const routineCopy = [...routine];
       const updatedRoutine = routineCopy.filter(
@@ -93,10 +86,7 @@ const Workout = (props) => {
       headers: { "Content-Type": "application/json" },
     };
     try {
-      const routine = await fetch(
-        `http://localhost:5000/api/routines/${routineId}`,
-        options
-      );
+      const routine = await fetch(`/api/routines/${routineId}`, options);
       const updatedRoutine = await routine.json();
       setRoutine(null);
       setRoutineId(null);

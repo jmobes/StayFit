@@ -22,7 +22,7 @@ const CreateExercise = (props) => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(exercise),
     };
-    fetch("http://localhost:5000/api/exercises", options)
+    fetch("/api/exercises", options)
       .then((result) => {
         if (!result.ok) {
           throw new Error("Duplicate Exercise");

@@ -7,7 +7,7 @@ const HomeLogout = (props) => {
   return (
     <div className="homelogout">
       <HeaderButton text="home" />
-      {props.loggedIn ? (
+      {props.token ? (
         <HeaderButton text="logout" logout={props.logout} />
       ) : null}
     </div>
