@@ -91,13 +91,13 @@ const Workout = (props) => {
       const updatedRoutine = await routine.json();
       setRoutine(null);
       setRoutineId(null);
+      setWorkoutLogged(true);
+      setTimeout(() => {
+        setWorkoutLogged(false);
+      }, 5000);
     } catch (ex) {
       setError("Network error. Could not process request.");
     }
-    setWorkoutLogged(true);
-    setTimeout(() => {
-      setWorkoutLogged(false);
-    }, 5000);
   };
 
   let view;

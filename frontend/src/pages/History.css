@@ -59,3 +59,9 @@
   color: #27e77f;
   margin-top: 1rem;
 }
+.history__error {
+  color: red;
+  margin-top: 1rem;
+  font-size: 2rem;
+  text-align: center;
+}

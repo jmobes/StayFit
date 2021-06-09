@@ -27,7 +27,7 @@ const History = (props) => {
         });
         setDates(dateArray);
       })
-      .catch((ex) => setError(ex));
+      .catch((ex) => setError("Network error. Try again later."));
   };
 
   const formatDate = (date) => {
@@ -68,7 +68,7 @@ const History = (props) => {
               .then((data) => {
                 setWorkout(data);
               })
-              .catch((err) => setError(err));
+              .catch((err) => setError("Network error. Try again later."));
           }}
           value={value}
           tileClassName={({ date, view }) => {
@@ -80,6 +80,7 @@ const History = (props) => {
           }}
         />
       </div>
+      {error ? <p className="history__error">{error}</p> : null}
       <div className="history__routine">
         {workout &&
           workout.map((current, index, arr) => {
