@@ -67,13 +67,13 @@ router.post("/", async (req, res, next) => {
 
     const duplicate = await db.query(
       "SELECT * FROM exercises WHERE name = $1",
-      [req.body.name]
+      [req.body.name.toLowerCase()]
     );
 
     if (duplicate.rows.length) {
       duplicate.rows.forEach((data) => {
-        if (data.user_id === 1 || data.user_id === req.body.user_id) {
-          return next(new HttpError("Duplicate exercise"), 400);
+        if (data.user_id === 1 || data.user_id === user.rows[0].user_id) {
+          throw new HttpError("Duplicate Exercise", 400);
         }
       });
     }
@@ -85,7 +85,7 @@ router.post("/", async (req, res, next) => {
 
     res.status(201).json(exercise.rows[0]);
   } catch (ex) {
-    return next(new HttpError());
+    return next(new HttpError(ex.message, ex.errorCode));
   }
 });
 

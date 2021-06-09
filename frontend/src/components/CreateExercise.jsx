@@ -28,7 +28,9 @@ const CreateExercise = (props) => {
         console.log(exercise);
         props.hideCreateExercise();
       })
-      .catch((err) => setError("Network error. Unable to create exercise."));
+      .catch((err) =>
+        setError(err.message || "Network error. Unable to create exercise.")
+      );
   };
 
   return (
