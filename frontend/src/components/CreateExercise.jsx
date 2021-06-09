@@ -23,9 +23,13 @@ const CreateExercise = (props) => {
       body: JSON.stringify(exercise),
     };
     fetch("http://localhost:5000/api/exercises", options)
-      .then((result) => result.json())
+      .then((result) => {
+        if (!result.ok) {
+          throw new Error("Duplicate Exercise");
+        }
+        return result.json();
+      })
       .then((exercise) => {
-        console.log(exercise);
         props.hideCreateExercise();
       })
       .catch((err) =>
@@ -42,7 +46,7 @@ const CreateExercise = (props) => {
         className="exercise__create__input"
         onChange={(e) => setName(e.target.value)}
       />
-      <p className="exercise__create__error">{error}</p>
+      {error ? <p className="exercise__create__error">{error}</p> : null}
       <button
         onClick={addExerciseToList}
         className="exercise__create__btn--add"
