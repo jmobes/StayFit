@@ -6,6 +6,7 @@ import FlagIcon from "@material-ui/icons/Flag";
 
 const Records = (props) => {
   const [max, setMax] = useState();
+  const [error, setError] = useState();
 
   useEffect(async () => {
     const user = JSON.parse(localStorage.getItem("user"));
@@ -14,9 +15,13 @@ const Records = (props) => {
     }
     const userId = user.userId;
 
-    const result = await fetch(`http://localhost:5000/api/max/${userId}`);
-    const data = await result.json();
-    setMax(data);
+    try {
+      const result = await fetch(`http://localhost:5000/api/max/${userId}`);
+      const data = await result.json();
+      setMax(data);
+    } catch (err) {
+      setError("Network error. Try again later.");
+    }
   }, []);
 
   return (
@@ -31,6 +36,7 @@ const Records = (props) => {
         </p>
       </div>
       <div className="records__data">
+        {error ? <p className="records__error">{error}</p> : null}
         <div className="records__data__label">
           <p className="records__data__label--exercise">Exercise</p>
           <p className="records__data__label--weight">Weight</p>
