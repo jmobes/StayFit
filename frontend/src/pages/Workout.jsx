@@ -17,7 +17,7 @@ const Workout = (props) => {
   const [routineId, setRoutineId] = useState();
   const [workoutLogged, setWorkoutLogged] = useState(false);
   const [error, setError] = useState();
-  const [loading, setLoading] = useState(false);
+  const [processing, setProcessing] = useState(false);
 
   useEffect(async () => {
     const user = JSON.parse(localStorage.getItem("user"));
@@ -26,18 +26,14 @@ const Workout = (props) => {
     }
     const userId = user.userId;
     try {
-      const result = await fetch(
-        `http://localhost:5000/api/routines/null-date/${userId}`
-      );
+      const result = await fetch(`/api/routines/null-date/${userId}`);
       const unfinished = await result.json();
       if (unfinished.length < 1) {
         return;
       }
       const routineId = unfinished[0].routine_id;
       setRoutineId(routineId);
-      const res = await fetch(
-        `http://localhost:5000/api/routine-data/${userId}/${routineId}`
-      );
+      const res = await fetch(`/api/routine-data/${userId}/${routineId}`);
       const routineInfo = await res.json();
       setRoutine(routineInfo);
     } catch (err) {
@@ -59,35 +55,38 @@ const Workout = (props) => {
   };
 
   const deleteExerciseFromRoutine = async (exerciseId, routineId) => {
+    if (processing) return;
     if (!Number(exerciseId) || !Number(routineId)) return;
+    setProcessing(true);
 
-    const result = await fetch(
-      `http://localhost:5000/api/stats/${routineId}/${exerciseId}`,
-      {
+    try {
+      const result = await fetch(`/api/stats/${routineId}/${exerciseId}`, {
         method: "DELETE",
         headers: { "Content-Type": "application/json" },
-      }
-    );
-    const deleted = await result.json();
-    const routineCopy = [...routine];
-    const updatedRoutine = routineCopy.filter(
-      (stats) => stats.routine_exercise_id !== deleted[0].routine_exercise_id
-    );
-    setRoutine(updatedRoutine);
+      });
+      const deleted = await result.json();
+      const routineCopy = [...routine];
+      const updatedRoutine = routineCopy.filter(
+        (stats) => stats.routine_exercise_id !== deleted[0].routine_exercise_id
+      );
+      setRoutine(updatedRoutine);
+    } catch (err) {
+      setError("Network error. Try again later");
+    }
+    setProcessing(false);
   };
 
   const logWorkout = async () => {
+    if (processing) return;
     if (!routineId) return;
+    setProcessing(true);
 
     const options = {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
     };
     try {
-      const routine = await fetch(
-        `http://localhost:5000/api/routines/${routineId}`,
-        options
-      );
+      const routine = await fetch(`/api/routines/${routineId}`, options);
       const updatedRoutine = await routine.json();
       setRoutine(null);
       setRoutineId(null);
@@ -98,6 +97,7 @@ const Workout = (props) => {
     } catch (ex) {
       setError("Network error. Could not process request.");
     }
+    setProcessing(false);
   };
 
   let view;

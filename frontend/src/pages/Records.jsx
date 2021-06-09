@@ -16,7 +16,7 @@ const Records = (props) => {
     const userId = user.userId;
 
     try {
-      const result = await fetch(`http://localhost:5000/api/max/${userId}`);
+      const result = await fetch(`/api/max/${userId}`);
       const data = await result.json();
       setMax(data);
     } catch (err) {
