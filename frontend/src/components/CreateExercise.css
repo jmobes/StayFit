@@ -50,3 +50,24 @@
   color: red;
   text-align: center;
 }
+.workout__instructions {
+  padding: 0 3rem;
+}
+
+@media (min-width: 850px) {
+  .exercise__create {
+    width: 60%;
+    margin: 0 auto;
+  }
+  .workout__instructions {
+    width: 60%;
+  }
+}
+@media (min-width: 1200px) {
+  .exercise__create {
+    width: 50%;
+  }
+  .workout__instructions {
+    width: 50%;
+  }
+}
